@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Home from './Components/Home/Home';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Privacy from './Components/PrivacyPolicy/Privacy';
+import Condition from './Components/Terms/Condition';
+
+
 
 function App() {
+  const styleText = {
+    fontFamily: "'Josefin Sans', sans-serif",
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={styleText} className='bg-[#feefef]'>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/privacypolicy' element={<Privacy />} />
+          <Route path='/condition' element={<Condition />} />
+
+        </Routes>
+
+      </Router>
+
     </div>
   );
 }
