@@ -5,3 +5,14 @@ url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.rdrDefinedRangesWrapper {
+    display: none !important;
+}
+.rdrCalendarWrapper{
+    border: 1px solid black;
+}
+.rdrDateDisplayWrapper{
+    display: none;
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { DateRange } from 'react-date-range';
+import { DateRange, DateRangePicker } from 'react-date-range';
 import Form from 'react-bootstrap/Form';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -108,14 +108,16 @@ function Searchbar() {
                     </div>
                     {
                         showCalender ?
-                            <div className='absolute top-[150px] left-2 md:left-6 z-10'>
-                                <DateRange
+                            <div className='absolute top-[150px] md: z-10'>
+                                
+                                <DateRangePicker
                                     editableDateInputs={true}
                                     onChange={item => setDate([item.selection])}
                                     moveRangeOnFirstSelection={false}
                                     ranges={date}
-
-
+                                    months={2}
+                                    direction={window.innerWidth < 768 ? 'vertical' : 'horizontal'}
+                                    rangeColors={['#f33e5b', '#3ecf8e', '#fed14c']}
                                 />
                             </div> : ""
                     }
