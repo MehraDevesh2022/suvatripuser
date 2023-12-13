@@ -11,7 +11,7 @@ import Newsletter from './Newsletter'
 function Home() {
 
     return (
-        <div className='w-full bg-[#feefef] h-screen'>
+        <div className='w-full  h-screen'>
             <div>
                 <Navbar />
                 <Header />

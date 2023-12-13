@@ -2,17 +2,21 @@ import React from 'react'
 import paymentImg from '../../Assets/img/Google Play.png'
 import { IoLogoTwitter } from "react-icons/io5";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa6";
+import { Link } from 'react-router-dom'
 
 
 
 
 
 function Footer() {
+    const styleText = {
+
+    }
     const listOfImages = [1, 2, 3, 4, 5]
     return (
         <div className='bg-[#292929] w-full h-auto  p-5'>
             <div className='flex flex-col md:flex-row  justify-around md:justify-between border-b-[1px] pt-2 pb-0 w-full md:w-[900px] mx-auto leading-6'>
-                <div className='flex flex-row'>
+                <div className='hidden md:flex flex-row'>
                     {
                         listOfImages.map((item, index) => {
                             return (
@@ -35,8 +39,8 @@ function Footer() {
                 </div>
             </div>
             <div className='text-slate-300 text-center mt-4'>
-                <span className='mx-2 cursor-pointer hover:underline'>Terms and condition</span>
-                <span className='mx-2 cursor-pointer hover:underline'>Privacy Policy</span>
+                <Link to='/condition' className='text-slate-300 no-underline'><span className='mx-2 cursor-pointer hover:underline'>Terms and condition</span></Link>
+                <Link to="/privacypolicy" className='text-slate-300 no-underline'><span className='mx-2 cursor-pointer hover:underline'>Privacy Policy</span></Link>
                 <span className='mx-2 cursor-pointer hover:underline'>List your property</span>
             </div>
 
