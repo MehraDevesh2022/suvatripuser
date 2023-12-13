@@ -47,7 +47,7 @@ function Hotel() {
                     </div>
                     <div className='w-[700px] h-[2px] hidden md:block bg-slate-950 my-auto'></div>
                     <div>
-                        <Button style={{ padding: "8px 30px", textAlign: 'center', backgroundColor: "#e3292d", border: "none", borderRadius: '40px', fontWeight: '400' }}>View All <span><MdOutlineArrowRightAlt className='inline text-[35px] font-[300]' /></span></Button>
+                        <Button style={{ padding: "8px 28px", textAlign: 'center', backgroundColor: "#e3292d", border: "none", borderRadius: '40px', fontWeight: '400' }}>View All <span><MdOutlineArrowRightAlt className='inline text-[35px] font-[300]' /></span></Button>
                     </div>
                 </div>
                 <div className='mt-5 grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center'>

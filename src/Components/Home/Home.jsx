@@ -5,6 +5,7 @@ import Header from './Header'
 import Section from './Section'
 import Footer from '../Fotter/Footer'
 import Hotel from './Hotel'
+import Newsletter from './Newsletter'
 
 
 function Home() {
@@ -16,6 +17,7 @@ function Home() {
                 <Header />
                 <Section />
                 <Hotel />
+                <Newsletter />
                 <Footer />
             </div>
 

@@ -8,10 +8,13 @@ import Condition from './Components/Terms/Condition';
 
 function App() {
   const styleText = {
-    fontFamily: "'Josefin Sans', sans-serif",
-  }
+    fontFamily: "'Poppins', sans-serif",
+    background: 'rgb(2,0,36)',
+    background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,135,131,1) 0%, rgba(254,243,242,1) 58%)',
+
+  };
   return (
-    <div style={styleText} className='bg-[#feefef]'>
+    <div style={styleText}>
       <Router>
         <Routes>
           <Route path='/' element={<Home />} />
