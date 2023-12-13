@@ -8,7 +8,7 @@ import Condition from './Components/Terms/Condition';
 
 function App() {
   const styleText = {
-    fontFamily: "'Poppins', sans-serif",
+    fontFamily: "'Josefin Sans', sans-serif",
     background: 'rgb(2,0,36)',
     background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,135,131,1) 0%, rgba(254,243,242,1) 58%)',
 
