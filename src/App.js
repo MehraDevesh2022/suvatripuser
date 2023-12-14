@@ -3,13 +3,14 @@ import Home from './Components/Home/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Privacy from './Components/PrivacyPolicy/Privacy';
 import Condition from './Components/Terms/Condition';
+import Filter from './Components/Filter/Filter';
 
 
 
 function App() {
   const styleText = {
     fontFamily: "'Josefin Sans', sans-serif",
-    background: 'rgb(2,0,36)',
+    backgroundColor: 'rgb(2,0,36)',
     background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,135,131,1) 0%, rgba(254,243,242,1) 58%)',
 
   };
@@ -20,6 +21,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/privacypolicy' element={<Privacy />} />
           <Route path='/condition' element={<Condition />} />
+          <Route path='/filter' element={< Filter />} />
 
         </Routes>
 
