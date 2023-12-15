@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Privacy from './Components/PrivacyPolicy/Privacy';
 import Condition from './Components/Terms/Condition';
 import Filter from './Components/Filter/Filter';
+import HotelDetail from './Components/HotelDetails/HotelDetail';
 
 
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='/privacypolicy' element={<Privacy />} />
           <Route path='/condition' element={<Condition />} />
           <Route path='/filter' element={< Filter />} />
+          <Route path='/hoteldetails/*' element={< HotelDetail />} />
 
         </Routes>
 
