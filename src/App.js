@@ -10,10 +10,9 @@ import HotelDetail from './Components/HotelDetails/HotelDetail';
 
 function App() {
   const styleText = {
-    fontFamily: "'Josefin Sans', sans-serif",
+    fontFamily: "'Popins', sans-serif",
     backgroundColor: 'rgb(2,0,36)',
     background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,135,131,1) 0%, rgba(254,243,242,1) 58%)',
-
   };
   return (
     <div style={styleText}>

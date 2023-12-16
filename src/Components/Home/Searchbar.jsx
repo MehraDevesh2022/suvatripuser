@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { DateRange, DateRangePicker } from 'react-date-range';
+import { DateRangePicker } from 'react-date-range';
 import Form from 'react-bootstrap/Form';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { format } from 'date-fns'
 import { TiPlus, TiMinus } from "react-icons/ti";
+import { Link } from 'react-router-dom';
 
 
 function Searchbar() {
@@ -189,7 +190,9 @@ function Searchbar() {
 
             </>
             <div className='w-[150px] absolute bottom-[-24px] left-[110px] md:left-[450px]'>
-                <button className='bg-[#129035] w-full py-2 font-[600] text-[20px] text-slate-100 rounded-[20px] z-0'>Search</button>
+                <Link to='/filter'>
+                    <button className='bg-[#129035] w-full py-2 font-[600] text-[20px] text-slate-100 rounded-[20px] z-0'>Search</button>
+                </Link>
             </div>
         </div>
 

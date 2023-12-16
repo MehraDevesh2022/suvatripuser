@@ -49,7 +49,7 @@ function FilterCard() {
                         <p className='text-[#f74044]'>(572 Rating)</p>
                     </div>
                     <div className='text-center md:text-right'>
-                        <h3 className='text-[32px] text-slate-600 font-[900]'>NPR 4,972</h3>
+                        <h3 className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
                         <div>
                             <p className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
                             <p className='mb-0 text-center md:text-right text-[16px]'>Per Night</p>
@@ -93,7 +93,7 @@ function FilterCard() {
                         <p className='text-[#f74044]'>(572 Rating)</p>
                     </div>
                     <div className='text-center md:text-right'>
-                        <h3 className='text-[32px] text-slate-600 font-[900]'>NPR 4,972</h3>
+                        <h3 className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
                         <div>
                             <p className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
                             <p className='mb-0 text-center md:text-right text-[16px]'>Per Night</p>
@@ -137,7 +137,7 @@ function FilterCard() {
                         <p className='text-[#f74044]'>(572 Rating)</p>
                     </div>
                     <div className='text-center md:text-right'>
-                        <h3 className='text-[32px] text-slate-600 font-[900]'>NPR 4,972</h3>
+                        <h3 className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
                         <div>
                             <p className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
                             <p className='mb-0 text-center md:text-right text-[16px]'>Per Night</p>
@@ -181,7 +181,7 @@ function FilterCard() {
                         <p className='text-[#f74044]'>(572 Rating)</p>
                     </div>
                     <div className='text-center md:text-right'>
-                        <h3 className='text-[32px] text-slate-600 font-[900]'>NPR 4,972</h3>
+                        <h3 className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
                         <div>
                             <p className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
                             <p className='mb-0 text-center md:text-right text-[16px]'>Per Night</p>
