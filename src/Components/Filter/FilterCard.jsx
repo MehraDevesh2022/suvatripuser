@@ -11,9 +11,16 @@ import { BsHouseCheckFill } from "react-icons/bs";
 
 
 function FilterCard() {
+
+    const isMobile = window.innerWidth > 768;
+
+    const containerStyle = {
+        textAlign: isMobile ? 'right' : 'center',
+    };
     return (
         <div>
-            <div className='w-full md:w-[800px] h-auto bg-[#fff] border-[1px] shadow-lg mx-auto flex flex-col md:flex-row justify-start p-3 rounded-lg'>
+            {/* First Div */}
+            <div className='w-full md:w-[800px] h-auto my-0 bg-[#fff] border-[1px] shadow-lg mx-auto flex flex-col md:flex-row justify-start p-2 rounded-lg'>
                 <div className='w-full md:w-[250px] h-[250px] rounded-lg'>
                     <img src={LoginImg} alt="filter_img" className='w-full h-full rounded-lg' />
                 </div>
@@ -44,20 +51,21 @@ function FilterCard() {
                     </div>
                 </div>
                 <div className='p-2 w-full md:w-[200px] border-l-[1px] border-slate-400 py-5 px-2'>
-                    <div className='text-center md:text-right'>
-                        <h4 className='font-[700] text-[#f74044] leading-6 mb-0'>Very Good 4.7</h4>
-                        <p className='text-[#f74044]'>(572 Rating)</p>
+                    <div style={containerStyle}>
+                        <h4 style={containerStyle} className='font-[700] text-[#f74044] leading-6 mb-0'>Very Good 4.7</h4>
+                        <p style={containerStyle} className='text-[#f74044]'>(572 Rating)</p>
                     </div>
-                    <div className='text-center md:text-right'>
-                        <h3 className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
-                        <div>
-                            <p className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
-                            <p className='mb-0 text-center md:text-right text-[16px]'>Per Night</p>
+                    <div style={containerStyle}>
+                        <h3 style={containerStyle} className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
+                        <div style={containerStyle}>
+                            <p style={containerStyle} className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
+                            <p style={containerStyle} className='mb-0 text-[16px]'>Per Night</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='w-full md:w-[800px] h-auto my-5 bg-[#fff] border-[1px] shadow-lg mx-auto flex flex-col md:flex-row justify-start p-3 rounded-lg'>
+            {/* Second Div */}
+            <div className='w-full md:w-[800px] h-auto my-3 bg-[#fff] border-[1px] shadow-lg mx-auto flex flex-col md:flex-row justify-start p-2 rounded-lg'>
                 <div className='w-full md:w-[250px] h-[250px] rounded-lg'>
                     <img src={LoginImg} alt="filter_img" className='w-full h-full rounded-lg' />
                 </div>
@@ -88,20 +96,21 @@ function FilterCard() {
                     </div>
                 </div>
                 <div className='p-2 w-full md:w-[200px] border-l-[1px] border-slate-400 py-5 px-2'>
-                    <div className='text-center md:text-right'>
-                        <h4 className='font-[700] text-[#f74044] leading-6 mb-0'>Very Good 4.7</h4>
-                        <p className='text-[#f74044]'>(572 Rating)</p>
+                    <div style={containerStyle}>
+                        <h4 style={containerStyle} className='font-[700] text-[#f74044] leading-6 mb-0'>Very Good 4.7</h4>
+                        <p style={containerStyle} className='text-[#f74044]'>(572 Rating)</p>
                     </div>
-                    <div className='text-center md:text-right'>
-                        <h3 className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
-                        <div>
-                            <p className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
-                            <p className='mb-0 text-center md:text-right text-[16px]'>Per Night</p>
+                    <div style={containerStyle}>
+                        <h3 style={containerStyle} className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
+                        <div style={containerStyle}>
+                            <p style={containerStyle} className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
+                            <p style={containerStyle} className='mb-0 text-[16px]'>Per Night</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='w-full md:w-[800px] h-auto my-5 bg-[#fff] border-[1px] shadow-lg mx-auto flex flex-col md:flex-row justify-start p-3 rounded-lg'>
+            {/* Third Div */}
+            <div className='w-full md:w-[800px] h-auto my-3 bg-[#fff] border-[1px] shadow-lg mx-auto flex flex-col md:flex-row justify-start p-2 rounded-lg'>
                 <div className='w-full md:w-[250px] h-[250px] rounded-lg'>
                     <img src={LoginImg} alt="filter_img" className='w-full h-full rounded-lg' />
                 </div>
@@ -132,20 +141,21 @@ function FilterCard() {
                     </div>
                 </div>
                 <div className='p-2 w-full md:w-[200px] border-l-[1px] border-slate-400 py-5 px-2'>
-                    <div className='text-center md:text-right'>
-                        <h4 className='font-[700] text-[#f74044] leading-6 mb-0'>Very Good 4.7</h4>
-                        <p className='text-[#f74044]'>(572 Rating)</p>
+                    <div style={containerStyle}>
+                        <h4 style={containerStyle} className='font-[700] text-[#f74044] leading-6 mb-0'>Very Good 4.7</h4>
+                        <p style={containerStyle} className='text-[#f74044]'>(572 Rating)</p>
                     </div>
-                    <div className='text-center md:text-right'>
-                        <h3 className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
-                        <div>
-                            <p className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
-                            <p className='mb-0 text-center md:text-right text-[16px]'>Per Night</p>
+                    <div style={containerStyle}>
+                        <h3 style={containerStyle} className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
+                        <div style={containerStyle}>
+                            <p style={containerStyle} className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
+                            <p style={containerStyle} className='mb-0 text-[16px]'>Per Night</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='w-full md:w-[800px] h-auto my-5 bg-[#fff] border-[1px] shadow-lg mx-auto flex flex-col md:flex-row justify-start p-3 rounded-lg'>
+            {/* Fourt Div */}
+            <div className='w-full md:w-[800px] h-auto my-3 bg-[#fff] border-[1px] shadow-lg mx-auto flex flex-col md:flex-row justify-start p-2 rounded-lg'>
                 <div className='w-full md:w-[250px] h-[250px] rounded-lg'>
                     <img src={LoginImg} alt="filter_img" className='w-full h-full rounded-lg' />
                 </div>
@@ -176,19 +186,20 @@ function FilterCard() {
                     </div>
                 </div>
                 <div className='p-2 w-full md:w-[200px] border-l-[1px] border-slate-400 py-5 px-2'>
-                    <div className='text-center md:text-right'>
-                        <h4 className='font-[700] text-[#f74044] leading-6 mb-0'>Very Good 4.7</h4>
-                        <p className='text-[#f74044]'>(572 Rating)</p>
+                    <div style={containerStyle}>
+                        <h4 style={containerStyle} className='font-[700] text-[#f74044] leading-6 mb-0'>Very Good 4.7</h4>
+                        <p style={containerStyle} className='text-[#f74044]'>(572 Rating)</p>
                     </div>
-                    <div className='text-center md:text-right'>
-                        <h3 className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
-                        <div>
-                            <p className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
-                            <p className='mb-0 text-center md:text-right text-[16px]'>Per Night</p>
+                    <div style={containerStyle}>
+                        <h3 style={containerStyle} className='text-[24px] text-slate-600 font-[900]'>NPR 4,972</h3>
+                        <div style={containerStyle}>
+                            <p style={containerStyle} className='mb-0 text-[20px]'>+ 720 Taxes & Fee</p>
+                            <p style={containerStyle} className='mb-0 text-[16px]'>Per Night</p>
                         </div>
                     </div>
                 </div>
             </div>
+
 
 
 

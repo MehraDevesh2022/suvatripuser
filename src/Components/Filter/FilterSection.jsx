@@ -16,7 +16,7 @@ function FilterSection() {
                     <div>
                         <FilterMap />
                     </div>
-                    <div className='w-[250px] h-[1100px] bg-[#fff]  py-2 rounded-lg mt-4 overflow-y-auto'>
+                    <div className='w-[250px] h-[900px] bg-[#fff]  py-2 rounded-lg mt-4 overflow-y-auto'>
                         <div>
                             <h3 className='text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1'>Select Filters</h3>
                             <div className='px-3'>
