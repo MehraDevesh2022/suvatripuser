@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 function HotelFilter() {
     const navItemStyle = {
         backgroundColor: '#edf2f7',
-        padding: '12px 20px',
+        padding: '12px 18px',
         borderRadius: '8px',
-        fontSize: '18px',
+        fontSize: '15px',
         fontWeight: '500',
         marginBottom: '10px', // Adjust as needed for spacing
         cursor: 'pointer',
@@ -14,7 +14,7 @@ function HotelFilter() {
 
     };
     return (
-        <div className='grid grid-cols-3 md:grid-cols-6 gap-4'>
+        <div className='grid grid-cols-3 md:grid-cols-6 gap-4 px-2 md:px-0'>
             <Link to="/hoteldetails/" className='no-underline'>
                 <div style={navItemStyle}>Room</div>
             </Link>
@@ -30,7 +30,7 @@ function HotelFilter() {
             <Link to="animities/discription/review/support" className='no-underline'>
                 <div style={navItemStyle}>Support</div>
             </Link>
-            <Link to="animities/discription/review/support" className='no-underline'>
+            <Link to="animities/discription/review/support/photos" className='no-underline'>
                 <div style={navItemStyle}>Photos</div>
             </Link>
         </div>

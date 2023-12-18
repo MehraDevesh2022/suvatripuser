@@ -135,9 +135,9 @@ function Searchbar() {
 
                             <div className='relative my-2 md:my-0'>
                                 <div className='bg-[#f2f5f8] px-5 md:px-3 w-full md:w-[350px] h-[160px] py-3 ml-0 md:ml-6 cursor-pointer rounded-lg' onClick={hideCalender}>
-                                    <p className='bg-[#fff] text-[#f62c31] w-[130px] text-center py-[2px] rounded-lg'>Room and Guest</p>
+                                    <p className='bg-[#fff] text-[#f62c31] w-[130px] text-center py-[2px] rounded-lg text-sm'>Room and Guest</p>
                                     <div className='mt-4 text-center'>
-                                        <h3 className='leading-10 text-[18px]'><span className='text-[25px] font-[500]'>{options.room}</span> Room <span className='text-[25px] font-[500]'>{options.adult}</span> Adluts <span className='text-[25px] font-[500]'>{options.child}</span> Child</h3>
+                                        <h3 className='leading-10 text-[18px]'><span className='text-[25px] font-[500]'>{options.room}</span> Room <span className='text-[25px] font-[500]'>{options.adult}</span> Adluts <span className='text-[20px]  md:text-[25px] font-[500]'>{options.child}</span> Child</h3>
                                     </div>
                                 </div>
                                 {
