@@ -12,7 +12,7 @@ function App() {
   const styleText = {
     fontFamily: "'Poppins', sans-serif",
     backgroundColor: 'rgb(2,0,36)',
-    background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,135,131,1) 0%, rgba(254,243,242,1) 58%)',
+    background: 'linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(255,135,131,1) 0%, white 58%)',
     // Another Backgrodund
     // background: 'linear-gradient(rgb(2, 0, 36) 0%, rgb(237, 172, 170) 50%, white 100%)',
   };
