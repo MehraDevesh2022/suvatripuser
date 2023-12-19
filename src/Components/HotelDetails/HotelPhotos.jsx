@@ -1,15 +1,18 @@
 import React from 'react'
 import PhotoRouting from './PhotoRouting'
-import AllPicture from './AllPicture'
+import { Outlet } from 'react-router-dom'
+import PictureRoute from './PictureRoute'
 
 function HotelPhotos() {
     return (
-        <div className='min-w-fit max-w-full bg-[#fff] rounded-xl'>
+        <div className='min-w-fit max-w-full bg-[#fff] rounded-xl my-3'>
             <div>
                 <PhotoRouting />
             </div>
             <div>
-                <AllPicture />
+                <Outlet />
+                <PictureRoute />
+
             </div>
         </div>
     )

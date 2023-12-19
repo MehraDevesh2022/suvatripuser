@@ -16,7 +16,7 @@ function NestedRouting() {
             <Route path='animities/discription' element={<HotelDiscription />} />
             <Route path='animities/discription/review' element={<HotelReviews />} />
             <Route path='animities/discription/review/support' element={<HotelSupport />} />
-            <Route path='animities/discription/review/support/photos' element={<HotelPhotos />} />
+            <Route path='animities/discription/review/support/photos/*' element={<HotelPhotos />} />
         </Routes>
     )
 }

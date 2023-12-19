@@ -5,6 +5,8 @@ import Privacy from './Components/PrivacyPolicy/Privacy';
 import Condition from './Components/Terms/Condition';
 import Filter from './Components/Filter/Filter';
 import HotelDetail from './Components/HotelDetails/HotelDetail';
+import Booking from './Components/Booking/Booking';
+import PersonalDetails from './Components/PersonalDetails/PersonalDetails';
 
 
 
@@ -24,10 +26,10 @@ function App() {
           <Route path='/privacypolicy' element={<Privacy />} />
           <Route path='/condition' element={<Condition />} />
           <Route path='/filter' element={< Filter />} />
+          <Route path='/booking' element={< Booking />} />
+          <Route path='/personaldetails' element={< PersonalDetails />} />
           <Route path='/hoteldetails/*' element={< HotelDetail />} />
-
         </Routes>
-
       </Router>
 
     </div>
