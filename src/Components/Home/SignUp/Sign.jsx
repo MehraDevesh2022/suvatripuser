@@ -12,10 +12,10 @@ function Sign({ handleLoginShow, setHandleLoginShow }) {
     return (
         <div>
             <div className='flex flex-row items-start'>
-                <div className='w-[350px] h-[430px] hidden md:block rounded-lg'>
+                <div className='w-[400px] h-auto hidden md:block rounded-lg'>
                     <img src={LoginImg} alt="login_img" className='w-full h-full rounded-lg' />
                 </div>
-                <div className='w-[350px] px-4 py-3'>
+                <div className='w-[400px] px-4 py-3'>
                     <div className='mb-2'>
                         <input type="text" placeholder='Enter the Name' className='w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg' />
                     </div>

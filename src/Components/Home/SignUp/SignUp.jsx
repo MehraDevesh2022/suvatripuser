@@ -10,7 +10,7 @@ function SignUp({ show, setShow }) {
         fontFamily: "'Josefin Sans', sans-serif",
         backgroundColor: '#fff',
         borderRadius: '20px',
-        width: '700px'
+
         // Default width for larger screens
 
     };
@@ -33,7 +33,7 @@ function SignUp({ show, setShow }) {
 
     return (
         <div>
-            <Modal show={show} onHide={handleClose} onClick={handleBackdropClick} centered ref={modalRef}>
+            <Modal show={show} onHide={handleClose} onClick={handleBackdropClick} size='lg' centered ref={modalRef}>
                 <Modal.Body onClick={handleModalClick} style={{ ...modalStyle, ...(window.innerWidth <= 800 && mobileModalStyle) }}>
 
                     {
