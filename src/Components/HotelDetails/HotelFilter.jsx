@@ -1,36 +1,38 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 function HotelFilter() {
+    const location = useLocation();
+    const isActive = (path) => location.pathname === path;
     const navItemStyle = {
         backgroundColor: '#edf2f7',
-        padding: '12px 20px',
+        padding: '12px 18px',
         borderRadius: '8px',
-        fontSize: '18px',
-        fontWeight: '500',
+        fontSize: '15px',
+        fontWeight: '600',
         marginBottom: '10px', // Adjust as needed for spacing
         cursor: 'pointer',
-        textAlign: 'center'
-
+        textAlign: 'center',
     };
+
     return (
-        <div className='grid grid-cols-3 md:grid-cols-6 gap-4'>
-            <Link to="/hoteldetails/" className='no-underline'>
+        <div className='grid grid-cols-3 md:grid-cols-6 gap-4 px-2 md:px-0'>
+            <Link to="/hoteldetails/" className={`no-underline text-slate-500 ${isActive('/hoteldetails/') ? "text-[#f7484d]" : ''}`} >
                 <div style={navItemStyle}>Room</div>
             </Link>
-            <Link to="/hoteldetails/animities" className='no-underline'>
+            <Link to="/hoteldetails/animities" className={`no-underline text-slate-500 ${isActive('/hoteldetails/animities') ? "text-[#f7484d]" : ''}`}>
                 <div className='nav-item' style={navItemStyle}>Amenities</div>
             </Link>
-            <Link to="animities/discription" className='no-underline'>
+            <Link to="animities/discription" className={`no-underline text-slate-500  ${isActive('/hoteldetails/animities/discription') ? "text-[#f7484d]" : ''}`}>
                 <div style={navItemStyle}>Description</div>
             </Link>
-            <Link to="animities/discription/review" className='no-underline'>
+            <Link to="animities/discription/review" className={`no-underline text-slate-500 ${isActive('/hoteldetails/animities/discription/review') ? "text-[#f7484d]" : ''}`}>
                 <div style={navItemStyle}>Review</div>
             </Link>
-            <Link to="animities/discription/review/support" className='no-underline'>
+            <Link to="animities/discription/review/support" className={`no-underline text-slate-500 ${isActive('/hoteldetails/animities/discription/review/support') ? "text-[#f7484d]" : ''}`}>
                 <div style={navItemStyle}>Support</div>
             </Link>
-            <Link to="animities/discription/review/support" className='no-underline'>
+            <Link to="animities/discription/review/support/photos/" className={`no-underline text-slate-500 ${isActive('/hoteldetails/animities/discription/review/support/photos/') ? "text-[#f7484d]" : ''}`}>
                 <div style={navItemStyle}>Photos</div>
             </Link>
         </div>

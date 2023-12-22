@@ -5,14 +5,14 @@ import Privacy from './Components/PrivacyPolicy/Privacy';
 import Condition from './Components/Terms/Condition';
 import Filter from './Components/Filter/Filter';
 import HotelDetail from './Components/HotelDetails/HotelDetail';
-import {GoogleOAuthProvider} from "@react-oauth/google"
-import { clientId } from './config';
+
+
 
 function App() {
   const styleText = {
-    fontFamily: "'Popins', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     backgroundColor: 'rgb(2,0,36)',
-    background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,135,131,1) 0%, rgba(254,243,242,1) 58%)',
+    background: 'linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(255,135,131,1) 0%, white 58%)',
     // Another Backgrodund
     // background: 'linear-gradient(rgb(2, 0, 36) 0%, rgb(237, 172, 170) 50%, white 100%)',
   };
@@ -25,10 +25,10 @@ function App() {
           <Route path='/privacypolicy' element={<Privacy />} />
           <Route path='/condition' element={<Condition />} />
           <Route path='/filter' element={< Filter />} />
+          <Route path='/booking' element={< Booking />} />
+          <Route path='/personaldetails' element={< PersonalDetails />} />
           <Route path='/hoteldetails/*' element={< HotelDetail />} />
-
         </Routes>
-
       </Router>
       </GoogleOAuthProvider>
     </div>

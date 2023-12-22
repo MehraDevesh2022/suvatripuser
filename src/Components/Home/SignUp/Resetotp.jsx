@@ -9,10 +9,10 @@ function Resetotp() {
     return (
         <div>
             <div className='flex flex-row items-start'>
-                <div className='w-[350px] h-[430px] hidden md:block rounded-lg'>
+                <div className='w-[400px] h-[430px] hidden md:block rounded-lg'>
                     <img src={LoginImg} alt="login_img" className='w-full h-full rounded-lg' />
                 </div>
-                <div className='w-[350px] px-4 py-3'>
+                <div className='w-[400px] px-4 py-3'>
                     <div className='mb-3 flex flex-row items-center border-[1px] rounded-lg border-slate-500'>
                         <p className='w-[50px] h-[40px] mb-0  py-1 font-bold px-1 text-[20px]'>+91</p>
                         <input type="Number" placeholder='Phone Number' className='w-full outline-none text-[20px] px-1 py-2 rounded-lg' />

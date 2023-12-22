@@ -1,14 +1,78 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaUser, FaWifi } from "react-icons/fa";
 import { LuParkingCircle } from "react-icons/lu";
 import { MdOutlineHomeWork } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdOutlineNavigateNext } from "react-icons/md";
+import Modal from 'react-bootstrap/Modal';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function HotelRooms() {
+    const inlineStyle = {
+        backgroundColor: '#f3f5f8',
+        padding: '10px 10px'
+    }
 
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     return (
         <div>
+            {/* This is modal Code */}
+            <>
+                <Modal show={show} onHide={handleClose} size='lg' centered >
+                    <Modal.Body>
+                        <Container>
+                            <Row>
+                                <div className='mb-3'>
+                                    <h3 className='text-3xl font-[700] tracking-wider'>Enter Your Details</h3>
+                                </div>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style={inlineStyle} className="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1" />
+                                    </div>
+                                </Col>
+                                <Col>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style={inlineStyle} className="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1" />
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <div class="input-group mb-3">
+                                        <input type="number" style={inlineStyle} className="form-control" placeholder="Number" aria-label="Number" aria-describedby="basic-addon1" />
+                                    </div>
+                                </Col>
+                                <Col>
+                                    <div class="input-group mb-3">
+                                        <input type="Email" style={inlineStyle} className="form-control" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" />
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <div class="input-group mb-3">
+                                    <input type="Email" style={inlineStyle} className="form-control" placeholder="Estimated Arrival Time" aria-label="Estimated Arrival Time" aria-describedby="basic-addon1" />
+                                </div>
+                            </Row>
+                            <Row>
+                                <div className='mb-3'>
+                                    <textarea name="textarea" className='w-full h-[150px] border-[1px] border-slate-300 bg-[#f3f5f8] outline-none rounded-md px-2 py-1' placeholder='Any Special Requests' ></textarea>
+                                </div>
+                            </Row>
+
+                            <div className='w-full md:w-[400px] mx-auto'>
+                                <button className='w-full bg-[#f62c31] px-4 py-3 rounded-lg text-[#fff] font-[600]'>Complete Your Booking</button>
+                            </div>
+                        </Container>
+                    </Modal.Body>
+                </Modal>
+            </>
             {/* First card */}
             <div className='w-full  bg-slate-50 my-3 grid grid-cols-2 md:grid-cols-4 gap-4 p-2 rounded-lg shadow-md'>
                 <div className='border-r-[1px] px-3 border-slate-400'>
@@ -43,7 +107,7 @@ function HotelRooms() {
                         <button><GrFormPrevious className='text-[20px]  font-[700]' /></button>
                         <span className='bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]'>+1</span>
                         <button><MdOutlineNavigateNext className='text-[20px]' /></button>
-                        <span className='bg-[#129035] text-sm px-3 rounded-lg text-slate-200'>selected</span>
+                        <span className='bg-[#129035] text-[13px] text-[#fff] px-2 py-1 rounded-lg  cursor-pointer' onClick={handleShow}>selected</span>
                     </div>
                     <p className='text-[21px] font-[700]  mb-1'>NPR 4,972</p>
                     <p className='text-[21px]'>Total</p>
@@ -84,7 +148,7 @@ function HotelRooms() {
                         <button><GrFormPrevious className='text-[20px]  font-[700]' /></button>
                         <span className='bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]'>+1</span>
                         <button><MdOutlineNavigateNext className='text-[20px]' /></button>
-                        <span className='bg-[#129035] text-sm px-3 rounded-lg text-slate-200'>selected</span>
+                        <span className='bg-[#129035] text-[13px] px-2 py-1 rounded-lg text-[#fff] cursor-pointer' onClick={handleShow}>selected</span>
                     </div>
                     <p className='text-[21px] font-[700]  mb-1'>NPR 4,972</p>
                     <p className='text-[21px]'>Total</p>
@@ -125,7 +189,7 @@ function HotelRooms() {
                         <button><GrFormPrevious className='text-[20px]  font-[700]' /></button>
                         <span className='bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]'>+1</span>
                         <button><MdOutlineNavigateNext className='text-[20px]' /></button>
-                        <span className='bg-[#129035] text-sm px-3 rounded-lg text-slate-200'>selected</span>
+                        <span className='bg-[#129035] text-[12px] px-2 py-1 rounded-lg text-[#fff] cursor-pointer' onClick={handleShow}>selected</span>
                     </div>
                     <p className='text-[21px] font-[700]  mb-1'>NPR 4,972</p>
                     <p className='text-[21px]'>Total</p>

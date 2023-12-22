@@ -14,10 +14,10 @@ function Forget() {
         <div>
             {
                 resetPassword ? <div className='flex flex-row items-start'>
-                    <div className='w-[350px] h-[430px] hidden md:block rounded-lg'>
+                    <div className='w-[400px] h-[430px] hidden md:block rounded-lg'>
                         <img src={LoginImg} alt="login_img" className='w-full h-full rounded-lg' />
                     </div>
-                    <div className='w-[350px] px-4 py-3'>
+                    <div className='w-[400px] px-4 py-3'>
                         <div className='mb-3'>
                             <p className='leading-6 text-slate-6000 font-[600] mb-0'>Email</p>
                             <input type="text" placeholder='Enter the Email' className='w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg' />
