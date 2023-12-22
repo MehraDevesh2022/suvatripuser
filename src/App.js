@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './Components/Home/Home';
+import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Privacy from './Components/PrivacyPolicy/Privacy';
 import Condition from './Components/Terms/Condition';

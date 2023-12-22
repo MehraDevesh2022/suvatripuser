@@ -7,7 +7,7 @@ function SignUp({ show, setShow }) {
     const [handleLoginShow, setHandleLoginShow] = useState(true)
     const [forgotPass, setForgetpass] = useState(true)
     const modalStyle = {
-        fontFamily: "'Josefin Sans', sans-serif",
+        fontFamily: "'Popins', sans-serif",
         backgroundColor: '#fff',
         borderRadius: '20px',
 

@@ -17,22 +17,22 @@ function HotelFilter() {
 
     return (
         <div className='grid grid-cols-3 md:grid-cols-6 gap-4 px-2 md:px-0'>
-            <Link to="/hoteldetails/" className={`no-underline text-slate-500 ${isActive('/hoteldetails/') ? "text-[#f7484d]" : ''}`} >
+            <Link to="/hoteldetails/" className={`no-underline  ${isActive('/hoteldetails/') ? "text-[#f7484d]" : 'text-slate-500'}`} >
                 <div style={navItemStyle}>Room</div>
             </Link>
-            <Link to="/hoteldetails/animities" className={`no-underline text-slate-500 ${isActive('/hoteldetails/animities') ? "text-[#f7484d]" : ''}`}>
+            <Link to="/hoteldetails/animities" className={`no-underline ${isActive('/hoteldetails/animities') ? "text-[#f7484d]" : 'text-slate-500'}`}>
                 <div className='nav-item' style={navItemStyle}>Amenities</div>
             </Link>
-            <Link to="animities/discription" className={`no-underline text-slate-500  ${isActive('/hoteldetails/animities/discription') ? "text-[#f7484d]" : ''}`}>
+            <Link to="animities/discription" className={`no-underline   ${isActive('/hoteldetails/animities/discription') ? "text-[#f7484d]" : 'text-slate-500'}`}>
                 <div style={navItemStyle}>Description</div>
             </Link>
-            <Link to="animities/discription/review" className={`no-underline text-slate-500 ${isActive('/hoteldetails/animities/discription/review') ? "text-[#f7484d]" : ''}`}>
+            <Link to="animities/discription/review" className={`no-underline  ${isActive('/hoteldetails/animities/discription/review') ? "text-[#f7484d]" : 'text-slate-500'}`}>
                 <div style={navItemStyle}>Review</div>
             </Link>
-            <Link to="animities/discription/review/support" className={`no-underline text-slate-500 ${isActive('/hoteldetails/animities/discription/review/support') ? "text-[#f7484d]" : ''}`}>
+            <Link to="animities/discription/review/support" className={`no-underline  ${isActive('/hoteldetails/animities/discription/review/support') ? "text-[#f7484d]" : 'text-slate-500'}`}>
                 <div style={navItemStyle}>Support</div>
             </Link>
-            <Link to="animities/discription/review/support/photos/" className={`no-underline text-slate-500 ${isActive('/hoteldetails/animities/discription/review/support/photos/') ? "text-[#f7484d]" : ''}`}>
+            <Link to="animities/discription/review/support/photos/" className={`no-underline  ${isActive('/hoteldetails/animities/discription/review/support/photos/') ? "text-[#f7484d]" : 'text-slate-500'}`}>
                 <div style={navItemStyle}>Photos</div>
             </Link>
         </div>

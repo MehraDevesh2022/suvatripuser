@@ -18,7 +18,7 @@ function HotelHaeding() {
                         }
                     </div>
                 </div>
-                <p className='text-[18px] font-[400] text-slate-400'>Kathmandu, Nepal</p>
+                <p className='text-[18px] font-[400] text-slate-800'>Kathmandu, Nepal</p>
 
             </div>
         </div>
