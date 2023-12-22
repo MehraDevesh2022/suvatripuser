@@ -5,6 +5,8 @@ import Privacy from './Components/PrivacyPolicy/Privacy';
 import Condition from './Components/Terms/Condition';
 import Filter from './Components/Filter/Filter';
 import HotelDetail from './Components/HotelDetails/HotelDetail';
+import {GoogleOAuthProvider} from "@react-oauth/google"
+import { clientId } from './config';
 import Booking from './Components/Booking/Booking';
 import PersonalDetails from './Components/PersonalDetails/PersonalDetails';
 
@@ -20,6 +22,7 @@ function App() {
   };
   return (
     <div style={styleText}>
+      <GoogleOAuthProvider clientId={clientId}>
       <Router>
         <Routes>
           <Route path='/' element={<Home />} />
@@ -31,7 +34,7 @@ function App() {
           <Route path='/hoteldetails/*' element={< HotelDetail />} />
         </Routes>
       </Router>
-
+      </GoogleOAuthProvider>
     </div>
   );
 }

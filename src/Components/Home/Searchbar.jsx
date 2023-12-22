@@ -8,6 +8,7 @@ import { TiPlus, TiMinus } from "react-icons/ti";
 import { Link } from 'react-router-dom';
 
 
+
 function Searchbar() {
     const [openOptions, setOpenOptions] = useState(false)
     const [options, setOptions] = useState({
@@ -15,6 +16,22 @@ function Searchbar() {
         room: 1,
         child: 0
     })
+
+    const handleSearch = () => {
+        // // Collecting search parameters
+        // const searchData = {
+        // //   const searchData = {
+        // // location: 'Durban', // You can get this from the input field
+        // // startDate: format(date[0].startDate, 'yyyy-MM-dd'),
+        // // endDate: format(date[0].endDate, 'yyyy-MM-dd'),
+        // // adults: options.adult,
+        // // rooms: options.room,
+        // // children: options.child,
+        // // };
+
+        // console.log(searchData);
+    }
+
     const [showCalender, setShowCalender] = useState(false)
     const [date, setDate] = useState([
         {
@@ -190,9 +207,9 @@ function Searchbar() {
 
             </>
             <div className='w-[150px] absolute bottom-[-24px] left-[110px] md:left-[450px]'>
-                <Link to='/filter'>
-                    <button className='bg-[#129035] w-full py-2 font-[600] text-[20px] text-slate-100 rounded-[20px] z-0'>Search</button>
-                </Link>
+                
+                    <button className='bg-[#129035] w-full py-2 font-[600] text-[20px] text-slate-100 rounded-[20px] z-0' onClick={handleSearch}>Search</button>
+               
             </div>
         </div>
 
