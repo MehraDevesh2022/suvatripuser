@@ -8,12 +8,17 @@ import axios from "axios";
 import Forget from "./Forget";
 import { LoginButton } from "react-facebook";
 import { useGoogleLogin } from "@react-oauth/google";
-function Login({ handleBackdropClick, setHandleLoginShow ,setIsLoggedIn }) {
+// import dotenv from 'dotenv';
+// dotenv.config();
+
+// console.log(process.env.BASE_URL, "process.env.BASE_URL");
+
+function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
   const [showForgotPass, setShowForgotPass] = useState(true);
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
-    role : "user",
+    role: "user",
   });
 
   const handleShowSignUp = () => setHandleLoginShow(false);
@@ -21,20 +26,18 @@ function Login({ handleBackdropClick, setHandleLoginShow ,setIsLoggedIn }) {
 
   const handleLogin = async () => {
     try {
-   
       // Make a POST request to the backend API
       const response = await axios.post(
-        "http://localhost:8000/auth/login",
+        process.env.BASE_URL + "/auth/login",
         loginData
       );
 
-     
-        if(response.ok){
-            localStorage.setItem("token", response.data.token);
-            // localStorage.setItem("authWith", "local");
-            handleBackdropClick();
-            setIsLoggedIn(true)
-        }
+      if (response.ok) {
+        localStorage.setItem("token", response.data.token);
+        // localStorage.setItem("authWith", "local");
+        handleBackdropClick();
+        setIsLoggedIn(true);
+      }
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -77,7 +80,6 @@ function Login({ handleBackdropClick, setHandleLoginShow ,setIsLoggedIn }) {
     }
   }
 
-
   const handleSuccess = async (response) => {
     // console.log(response.authResponse.accessToken, "accessToken");
 
@@ -95,7 +97,8 @@ function Login({ handleBackdropClick, setHandleLoginShow ,setIsLoggedIn }) {
         config
       );
 
-       console.log(result, "result");
+      console.log(result, "result");
+
       if (result.data.token) {
         localStorage.setItem("token", result.data.token);
         // localStorage.setItem("authWith", "facebook");
@@ -112,7 +115,6 @@ function Login({ handleBackdropClick, setHandleLoginShow ,setIsLoggedIn }) {
     console.error("Error during Facebook login:", error);
   };
 
-  
   const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
   return (
     <div>
@@ -190,16 +192,17 @@ function Login({ handleBackdropClick, setHandleLoginShow ,setIsLoggedIn }) {
             <div className="text-center mt-3">
               <p className="mb-3">or log In with</p>
               <div>
-                <FcGoogle className="inline mx-2 text-[30px] cursor-pointer hover:opacity-70" 
-                 onClick={() => login()}
+                <FcGoogle
+                  className="inline mx-2 text-[30px] cursor-pointer hover:opacity-70"
+                  onClick={() => login()}
                 />
-             <LoginButton
-                scope="email"
-                onError={handleError}
-                onSuccess={handleSuccess}
-              >
-                <FaSquareFacebook className="inline mx-3 text-[30px] cursor-pointer hover:opacity-70" />
-              </LoginButton>
+                <LoginButton
+                  scope="email"
+                  onError={handleError}
+                  onSuccess={handleSuccess}
+                >
+                  <FaSquareFacebook className="inline mx-3 text-[30px] cursor-pointer hover:opacity-70" />
+                </LoginButton>
                 <MdOutlineWifiCalling3 className="inline mx-3 text-[30px] cursor-pointer hover:opacity-70" />
               </div>
             </div>
