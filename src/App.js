@@ -31,7 +31,7 @@ function App() {
           <Route path='/filter' element={< Filter />} />
           <Route path='/booking' element={< Booking />} />
           <Route path='/personaldetails' element={< PersonalDetails />} />
-          <Route path='/hoteldetails/*' element={< HotelDetail />} />
+          <Route path='/hoteldetails/:id' element={< HotelDetail />} />
         </Routes>
       </Router>
       </GoogleOAuthProvider>

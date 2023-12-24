@@ -3,29 +3,41 @@ import Button from "react-bootstrap/Button";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
 import Picture from "../../Assets/img/Rectangle.png";
 import axios from "axios";
-
+import config from "../../config";
+import { useAppContext } from "../../context/store";
 function Hotel() {
   const [hotels, setHotels] = useState([]);
 
+  const { actions, state } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchHotels = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (!token) {
-       
-          return;
-        } else {
-          const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-          const response = await axios.get(
-            "http://localhost:8000/hotel/get-all-hotels",
-            {
-              headers,
-            }
-          );
-            console.log(response.data.data);
+        const headers = {
+          Authorization: token ? `Bearer ${token}}` : undefined,
+          My_Secret: config.MY_SECRET,
+        };
+
+        const response = await axios.get(
+          "http://localhost:8000/hotel/get-all-hotels",
+          {
+            headers,
+          }
+        );
+
+        console.log(response.data.data);
+
+        if (response.data.isHotelAccess) {
+          // while user were not logged in
+          setHotels(response.data.data);
+          actions.setHotel(response.data.data);
+         
+
+          setIsLoading(false);
+        } else {
           setHotels(response.data.data);
           setIsLoading(false);
         }
@@ -103,44 +115,48 @@ function Hotel() {
           </div>
         </div>
         {isLoading ? (
-  <div>Loading...</div>
-) : (
-  <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center">
-    {hotels.map((data, index) => {
-      return (
-        <div key={index} className="">
-          <div className="w-[320px] h-[250px]  rounded-tl-lg rounded-tr-lg">
-            <img
-              src={Picture || data.propertyPicture[0]?.link}
-              alt="hotel_images"
-              className="w-full h-full rounded-tl-lg rounded-tr-lg"
-            />
+          <div>Loading...</div>
+        ) : (
+          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center">
+            {hotels.map((data, index) => {
+              return (
+                <div key={index} className="">
+                  <div className="w-[320px] h-[250px]  rounded-tl-lg rounded-tr-lg">
+                    <img
+                      src={data.propertyPicture[0]?.link}
+                      alt="hotel_images"
+                      className="w-full h-full rounded-tl-lg rounded-tr-lg"
+                    />
+                  </div>
+                  <div className="w-[320px] shadow-md border-[1px] border-slate-200 p-2 rounded-br-lg rounded-bl-lg">
+                    <h3 className="font-[700]">
+                      {data.propertyName || "Hotel Name"}
+                    </h3>
+                    <p className="w-full">
+                      {data.description || "Hotel Description"}
+                    </p>
+                    <div className="text-right">
+                      <Button
+                        style={{
+                          padding: "10px 25px",
+                          textAlign: "center",
+                          backgroundColor: "#e3292d",
+                          border: "none",
+                          borderRadius: "40px",
+                        }}
+                        className="hover:opacity-70 duration-200 ease-in-out"
+                      >
+                        Book Now
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div className="w-[320px] shadow-md border-[1px] border-slate-200 p-2 rounded-br-lg rounded-bl-lg">
-            <h3 className="font-[700]">{data.propertyName || 'Hotel Name'}</h3>
-            <p className="w-full">{data.description || 'Hotel Description'}</p>
-            <div className="text-right">
-              <Button
-                style={{
-                  padding: "10px 25px",
-                  textAlign: "center",
-                  backgroundColor: "#e3292d",
-                  border: "none",
-                  borderRadius: "40px",
-                }}
-                className="hover:opacity-70 duration-200 ease-in-out"
-              >
-                Book Now
-              </Button>
-            </div>
-          </div>
-        </div>
-      );
-    })}
-  </div>
-)}
-        </div>
-        </div>
+        )}
+      </div>
+    </div>
   );
 }
 

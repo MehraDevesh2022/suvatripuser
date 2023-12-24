@@ -7,13 +7,15 @@ import { IoFilterOutline } from "react-icons/io5";
 import Mobilefilter from './Mobilefilter';
 import { IoChevronBackSharp } from "react-icons/io5";
 import { FaFilter } from "react-icons/fa";
-
+import { useAppContext } from '../../context/store';
 
 
 
 
 function FilterSection() {
     const [showFilter, setShowFilter] = useState(false)
+    const { state } = useAppContext();
+    const hotels = state.hotel;
     const openMobileFliter = () => {
         setShowFilter(true)
     }

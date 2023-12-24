@@ -6,11 +6,13 @@ import reportWebVitals from "./reportWebVitals";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { clientId } from "./config";
 // import { useGoogleLogin } from "@react-oauth/google";
+import { AppProvider } from "./context/store";
 import { FacebookProvider,  } from "react-facebook";
 import { FACEBOOK_APP_ID } from "./config";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <AppProvider>
     <GoogleOAuthProvider clientId={clientId}>
     <FacebookProvider appId={FACEBOOK_APP_ID}>
                
@@ -18,6 +20,7 @@ root.render(
 
       </FacebookProvider>
     </GoogleOAuthProvider>
+      </AppProvider>
   </React.StrictMode>
 );
 
