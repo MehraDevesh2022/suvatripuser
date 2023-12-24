@@ -20,13 +20,6 @@ function Home() {
                 <Hotel />
                 <Newsletter />
                 <Footer />
-                {/* <Header /> */}
-                {/* <Header />
-                <Section />
-                <PopularArea />
-                <Hotel />
-                <Newsletter />
-                <Footer /> */}
             </div>
 
 

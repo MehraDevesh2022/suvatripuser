@@ -1,10 +1,10 @@
 import React from 'react'
 import { FaArrowsAltH } from "react-icons/fa";
 
-function Mobilefilter() {
+function Mobilefilter({ checkboxRef }) {
     return (
-        <div>
-            <div className='w-full px-1 py-5 z--10'>
+        <div className='py-4'>
+            <div className='w-full px-1  z--10'>
                 <div>
                     <h3 className='text-[20px] text-slate-700 font-[700] px-3 py-2 mb-3'>Select Filters</h3>
                     <div className='px-3'>
@@ -44,31 +44,31 @@ function Mobilefilter() {
                     <h3 className='text-[20px] text-slate-700 font-[700] px-3 py-2 mb-3'>Price Per Night</h3>
                     <div className='px-3'>
                         <div className="form-check  mb-3">
-                            <input className="form-check-input" type="checkbox" value="Last Minute Deal" id="flexCheckDefault" />
+                            <input className="form-check-input" type="checkbox" value="Last Minute Deal" id="flexCheckDefault" ref={checkboxRef} />
                             <label className="form-check-label" for="flexCheckDefault">
                                 NPR 0 - 1500
                             </label>
                         </div>
                         <div className="form-check  mb-3">
-                            <input className="form-check-input" type="checkbox" value="5 Star" id="flexCheckDefault" />
+                            <input className="form-check-input" type="checkbox" value="5 Star" id="flexCheckDefault" ref={checkboxRef} />
                             <label className="form-check-label" for="flexCheckDefault">
                                 NPR 1500 - 2500
                             </label>
                         </div>
                         <div className="form-check  mb-3">
-                            <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
+                            <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" ref={checkboxRef} />
                             <label className="form-check-label" for="flexCheckDefault">
                                 NPR 2500 - 3500
                             </label>
                         </div>
                         <div className="form-check  mb-3">
-                            <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
+                            <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" ref={checkboxRef} />
                             <label className="form-check-label" for="flexCheckDefault">
                                 NPR 3500 - 4500
                             </label>
                         </div>
                         <div className="form-check  mb-3">
-                            <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
+                            <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" ref={checkboxRef} />
                             <label className="form-check-label" for="flexCheckDefault">
                                 NPR 4500+
                             </label>

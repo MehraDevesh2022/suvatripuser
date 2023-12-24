@@ -1,0 +1,12 @@
+.scrollbar-custom {
+scrollbar-width: thin;
+scrollbar-color: #f84c50 #e2e8f0; /* You can adjust the colors as needed */
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+width: 5px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+background-color: #f84c50; /* Adjust the color as needed */
+}

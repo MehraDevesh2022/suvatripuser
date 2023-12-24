@@ -30,7 +30,7 @@ function Forget() {
                             <p className='mb-4'>or log In with</p>
                             <div>
                                 <FcGoogle className='inline mx-2 text-[30px] cursor-pointer hover:opacity-70' />
-                                <FaSquareFacebook className='inline mx-3 text-[30px] cursor-pointer hover:opacity-70' />
+                                <FaSquareFacebook className='inline mx-3 text-[30px] cursor-pointer text-[blue] hover:opacity-70' />
                                 <MdOutlineWifiCalling3 className='inline mx-3 text-[30px] cursor-pointer hover:opacity-70' />
                             </div>
                         </div>

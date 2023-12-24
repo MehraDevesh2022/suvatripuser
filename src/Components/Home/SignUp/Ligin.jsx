@@ -38,8 +38,8 @@ function Ligin({ handleLoginShow, setHandleLoginShow }) {
                         <div className='text-center mt-3'>
                             <p className='mb-3'>or log In with</p>
                             <div>
-                                <FcGoogle className='inline mx-2 text-[30px] cursor-pointer hover:opacity-70' />
-                                <FaSquareFacebook className='inline mx-3 text-[30px] cursor-pointer hover:opacity-70' />
+                                <FcGoogle className='inline mx-2 text-[30px] cursor-pointer  hover:opacity-70' />
+                                <FaSquareFacebook className='inline mx-3 text-[30px] cursor-pointer text-[blue] hover:opacity-70' />
                                 <MdOutlineWifiCalling3 className='inline mx-3 text-[30px] cursor-pointer hover:opacity-70' />
                             </div>
                         </div>

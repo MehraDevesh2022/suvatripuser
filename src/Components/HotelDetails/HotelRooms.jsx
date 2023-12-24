@@ -10,6 +10,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 function HotelRooms() {
+    const [number, setnumber] = useState(1)
+
+    const IncreseadNumber = () => {
+        setnumber((prevNum) => (prevNum + 1))
+    }
+    const decreasedNumber = () => {
+        setnumber((prevNum) => (prevNum > 0 ? prevNum - 1 : prevNum));
+    }
     const inlineStyle = {
         backgroundColor: '#f3f5f8',
         padding: '10px 10px'
@@ -104,10 +112,10 @@ function HotelRooms() {
                 <div className='px-3'>
                     <h3 className='text-[20px] md:text-[25px] font-[600] text-[#f86d71]'>No of Rooms</h3>
                     <div className='flex flex-row items-center mb-3'>
-                        <button><GrFormPrevious className='text-[20px]  font-[700]' /></button>
-                        <span className='bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]'>+1</span>
-                        <button><MdOutlineNavigateNext className='text-[20px]' /></button>
-                        <span className='bg-[#129035] text-[13px] text-[#fff] px-2 py-1 rounded-lg  cursor-pointer' onClick={handleShow}>selected</span>
+                        <button onClick={decreasedNumber}><GrFormPrevious className='text-[25px]  font-[700]' /></button>
+                        <span className='bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]'>{number > 0 ? `+${number}` : number}</span>
+                        <button onClick={IncreseadNumber}><MdOutlineNavigateNext className='text-[25px]' /></button>
+                        <span className={`${show ? "bg-[#129035]" : "bg-slate-600"} text-[13px] text-[#fff] px-2 py-1 ml-0 md:ml-2 rounded-lg  cursor-pointer`} onClick={handleShow}>{show ? "selected" : "Select"}</span>
                     </div>
                     <p className='text-[21px] font-[700]  mb-1'>NPR 4,972</p>
                     <p className='text-[21px]'>Total</p>
@@ -145,10 +153,10 @@ function HotelRooms() {
                 <div className='px-3'>
                     <h3 className='text-[20px] md:text-[25px] font-[600] text-[#f86d71]'>No of Rooms</h3>
                     <div className='flex flex-row items-center mb-3'>
-                        <button><GrFormPrevious className='text-[20px]  font-[700]' /></button>
-                        <span className='bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]'>+1</span>
-                        <button><MdOutlineNavigateNext className='text-[20px]' /></button>
-                        <span className='bg-[#129035] text-[13px] px-2 py-1 rounded-lg text-[#fff] cursor-pointer' onClick={handleShow}>selected</span>
+                        <button onClick={decreasedNumber}><GrFormPrevious className='text-[25px]  font-[700]' /></button>
+                        <span className='bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]'>{number > 0 ? `+${number}` : number}</span>
+                        <button onClick={IncreseadNumber}><MdOutlineNavigateNext className='text-[25px]' /></button>
+                        <span className={`${show ? "bg-[#129035]" : "bg-slate-600"} text-[13px] text-[#fff] px-2 py-1 ml-0 md:ml-2 rounded-lg  cursor-pointer`} onClick={handleShow}>{show ? "selected" : "Select"}</span>
                     </div>
                     <p className='text-[21px] font-[700]  mb-1'>NPR 4,972</p>
                     <p className='text-[21px]'>Total</p>
@@ -186,10 +194,10 @@ function HotelRooms() {
                 <div className='px-3'>
                     <h3 className='text-[20px] md:text-[25px] font-[600] text-[#f86d71]'>No of Rooms</h3>
                     <div className='flex flex-row items-center mb-3'>
-                        <button><GrFormPrevious className='text-[20px]  font-[700]' /></button>
-                        <span className='bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]'>+1</span>
-                        <button><MdOutlineNavigateNext className='text-[20px]' /></button>
-                        <span className='bg-[#129035] text-[12px] px-2 py-1 rounded-lg text-[#fff] cursor-pointer' onClick={handleShow}>selected</span>
+                        <button onClick={decreasedNumber}><GrFormPrevious className='text-[25px]  font-[700]' /></button>
+                        <span className='bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]'>{number > 0 ? `+${number}` : number}</span>
+                        <button onClick={IncreseadNumber}><MdOutlineNavigateNext className='text-[25px]' /></button>
+                        <span className={`${show ? "bg-[#129035]" : "bg-slate-600"} text-[13px] text-[#fff] px-2 py-1 ml-0 md:ml-2 rounded-lg  cursor-pointer`} onClick={handleShow}>{show ? "selected" : "Select"}</span>
                     </div>
                     <p className='text-[21px] font-[700]  mb-1'>NPR 4,972</p>
                     <p className='text-[21px]'>Total</p>
