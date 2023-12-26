@@ -68,6 +68,23 @@ function HotelRooms() {
                                     <input type="Email" style={inlineStyle} className="form-control" placeholder="Estimated Arrival Time" aria-label="Estimated Arrival Time" aria-describedby="basic-addon1" />
                                 </div>
                             </Row>
+                            <Row className='mb-2 px-2'>
+                                <p className='text-xl font-[500] tracking-wider mb-1'>Do you Prefer Smoking Room ? </p>
+                                <div className='px-3'>
+                                    <div className="form-check mb-1">
+                                        <input className="form-check-input" type="checkbox" value="Yes" id="flexCheckDefault" />
+                                        <label className="form-check-label text-[20px] font-[400]" htmlFor="flexCheckDefault">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" value="No" id="flexCheckDefault" />
+                                        <label className="form-check-label text-[20px] font-[400]" htmlFor="flexCheckDefault">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </Row>
                             <Row>
                                 <div className='mb-3'>
                                     <textarea name="textarea" className='w-full h-[150px] border-[1px] border-slate-300 bg-[#f3f5f8] outline-none rounded-md px-2 py-1' placeholder='Any Special Requests' ></textarea>

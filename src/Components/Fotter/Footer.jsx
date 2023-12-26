@@ -9,25 +9,10 @@ import { Link } from 'react-router-dom'
 
 
 function Footer() {
-    const styleText = {
-
-    }
-    const listOfImages = [1, 2, 3, 4, 5]
     return (
         <div className='bg-[#292929] w-full h-auto  p-5'>
-            <div className='flex flex-col md:flex-row  justify-around md:justify-between border-b-[1px] pt-2 pb-0 w-full md:w-[900px] mx-auto leading-6'>
-                <div className='hidden md:flex flex-row'>
-                    {
-                        listOfImages.map((item, index) => {
-                            return (
-                                <div className='w-[80px] h-[80px] mx-1'>
-                                    <img src={paymentImg} alt="img" />
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                <div className='flex flex-row items-start'>
+            <div className='border-b-[1px] pt-2 pb-0 w-full md:w-[900px] mx-auto leading-6'>
+                <div className='flex flex-row items-start justify-center'>
                     <p className='text-slate-300 text-[14px] md:text-[19px] font-[400]'>Follow us on</p>
                     <ul className='flex flex-row cursor-pointer'>
                         <li><IoLogoTwitter className='text-slate-300 mx-2 text-[22px] font-[700] cursor-pointer hover:text-[#FFA534] ease-in-out duration-300' /></li>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { MdOutlineAppShortcut } from "react-icons/md";
 import paymentImg from '../../Assets/img/Google Play.png'
+import AppStore from '../../Assets/img/Appstore.jpg'
 
 function Newsletter() {
     return (
@@ -27,7 +28,7 @@ function Newsletter() {
                             <img src={paymentImg} alt="img" className='w-full h-full' />
                         </div>
                         <div className='h-[60px] mt-2'>
-                            <img src={paymentImg} alt="img" className='w-full h-full' />
+                            <img src={AppStore} alt="img" className='w-full h-full' />
                         </div>
 
                     </div>

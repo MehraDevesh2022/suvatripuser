@@ -2,7 +2,7 @@ import React from 'react'
 import LoginImg from '../../../Assets/img/Rectangle.png'
 import { FcGoogle } from 'react-icons/fc'
 import { FaSquareFacebook } from "react-icons/fa6";
-import { MdOutlineWifiCalling3 } from "react-icons/md";
+import { FaPhone } from "react-icons/fa6";
 import Button from 'react-bootstrap/Button';
 
 function Resetotp() {
@@ -36,7 +36,7 @@ function Resetotp() {
                         <div>
                             <FcGoogle className='inline mx-2 text-[30px] cursor-pointer hover:opacity-70' />
                             <FaSquareFacebook className='inline mx-3 text-[30px] text-[blue] cursor-pointer hover:opacity-70' />
-                            <MdOutlineWifiCalling3 className='inline mx-3 text-[30px] cursor-pointer hover:opacity-70' />
+                            <FaPhone className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70" />
                         </div>
                     </div>
                 </div>
