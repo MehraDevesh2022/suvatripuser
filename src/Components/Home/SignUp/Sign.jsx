@@ -68,6 +68,10 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
     } catch (error) {
       console.error("Error during signup:", error);
     }
+
+
+       // state management
+       setClickSignup(true)
   };
 
   const handleVerify = async () => {
@@ -100,11 +104,6 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
     } catch (error) {
       console.error("Error during signup:", error);
     }
-
-
-    // state management
-    setClickSignup(true)
-
 
   };
 

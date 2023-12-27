@@ -61,7 +61,7 @@ function Section() {
 
   return (
     <div>
-      <div className="mw-full md:w-[1050px] bg-[#fff] shadow-md mx-auto p-3 mt-5 rounded-md">
+      <div className="w-full md:w-[1050px] bg-[#fff] shadow-md mx-auto p-3 mt-5 rounded-md">
         <section className="flex flex-col md:flex-row items-center p-2">
           <div className="w-full md:w-[300px] bg-[#fff] shadow-md  border-[1px] border-slate-100 p-3 rounded-md">
             <p className="leading-3 bg-slate-700 w-[100px] p-2  rounded-md text-slate-200">
