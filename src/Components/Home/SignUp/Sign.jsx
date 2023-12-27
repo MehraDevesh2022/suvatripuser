@@ -10,7 +10,7 @@ import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
 import { LoginButton } from "react-facebook";
 
-import { LoginSocialFacebook } from "reactjs-social-login";
+// import { LoginSocialFacebook } from "reactjs-social-login";
 import Forget from "./Forget";
 import SignReset from "./SignReset";
 
@@ -29,9 +29,9 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
     password: "",
     email: "",
     phoneNumber: "",
-    otp: ""
+   
   });
-  const [isOTP, setIsOTP] = useState(false)
+  const [otp, setOTP] = useState("")
   const [token, setToken] = useState()
   const handleShow = () => setHandleLoginShow(true);
   // const navigate = useNavigate();
@@ -41,9 +41,17 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
     setFormData({ ...formData, [name]: value });
   };
 
+
+const handleOtp = (otp) => {
+  alert(otp)
+  setOTP(otp)
+  handleVerify()
+}
+
+
   const handleSignUp = async () => {
     const { otp, ...form } = formData;
-    console.log(form, 'ffffff');
+    
     try {
       const config = {
         headers: {
@@ -56,22 +64,27 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
         config
       );
 
-      if (response.success && response.success === true) {
-        setIsOTP(true)
-        setToken(response.data.token)
-      }
 
-      // console.log(response, "response");
-      // console.log(response.data.token, "token");
-      // localStorage.setItem("authWith", "local");
-      // navigate("/home");
+      if (response.data.success && response.data.success === true) {
+      
+        setClickSignup(true)
+        setToken(response.data.token)
+        localStorage.setItem("token", response.data.token);
+         
+      }
     } catch (error) {
-      console.error("Error during signup:", error);
+      console.error("Error during signup:", error); 
     }
   };
 
   const handleVerify = async () => {
     try {
+      
+      if(otp === ""){
+        alert("Please enter the otp")
+        return
+      }
+
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -81,29 +94,27 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
         "http://localhost:8000/auth/user-otp",
         {
           email: formData.email,
-          otp: formData.otp
+          otp:  otp,
         },
         config
       );
 
-      if (response.success && response.success === true) {
+    
+
+      if (response.data.success && response.data.success === true) {
+        setClickSignup(true)
         localStorage.setItem("token", token);
         handleBackdropClick();
         setIsLoggedIn(true);
       }
 
-      // console.log(response, "response");
-      // console.log(response.data.token, "token");
-
-      // localStorage.setItem("authWith", "local");
-      // navigate("/home");
     } catch (error) {
       console.error("Error during signup:", error);
     }
 
 
-    // state management
-    setClickSignup(true)
+
+   
 
 
   };
@@ -187,10 +198,10 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
             <div className="mb-2">
               <input
                 type="text"
-                name="userName"
+                name="username"
                 placeholder="User Name"
                 className="w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg"
-                value={formData.userName}
+                value={formData.username}
                 onChange={handleInputChange}
               />
             </div>
@@ -207,10 +218,10 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
             <div className="mb-2">
               <input
                 type="number"
-                name="phone"
+                name="phoneNumber"
                 placeholder="Enter the phone"
                 className="w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg"
-                value={formData.phone}
+                value={formData.phoneNumber}
                 onChange={handleInputChange}
               />
             </div>
@@ -296,7 +307,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
               </div>
             </div>
           </div>
-        </div> : clickSignUp ? <SignReset /> : <Forget />
+        </div> : clickSignUp ? <SignReset otpHandler ={handleOtp} /> : <Forget handleBackdropClick ={handleBackdropClick} />
       }
     </div>
   );
