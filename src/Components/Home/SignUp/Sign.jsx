@@ -115,11 +115,6 @@ const handleOtp = (otp) => {
       console.error("Error during signup:", error);
     }
 
-
-
-   
-
-
   };
 
   async function handleGoogleLoginSuccess(tokenResponse) {
