@@ -64,8 +64,6 @@ const handleOtp = (otp) => {
         config
       );
 
-        setIsOTP(true)
-        setToken(response.data.token)
 
       if (response.data.success && response.data.success === true) {
       

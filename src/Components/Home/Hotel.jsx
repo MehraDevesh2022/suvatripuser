@@ -17,7 +17,7 @@ function Hotel() {
         const token = localStorage.getItem("token");
 
         const headers = {
-          Authorization: token ? `Bearer ${token}}` : undefined,
+          Authorization: token ? `Bearer ${token}` : undefined,
           My_Secret: config.MY_SECRET,
         };
 

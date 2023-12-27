@@ -24,9 +24,11 @@ function Home() {
             console.log(token , "token inside home");
     
             const headers = {
-              Authorization: token ? `Bearer ${token}}` : undefined,
+              Authorization: token ? `Bearer ${token}` : undefined,
               My_Secret: MY_SECRET,
             };
+
+            console.log(headers, 'hhhhhhhhhhhh');
     
             const response = await axios.get(
               "http://localhost:8000/hotel/get-all-hotels",
