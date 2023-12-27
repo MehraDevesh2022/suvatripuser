@@ -1,11 +1,15 @@
-import React from 'react'
+import React , {useState} from 'react'
 import LoginImg from '../../../Assets/img/Rectangle.png'
 import { FcGoogle } from 'react-icons/fc'
 import { FaSquareFacebook } from "react-icons/fa6";
 import { FaPhone } from "react-icons/fa6";
 import Button from 'react-bootstrap/Button';
 
-function SignReset() {
+function SignReset({otpHandler}) {
+   
+    const  [otp , setOtp] = useState("")
+    
+
     return (
         <div>
             <div className='flex flex-row items-start'>
@@ -25,10 +29,14 @@ function SignReset() {
                         Resent OTP
                     </div>
                     <div className='mb-3'>
-                        <input type="Number" placeholder='OTP' className='w-full outline-none text-[20px] border-[1px] border-slate-500 px-1 py-2 rounded-lg' />
+                        <input type="Number" placeholder='OTP' className='w-full outline-none text-[20px] border-[1px] border-slate-500 px-1 py-2 rounded-lg'
+                         onChange={(e) => setOtp(e.target.value)}
+                        />
                     </div>
                     <div className='w-full my-2'>
-                        <Button style={{ padding: "10px 18px", textAlign: 'center', backgroundColor: "#e3292d", border: "none", borderRadius: '40px' }} className='w-full hover:opacity-80'>Verify OTP</Button>
+                        <Button style={{ padding: "10px 18px", textAlign: 'center', backgroundColor: "#e3292d", border: "none", borderRadius: '40px' }} className='w-full hover:opacity-80'
+                        onClick={() => otpHandler(otp)}
+                        >Verify OTP</Button>
 
                     </div>
                     <div className='text-center mt-4'>
