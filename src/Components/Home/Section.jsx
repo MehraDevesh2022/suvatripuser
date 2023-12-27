@@ -1,45 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
+import { useAppContext } from "../../context/store";
 import ViewImg from "../../Assets/img/simple.png";
-import config from "../../config";
+
 function Section() {
   const [specialData, setSpecialData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const { state } = useAppContext();
   useEffect(() => {
-    const fetchSpecialData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-
-        const headers = {
-          Authorization: token ? `Bearer ${token}}` : undefined,
-          My_Secret: config.MY_SECRET,
-        };
-
-        const response = await axios.get(
-          "http://localhost:8000/hotel/get-all-hotels",
-          {
-            headers,
-          }
-        );
-
-        if (response.data.isHotelAccess) {
-          // while user were not logged in
-          setSpecialData(response.data.data);
-          setIsLoading(false);
-        } else {
-          setSpecialData(response.data.data);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching special data:", error);
-        // Handle error as needed
-      }
-    };
-
-    fetchSpecialData();
-  }, []);
+    console.log(state.hotel , "state.hotel inside section");
+    if(state.hotel){
+      setSpecialData(state.hotel);
+      setIsLoading(false);
+    }else{
+      setIsLoading(true);
+    }
+  }, [state.hotel]);
 
   const obj = [
     {
@@ -61,7 +37,7 @@ function Section() {
 
   return (
     <div>
-      <div className="mw-full md:w-[1050px] bg-[#fff] shadow-md mx-auto p-3 mt-5 rounded-md">
+      <div className="w-full md:w-[1050px] bg-[#fff] shadow-md mx-auto p-3 mt-5 rounded-md">
         <section className="flex flex-col md:flex-row items-center p-2">
           <div className="w-full md:w-[300px] bg-[#fff] shadow-md  border-[1px] border-slate-100 p-3 rounded-md">
             <p className="leading-3 bg-slate-700 w-[100px] p-2  rounded-md text-slate-200">
