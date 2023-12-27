@@ -50,13 +50,12 @@ function Navbar() {
     setShowProfileDropdown(false);
   };
 
-
   return (
-    <div>
-      <div className="flex  flex-row justify-between items-center px-3 md:px-5 py-3">
+    <div className='min-w-fit max-w-[1200px] mx-auto'>
+      <div className="flex  flex-row justify-between items-center px-2 md:px-5 py-3">
         <Link to="/">
-          <div>
-            <img src={Logo} alt="img" />
+          <div className='w-[150px] md:w-[200px]'>
+            <img src={Logo} alt="img" className='w-full h-full' />
           </div>
         </Link>
         <div className="w-[500px] hidden md:block cursor-pointer">
@@ -113,11 +112,8 @@ function Navbar() {
             </Button>
           )}
         </div>
-        <div>
-          {showSignup && <SignUp show={showSignup} setShow={setShowSignup} setIsLoggedIn={setIsLoggedIn} />}
-        </div>
-
       </div>
+      {showSignup && <SignUp show={showSignup} setShow={setShowSignup} setIsLoggedIn={setIsLoggedIn} />}
     </div>
 
   );

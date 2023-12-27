@@ -9,24 +9,54 @@ import axios from "axios";
 
 function PersonalDetails() {
   const [show, setShow] = useState(false);
-
+  const [profileData, setProfileData] = useState({}); // [{} , {} , {}
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [password, setPassword] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   // fetch data from the backend
 
-   
+  const handleResetPass = async () => {
+    try {
+      if (oldPassword !== newPassword) {
+        alert("Password and confirm password should be same");
+        return;
+      }
+      const config = { headers: { "Content-Type": "application/json" } };
+      const response = await axios.patch(
+        "http://localhost:8000/auth/update-password",
+        {
+            currentPassword: oldPassword,
+            newPassword: newPassword,
 
+        },
+        config
+      );
+  
+      if (response.data.success && response.data.success === true) {
+        localStorage.setItem("token", response.data.token);
+         handleClose()
+        console.log(response.data.token, "response.data.token");
+       ;
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
 
   const personalProfile = async () => {
     try {
-        const config  =   { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } };
-       const response = await axios.get("http://localhost:8000/profile" , config);
-         console.log(response.data.data , "response.data.data");
-
+      const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      };
+      const response = await axios.get("http://localhost:8000/profile", config);
+      console.log(response.data.data, "response.data.data");
+      if (response.data.data) {
+        setProfileData(response.data.data);
+      }
     } catch (error) {
-        console.log(error , "error") ;
+      console.log(error, "error");
     }
   };
 
@@ -41,12 +71,6 @@ function PersonalDetails() {
     num: +9170784234324,
   };
 
-  const showPassword = () => {
-    setPassword(true);
-  };
-  const closePassword = () => {
-    setPassword(false);
-  };
   return (
     <div>
       {/* For the Confirm Password modal */}
@@ -64,6 +88,7 @@ function PersonalDetails() {
                   placeholder="Enter Your Previous Password"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
+                  onChange={(e) => setOldPassword(e.target.value)}
                 />
               </div>
             </div>
@@ -77,6 +102,7 @@ function PersonalDetails() {
                 placeholder="Enter Your New Password"
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-lg"
+                onChange={(e) => setNewPassword(e.target.value)}
               />
             </div>
             <div className="my-3 w-[100px] mx-auto">
@@ -89,7 +115,7 @@ function PersonalDetails() {
                   border: "none",
                   borderRadius: "30px",
                 }}
-                onClick={handleClose}
+                onClick={handleResetPass}
               >
                 Submit
               </Button>
@@ -114,15 +140,10 @@ function PersonalDetails() {
                 >
                   Name
                 </label>
-                <div className=" border-[1px] border-slate-600 w-full md:w-[350px] rounded-md">
-                  <input
-                    type="text"
-                    id="userName"
-                    name="name"
-                    value={userInfo.name}
-                    placeholder="Enter Your Name"
-                    className="bg-transparent py-[6px] w-[90%] h-full outline-none mx-4"
-                  />
+                <div className="  w-full md:w-[350px] rounded-md">
+                  <p className="text-[16px]">
+                    {profileData?.name || userInfo.name}
+                  </p>
                 </div>
               </div>
               <div className="mb-3 flex flex-col md:flex-row">
@@ -132,15 +153,10 @@ function PersonalDetails() {
                 >
                   Email
                 </label>
-                <div className=" border-[1px] border-slate-600 w-full md:w-[350px] rounded-md">
-                  <input
-                    type="email"
-                    id="userEmail"
-                    name="email"
-                    value={userInfo.email}
-                    placeholder="Enter the email"
-                    className="bg-transparent py-2  w-[90%] h-full   outline-none mx-4"
-                  />
+                <div className="  w-full md:w-[350px] rounded-md">
+                  <p className="text-[16px]">
+                    {profileData?.name || userInfo.email}
+                  </p>
                 </div>
               </div>
               <div className="mb-3 flex flex-col md:flex-row">
@@ -150,48 +166,13 @@ function PersonalDetails() {
                 >
                   Number
                 </label>
-                <div className=" border-[1px] border-slate-600 w-full md:w-[350px] rounded-md">
-                  <input
-                    type="number"
-                    id="userNum"
-                    name="number"
-                    value={userInfo.num}
-                    placeholder="Enter Your number"
-                    className="bg-transparent py-2  w-[90%] h-full  outline-none mx-4"
-                  />
+                <div className=" 0 w-full md:w-[350px] rounded-md">
+                  <p className="text-[16px]">
+                    {profileData?.name || userInfo.num}
+                  </p>
                 </div>
               </div>
-              <div className="mb-3 flex flex-col md:flex-row">
-                <label
-                  htmlFor="userPass"
-                  className="text-[20px] text-slate-600 font-[500] w-[100px]"
-                >
-                  Password
-                </label>
-                <div className=" border-[1px] border-slate-600 w-full md:w-[350px] rounded-md flex flex-row items-center justify-between px-1">
-                  <input
-                    type={password ? "text" : "password"}
-                    id="userPass"
-                    value={userInfo.pass}
-                    name="password"
-                    placeholder="Enter your password"
-                    className="bg-transparent py-2 w-[80%] h-full outline-none mx-4"
-                  />
-                  <span className="text-right">
-                    {password ? (
-                      <FaEyeSlash
-                        className="cursor-pointer text-right mr-2"
-                        onClick={closePassword}
-                      />
-                    ) : (
-                      <FaEye
-                        className="cursor-pointer text-right mr-2"
-                        onClick={showPassword}
-                      />
-                    )}
-                  </span>
-                </div>
-              </div>
+
               <div className="my-5">
                 <Button
                   style={{

@@ -66,9 +66,6 @@ function Home() {
                 <Newsletter />
                 <Footer />
             </div>
-
-
-
         </div>
     )
 }

@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import config from "../../config";
 import { useAppContext } from "../../context/store";
+
 function Searchbar() {
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
@@ -120,7 +121,7 @@ function Searchbar() {
   };
 
   return (
-    <div className="w-full md:w-[1100px]  mx-auto bg-[#fff] py-2 px-2 rounded-[15px] border-l-2 border-r-2 border-b-[10px] border-[#129035] relative">
+    <div className="w-full md:w-[1100px] mx-auto bg-[#fff] py-2 px-2 rounded-[15px] border-l-2 border-r-2 border-b-[10px] border-[#129035] relative">
       <>
         <div>
           <div id="searchbar">

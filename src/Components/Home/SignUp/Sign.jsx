@@ -75,6 +75,10 @@ const handleOtp = (otp) => {
     } catch (error) {
       console.error("Error during signup:", error); 
     }
+
+
+       // state management
+       setClickSignup(true)
   };
 
   const handleVerify = async () => {
