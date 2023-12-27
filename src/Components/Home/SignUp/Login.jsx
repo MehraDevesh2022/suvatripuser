@@ -30,11 +30,13 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
     try {
       // Make a POST request to the backend API
       const response = await axios.post(
-        process.env.BASE_URL + "/auth/login",
+        "http://localhost:8000/auth/login",
         loginData
       );
 
-      if (response.ok) {
+      console.log(response.data, "response.data");
+
+      if (response.data.token) {
         localStorage.setItem("token", response.data.token);
         // localStorage.setItem("authWith", "local");
         handleBackdropClick();
@@ -212,7 +214,7 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
             </div>
           </div>
         ) : (
-          <Forget />
+          <Forget handleBackdropClick ={handleBackdropClick} />
         )
 
       }

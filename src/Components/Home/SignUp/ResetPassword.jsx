@@ -5,46 +5,40 @@ import { FaSquareFacebook } from "react-icons/fa6";
 import { FaPhone } from "react-icons/fa6";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-import ResetPassword from "./ResetPassword";
-function Resendotp({ email, handleBackdropClick }) {
-  const [otp, setOtp] = useState("");
-  const [isOtpSent, setIsOtpSent] = useState(false);
+function ResetPassword({ email, handleBackdropClick , otp }) {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-
-  const handleVerify = async () => {
+  const handleResetPass = async () => {
     try {
-        if(otp === ""){
-            alert("Please enter the otp")
-            return
-        }
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+      if (password !== confirmPassword) {
+        alert("Password and confirm password should be same");
+        return;
+      }
+      const config = { headers: { "Content-Type": "application/json" } };
       const response = await axios.post(
-        "http://localhost:8000/auth/user-otp",
+        "http://localhost:8000/auth/reset-password",
         {
           email: email,
+          newPassword: password,
           otp: otp,
-          isReset : true
         },
         config
       );
-
+      console.log(response.data, "response.data");
       if (response.data.success && response.data.success === true) {
-       setIsOtpSent(true)
+        localStorage.setItem("token", response.data.token);
+        console.log(response.data.token, "response.data.token");
+        handleBackdropClick();
       }
     } catch (error) {
-      console.error("Error during signup:", error);
+      console.log(error, "error");
     }
   };
 
   return (
     <div>
-     { !isOtpSent ?<>
-     
-        <div className="flex flex-row items-start">
+      <div className="flex flex-row items-start">
         <div className="w-[400px] h-[430px] hidden md:block rounded-lg">
           <img
             src={LoginImg}
@@ -53,15 +47,24 @@ function Resendotp({ email, handleBackdropClick }) {
           />
         </div>
         <div className="w-[400px] px-4 py-3">
-          <div className="my-3 mt-5 text-center cursor-pointer hover:underline">
-            Resend OTP
+          <div className="my-3 text-center ">
+            <h4> Reset Password</h4>
+          </div>
+
+          <div className="mb-3">
+            <input
+              type="Password"
+              placeholder="New password"
+              className="w-full outline-none text-[20px] border-[1px] border-slate-500 px-1 py-2 rounded-lg"
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <div className="mb-3">
             <input
-              type="Number"
-              placeholder="OTP"
+              type="Password"
+              placeholder="Confirm password"
               className="w-full outline-none text-[20px] border-[1px] border-slate-500 px-1 py-2 rounded-lg"
-              onChange={(e) => setOtp(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <div className="w-full my-2">
@@ -74,9 +77,9 @@ function Resendotp({ email, handleBackdropClick }) {
                 borderRadius: "40px",
               }}
               className="w-full hover:opacity-80"
-                onClick={handleVerify}  
+              onClick={handleResetPass}
             >
-              Verify OTP
+              Reset
             </Button>
           </div>
           <div className="text-center mt-4">
@@ -89,9 +92,8 @@ function Resendotp({ email, handleBackdropClick }) {
           </div>
         </div>
       </div>
-     </> : <ResetPassword email={email} handleBackdropClick={handleBackdropClick} otp = {otp} />}
     </div>
   );
 }
 
-export default Resendotp;
+export default ResetPassword;

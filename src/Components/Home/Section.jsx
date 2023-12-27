@@ -1,45 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
+import { useAppContext } from "../../context/store";
 import ViewImg from "../../Assets/img/simple.png";
-import config from "../../config";
+
 function Section() {
   const [specialData, setSpecialData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const { state } = useAppContext();
   useEffect(() => {
-    const fetchSpecialData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-
-        const headers = {
-          Authorization: token ? `Bearer ${token}}` : undefined,
-          My_Secret: config.MY_SECRET,
-        };
-
-        const response = await axios.get(
-          "http://localhost:8000/hotel/get-all-hotels",
-          {
-            headers,
-          }
-        );
-
-        if (response.data.isHotelAccess) {
-          // while user were not logged in
-          setSpecialData(response.data.data);
-          setIsLoading(false);
-        } else {
-          setSpecialData(response.data.data);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching special data:", error);
-        // Handle error as needed
-      }
-    };
-
-    fetchSpecialData();
-  }, []);
+    console.log(state.hotel , "state.hotel inside section");
+    if(state.hotel){
+      setSpecialData(state.hotel);
+      setIsLoading(false);
+    }else{
+      setIsLoading(true);
+    }
+  }, [state.hotel]);
 
   const obj = [
     {
