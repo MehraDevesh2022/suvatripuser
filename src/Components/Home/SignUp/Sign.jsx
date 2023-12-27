@@ -45,10 +45,8 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
         config
       );
 
-      if(response.success && response.success===true) {
         setIsOTP(true)
         setToken(response.data.token)
-      }
 
       // console.log(response, "response");
       // console.log(response.data.token, "token");
@@ -75,11 +73,9 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
         config
       );
 
-      if(response.success && response.success===true) {
         localStorage.setItem("token", token);
         handleBackdropClick();
         setIsLoggedIn(true);
-      }
 
       // console.log(response, "response");
       // console.log(response.data.token, "token");
