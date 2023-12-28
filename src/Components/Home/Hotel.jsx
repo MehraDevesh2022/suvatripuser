@@ -5,6 +5,7 @@ import Picture from "../../Assets/img/Rectangle.png";
 import axios from "axios";
 import config from "../../config";
 import { useAppContext } from "../../context/store";
+
 function Hotel() {
   const [hotels, setHotels] = useState([]);
 

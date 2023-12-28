@@ -32,7 +32,7 @@ function Newsletter() {
                         </div>
 
                     </div>
-                    <div className='mx-2 w-full md:w-[150px] h-[150px]'>
+                    <div className='mx-2 w-[150px] h-[150px]'>
                         <img src="https://www.investopedia.com/thmb/hJrIBjjMBGfx0oa_bHAgZ9AWyn0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/qr-code-bc94057f452f4806af70fd34540f72ad.png" alt="QR_Code" className='w-full h-full' />
                     </div>
                 </div>

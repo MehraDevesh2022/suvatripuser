@@ -127,7 +127,7 @@ function PersonalDetails() {
         <Navbar />
       </div>
       <div>
-        <div className="min-w-fit max-w-[1000px] mx-auto py-5 px-3">
+        <div className="min-w-fit max-w-[1000px] h-screen mx-auto mt-16 px-3">
           <h3 className="mb-5 text-[30px] md:text-[40px] font-[600] tracking-wider">
             Personal deatils
           </h3>

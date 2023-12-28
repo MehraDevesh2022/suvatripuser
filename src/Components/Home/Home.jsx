@@ -12,7 +12,6 @@ import { useAppContext } from '../../context/store'
 
 function Home() {
   
-
       const { actions} = useAppContext()
 
 
