@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import LoginImg from "../../../Assets/img/Rectangle.png";
-import { FcGoogle } from "react-icons/fc";
-import { FaSquareFacebook } from "react-icons/fa6";
-import { FaPhone } from "react-icons/fa6";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-function ResetPassword({ email, handleBackdropClick , otp }) {
+
+function ResetPassword({ email, handleBackdropClick, otp }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleResetPass = async () => {
     try {
-      if (password !== confirmPassword) {
-        alert("Password and confirm password should be same");
+      // Password validation
+      if (!isValidPassword(password)) {
         return;
       }
+
+      if (password !== confirmPassword) {
+        setPasswordError("Passwords do not match");
+        return;
+      }
+
       const config = { headers: { "Content-Type": "application/json" } };
       const response = await axios.post(
         "http://localhost:8000/auth/reset-password",
@@ -25,6 +30,7 @@ function ResetPassword({ email, handleBackdropClick , otp }) {
         },
         config
       );
+
       console.log(response.data, "response.data");
       if (response.data.success && response.data.success === true) {
         localStorage.setItem("token", response.data.token);
@@ -34,6 +40,18 @@ function ResetPassword({ email, handleBackdropClick , otp }) {
     } catch (error) {
       console.log(error, "error");
     }
+  };
+
+  // Password validation function
+  const isValidPassword = (password) => {
+    const minLength = 6; // Set your minimum password length
+
+    if (password.length < minLength) {
+      setPasswordError(`Password must be at least ${minLength} characters`);
+      return false;
+    }
+    setPasswordError("");
+    return true;
   };
 
   return (
@@ -53,17 +71,24 @@ function ResetPassword({ email, handleBackdropClick , otp }) {
 
           <div className="mb-3">
             <input
-              type="Password"
+              type="password"
               placeholder="New password"
-              className="w-full outline-none text-[20px] border-[1px] border-slate-500 px-1 py-2 rounded-lg"
+              className={`w-full outline-none text-[20px] border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                passwordError ? "border-red-500" : ""
+              }`}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {passwordError && (
+              <div className="text-red-500 text-sm mt-1">{passwordError}</div>
+            )}
           </div>
           <div className="mb-3">
             <input
-              type="Password"
+              type="password"
               placeholder="Confirm password"
-              className="w-full outline-none text-[20px] border-[1px] border-slate-500 px-1 py-2 rounded-lg"
+              className={`w-full outline-none text-[20px] border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                passwordError ? "border-red-500" : ""
+              }`}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
@@ -81,14 +106,6 @@ function ResetPassword({ email, handleBackdropClick , otp }) {
             >
               Reset
             </Button>
-          </div>
-          <div className="text-center mt-4">
-            <p className="mb-4">or log In with</p>
-            <div>
-              <FcGoogle className="inline mx-2 text-[30px] cursor-pointer hover:opacity-70" />
-              <FaSquareFacebook className="inline mx-3 text-[30px] text-[blue] cursor-pointer hover:opacity-70" />
-              <FaPhone className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70" />
-            </div>
           </div>
         </div>
       </div>
