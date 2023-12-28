@@ -8,10 +8,6 @@ import axios from "axios";
 import Forget from "./Forget";
 import { LoginButton } from "react-facebook";
 import { useGoogleLogin } from "@react-oauth/google";
-// import dotenv from 'dotenv';
-// dotenv.config();
-
-// console.log(process.env.BASE_URL, "process.env.BASE_URL");
 
 function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
   const [showForgotPass, setShowForgotPass] = useState(true);
@@ -20,13 +16,25 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
     password: "",
     role: "user",
   });
-
-
+  const [fieldWarnings, setFieldWarnings] = useState({
+    email: false,
+    password: false,
+  });
 
   const handleShowSignUp = () => setHandleLoginShow(false);
   const handleForgotPass = () => setShowForgotPass(false);
 
   const handleLogin = async () => {
+    // Validate fields before attempting login
+    if (!loginData.email.trim() || !loginData.password.trim()) {
+      // Show warnings for empty fields
+      setFieldWarnings({
+        email: !loginData.email.trim(),
+        password: !loginData.password.trim(),
+      });
+      return;
+    }
+
     try {
       // Make a POST request to the backend API
       const response = await axios.post(
@@ -52,6 +60,12 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
     setLoginData({
       ...loginData,
       [name]: value,
+    });
+
+    // Set warning to true if the field is empty
+    setFieldWarnings({
+      ...fieldWarnings,
+      [name]: value.trim() === "",
     });
   };
 
@@ -120,6 +134,7 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
   };
 
   const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
+
   return (
     <div>
       {
@@ -133,38 +148,46 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
               />
             </div>
             <div className="w-[400px] mx-auto px-4 py-3">
-              <div className="mb-3">
-                <p className="leading-6 text-slate-6000 font-[600] mb-0">Email</p>
-                <input
-                  type="text"
-                  name="email"
-                  placeholder="Enter the Email"
-                  className="w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg"
-                  value={loginData.email}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <p className="leading-6 text-slate-6000 font-[600] mb-0">
-                  Password
-                </p>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Enter the password"
-                  className="w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg"
-                  value={loginData.password}
-                  onChange={handleInputChange}
-                />
-                <div className="text-right">
-                  <p
-                    className="text-slate-500 hover:underline text-[16px] cursor-pointer"
-                    onClick={handleForgotPass}
-                  >
-                    Forgot Password
-                  </p>
-                </div>
-              </div>
+            <div className="mb-3">
+            <p className="leading-6 text-slate-6000 font-[600] mb-0">Email</p>
+            <input
+              type="text"
+              name="email"
+              placeholder="Enter the Email"
+              className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                fieldWarnings.email ? "border-red-500" : ""
+              }`}
+              value={loginData.email}
+              onChange={handleInputChange}
+            />
+            {fieldWarnings.email && (
+              <div className="text-red-500 text-sm mt-1">Email is required</div>
+            )}
+          </div>
+          <div className="mb-3">
+            <p className="leading-6 text-slate-6000 font-[600] mb-0">Password</p>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter the password"
+              className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                fieldWarnings.password ? "border-red-500" : ""
+              }`}
+              value={loginData.password}
+              onChange={handleInputChange}
+            />
+            {fieldWarnings.password && (
+              <div className="text-red-500 text-sm mt-1">Password is required</div>
+            )}
+            <div className="text-right">
+              <p
+                className="text-slate-500 hover:underline text-[16px] cursor-pointer"
+                onClick={handleForgotPass}
+              >
+                Forgot Password
+              </p>
+            </div>
+          </div>
 
               <div className="w-full my-3">
                 <Button

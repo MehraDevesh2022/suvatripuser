@@ -13,45 +13,70 @@ import { LoginButton } from "react-facebook";
 // import { LoginSocialFacebook } from "reactjs-social-login";
 import Forget from "./Forget";
 import SignReset from "./SignReset";
+import { set } from "date-fns";
 
 function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
   // For reset Password
-  const [clickSignUp, setClickSignup] = useState(false)
+  const [clickSignUp, setClickSignup] = useState(false);
+ 
 
+  const [fieldWarnings, setFieldWarnings] = useState({
+    username: false,
+    email: false,
+    phoneNumber: false,
+    password: false,
+  });
 
-  const [forGot, setForgetpass] = useState(true)
+  const [forGot, setForgetpass] = useState(true);
   const handleForgotPass = () => {
-    setForgetpass(false)
-  }
+    setForgetpass(false);
+  };
   // const handleShow = () => setHandleLoginShow(true)
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     email: "",
     phoneNumber: "",
-   
   });
-  const [otp, setOTP] = useState("")
-  const [token, setToken] = useState()
+  const [otp, setOTP] = useState("");
+  const [token, setToken] = useState();
   const handleShow = () => setHandleLoginShow(true);
   // const navigate = useNavigate();
   // const  signIn  = useGoogleOAuth();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    // Set warning to true if the field is empty
+    setFieldWarnings((prev) => ({ ...prev, [name]: value.trim() === "" }));
   };
 
-
-const handleOtp = (otp) => {
-  alert(otp)
-  setOTP(otp)
-  handleVerify()
-}
-
+  const handleOtp = (otp) => {
+ 
+    setOTP(otp);
+    handleVerify();
+  };
 
   const handleSignUp = async () => {
-    const { otp, ...form } = formData;
-    
+    // Reset field warnings
+    setFieldWarnings({
+      username: formData.username.trim() === "",
+      email: formData.email.trim() === "",
+      phoneNumber: formData.phoneNumber.trim() === "",
+      password: formData.password.trim() === "",
+    });
+  
+    // Check if any field is empty
+    if (
+      formData.username.trim() === "" ||
+      formData.email.trim() === "" ||
+      formData.phoneNumber.trim() === "" ||
+      formData.password.trim() === ""
+    ) {
+      // If any field is empty, do not submit the form
+      return;
+    }
+  
     try {
       const config = {
         headers: {
@@ -60,33 +85,30 @@ const handleOtp = (otp) => {
       };
       const response = await axios.post(
         "http://localhost:8000/auth/signup/user",
-        form,
+        formData,
         config
       );
-
-
+  
       if (response.data.success && response.data.success === true) {
-      
-        setClickSignup(true)
-        setToken(response.data.token)
+        setClickSignup(true);
+        setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
-         
       }
     } catch (error) {
-      console.error("Error during signup:", error); 
+      console.error("Error during signup:", error);
     }
-
-
-       // state management
-       setClickSignup(true)
+  
+    // state management
+    setClickSignup(true);
   };
+  
+  
 
   const handleVerify = async () => {
     try {
-      
-      if(otp === ""){
-        alert("Please enter the otp")
-        return
+      if (otp === "") {
+        alert("Please enter the otp");
+        return;
       }
 
       const config = {
@@ -98,15 +120,13 @@ const handleOtp = (otp) => {
         "http://localhost:8000/auth/user-otp",
         {
           email: formData.email,
-          otp:  otp,
+          otp: otp,
         },
         config
       );
 
-    
-
       if (response.data.success && response.data.success === true) {
-        setClickSignup(true)
+        setClickSignup(true);
         localStorage.setItem("token", token);
         handleBackdropClick();
         setIsLoggedIn(true);
@@ -114,7 +134,6 @@ const handleOtp = (otp) => {
     } catch (error) {
       console.error("Error during signup:", error);
     }
-
   };
 
   async function handleGoogleLoginSuccess(tokenResponse) {
@@ -183,8 +202,8 @@ const handleOtp = (otp) => {
 
   return (
     <div>
-      {
-        forGot && !clickSignUp ? <div className="flex flex-row items-start">
+      {forGot && !clickSignUp ? (
+        <div className="flex flex-row items-start">
           <div className="w-[350px] h-[430px] hidden md:block rounded-lg">
             <img
               src={LoginImg}
@@ -193,51 +212,91 @@ const handleOtp = (otp) => {
             />
           </div>
           <div className="w-[350px] px-4 py-3">
-            <div className="mb-2">
-              <input
-                type="text"
-                name="username"
-                placeholder="User Name"
-                className="w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg"
-                value={formData.username}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="mb-2">
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="mb-2">
-              <input
-                type="number"
-                name="phoneNumber"
-                placeholder="Enter the phone"
-                className="w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg"
-                value={formData.phoneNumber}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="mb-2">
-              <input
-                type="Password"
-                name="password"
-                placeholder="Enter your password"
-                className="w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg"
-                value={formData.password}
-                onChange={handleInputChange}
-              />
-              <div className="text-right">
-                <p className="text-slate-500 hover:underline text-[16px] cursor-pointer" onClick={handleForgotPass}>
-                  Forgot Password
-                </p>
-              </div>
-            </div>
+          <div className="mb-2">
+  <input
+    type="text"
+    name="username"
+    placeholder="User Name"
+    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+      fieldWarnings.username && formData.username.trim() === ""
+        ? "border-red-500"
+        : ""
+    }`}
+    value={formData.username}
+    onChange={handleInputChange}
+    onBlur={() => setFieldWarnings({ ...fieldWarnings, username: true })}
+  />
+  {fieldWarnings.username && formData.username.trim() === "" && (
+    <div className="text-red-500 text-sm mt-1">Username is required</div>
+  )}
+</div>
+
+<div className="mb-2">
+  <input
+    type="email"
+    name="email"
+    placeholder="Email"
+    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+      fieldWarnings.email && formData.email.trim() === ""
+        ? "border-red-500"
+        : ""
+    }`}
+    value={formData.email}
+    onChange={handleInputChange}
+    onBlur={() => setFieldWarnings({ ...fieldWarnings, email: true })}
+  />
+  {fieldWarnings.email && formData.email.trim() === "" && (
+    <div className="text-red-500 text-sm mt-1">Email is required</div>
+  )}
+</div>
+
+<div className="mb-2">
+  <input
+    type="number"
+    name="phoneNumber"
+    placeholder="Enter the phone"
+    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+      fieldWarnings.phoneNumber && formData.phoneNumber.trim() === ""
+        ? "border-red-500"
+        : ""
+    }`}
+    value={formData.phoneNumber}
+    onChange={handleInputChange}
+    onBlur={() => setFieldWarnings({ ...fieldWarnings, phoneNumber: true })}
+  />
+  {fieldWarnings.phoneNumber && formData.phoneNumber.trim() === "" && (
+    <div className="text-red-500 text-sm mt-1">
+      Phone Number is required
+    </div>
+  )}
+</div>
+
+<div className="mb-2">
+  <input
+    type="Password"
+    name="password"
+    placeholder="Enter your password"
+    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+      fieldWarnings.password && formData.password.trim() === ""
+        ? "border-red-500"
+        : ""
+    }`}
+    value={formData.password}
+    onChange={handleInputChange}
+    onBlur={() => setFieldWarnings({ ...fieldWarnings, password: true })}
+  />
+  <div className="text-right">
+    <p
+      className="text-slate-500 hover:underline text-[16px] cursor-pointer"
+      onClick={handleForgotPass}
+    >
+      Forgot Password
+    </p>
+  </div>
+  {fieldWarnings.password && formData.password.trim() === "" && (
+    <div className="text-red-500 text-sm mt-1">Password is required</div>
+  )}
+</div>
 
             <div className="w-full my-3">
               <Button
@@ -305,8 +364,12 @@ const handleOtp = (otp) => {
               </div>
             </div>
           </div>
-        </div> : clickSignUp ? <SignReset otpHandler ={handleOtp} /> : <Forget handleBackdropClick ={handleBackdropClick} />
-      }
+        </div>
+      ) : clickSignUp ? (
+        <SignReset otpHandler={handleOtp} />
+      ) : (
+        <Forget handleBackdropClick={handleBackdropClick}  />
+      )}
     </div>
   );
 }
