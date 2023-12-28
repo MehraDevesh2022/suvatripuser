@@ -6,9 +6,10 @@ import { FaPhone } from "react-icons/fa6";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import Forget from "./Forget";
+// import {LoginSocialFacebook} from 'reactjs-social-login';
 import { LoginButton } from "react-facebook";
 import { useGoogleLogin } from "@react-oauth/google";
-
+// import {FACEBOOK_APP_ID} from '../../../config';
 function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
   const [showForgotPass, setShowForgotPass] = useState(true);
   const [loginData, setLoginData] = useState({
@@ -46,7 +47,7 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
-        // localStorage.setItem("authWith", "local");
+  
         handleBackdropClick();
         setIsLoggedIn(true);
       }
@@ -85,16 +86,15 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
         config
       );
 
+    
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
-        // localStorage.setItem("authWith", "google");
-        // navigate("/home");
+    
         handleBackdropClick();
         setIsLoggedIn(true);
       }
     } catch (error) {
-      console.error("Error during Google login:", error);
-      // Handle error as needed
+      console.error("Error during login:", error);
     }
   }
 
@@ -116,16 +116,14 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
       );
 
       console.log(result, "result");
-
       if (result.data.token) {
         localStorage.setItem("token", result.data.token);
-        // localStorage.setItem("authWith", "facebook");
-        // navigate("/home");
+       
         handleBackdropClick();
         setIsLoggedIn(true);
       }
     } catch (error) {
-      console.error("Error during Facebook login:", error);
+      console.error("Error during login:", error);
     }
   };
 
@@ -231,6 +229,9 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
                   >
                     <FaSquareFacebook className="inline mx-3 text-[30px] text-[blue] cursor-pointer hover:opacity-70" />
                   </LoginButton>
+
+
+
                   <FaPhone className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70" />
                 </div>
               </div>

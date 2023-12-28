@@ -2,78 +2,117 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../Home/Navbar";
 import Footer from "../Fotter/Footer";
 import Button from "react-bootstrap/Button";
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
 function PersonalDetails() {
   const [show, setShow] = useState(false);
-  const [profileData, setProfileData] = useState({}); // [{} , {} , {}
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [profileData, setProfileData] = useState({});
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [authType , setAuthType] = useState("local");
+  const [showPasswordError, setShowPasswordError] = useState(false);
 
-  // fetch data from the backend
+  const handleClose = () => {
+    setShow(false);
+    setOldPassword("");
+    setNewPassword("");
+    setPasswordError("");
+    setShowPasswordError(false);
+  };
+
+  const handleShow = () => setShow(true);
 
   const handleResetPass = async () => {
     try {
-      if (oldPassword !== newPassword) {
-        alert("Password and confirm password should be same");
-        return;
-      }
-      const config = { headers: { "Content-Type": "application/json" } };
-      const response = await axios.patch(
-        "http://localhost:8000/auth/update-password",
-        {
-            currentPassword: oldPassword,
-            newPassword: newPassword,
+        setShowPasswordError(false);
 
-        },
-        config
-      );
+        if (!oldPassword) {
+            setShowPasswordError(true);
+            setPasswordError("Please enter your old password");
+            return;
+        }
+
+        if (!newPassword) {
+            setShowPasswordError(true);
+            setPasswordError("Please enter your new password");
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            setShowPasswordError(true);
+            setPasswordError("Password must be at least 6 characters long");
+            return;
+        }
+
+        // Perform additional password strength validation here if needed
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json",
+            },
+        };
+
+        console.log(localStorage.getItem("token"));
+        const response = await axios.post(
+            "http://localhost:8000/auth/update-password",
+            {
+                currentPassword: oldPassword,
+                newPassword: newPassword,
+            },
+            config
+        );
+
+        if (response.data.success && response.data.success === true) {
+            localStorage.setItem("token", response.data.token);
+            handleClose();
+        }
+    } catch (error) {
+        console.log(error, "error");
+    }
+};
+
+const personalProfile = async () => {
+  try {
+    const token = localStorage.getItem("token");
   
-      if (response.data.success && response.data.success === true) {
-        localStorage.setItem("token", response.data.token);
-         handleClose()
-        console.log(response.data.token, "response.data.token");
-       ;
-      }
-    } catch (error) {
-      console.log(error, "error");
+    console.log("Token:", token);
+    if (!token) {
+      console.error("Token is missing");
+      return;
     }
-  };
+  
 
-  const personalProfile = async () => {
-    try {
-      const config = {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      };
-      const response = await axios.get("http://localhost:8000/profile", config);
-      console.log(response.data.data, "response.data.data");
-      if (response.data.data) {
-        setProfileData(response.data.data);
-      }
-    } catch (error) {
-      console.log(error, "error");
+    console.log("Token:", token);
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+     
+    };
+
+    const response = await axios.get("http://localhost:8000/auth/profile", config);
+
+
+    if (response.data.success && response.data.success === true) {
+      setProfileData(response.data.user);
+      setAuthType(response.data.authType);
+      console.log(response.data.authType);
     }
-  };
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+  }
+};
+
 
   useEffect(() => {
-    // get user data
     personalProfile();
   }, []);
 
-  const userInfo = {
-    name: "Ishaan",
-    email: "Ishaan545@gmail.com",
-    num: +9170784234324,
-  };
+
 
   return (
     <div>
-      {/* For the Confirm Password modal */}
       <>
         <Modal show={show} onHide={handleClose} size="md" centered>
           <Modal.Body>
@@ -84,7 +123,9 @@ function PersonalDetails() {
               <div className="input-group input-group-lg">
                 <input
                   type="password"
-                  className="form-control"
+                  className={`form-control ${
+                    showPasswordError && !oldPassword ? "border-red-500" : ""
+                  }`}
                   placeholder="Enter Your Previous Password"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -98,13 +139,18 @@ function PersonalDetails() {
             <div className="input-group input-group-lg">
               <input
                 type="password"
-                className="form-control"
+                className={`form-control ${
+                  showPasswordError && !newPassword ? "border-red-500" : ""
+                }`}
                 placeholder="Enter Your New Password"
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-lg"
                 onChange={(e) => setNewPassword(e.target.value)}
               />
             </div>
+            {passwordError && (
+              <div className="text-red-500 text-sm mt-2">{passwordError}</div>
+            )}
             <div className="my-3 w-[100px] mx-auto">
               <Button
                 style={{
@@ -129,7 +175,7 @@ function PersonalDetails() {
       <div>
         <div className="min-w-fit max-w-[1000px] h-screen mx-auto mt-16 px-3">
           <h3 className="mb-5 text-[30px] md:text-[40px] font-[600] tracking-wider">
-            Personal deatils
+            Personal details
           </h3>
           <form action="">
             <div className="min-w-fit max-w-[800px] mx-auto px-1">
@@ -142,10 +188,12 @@ function PersonalDetails() {
                 </label>
                 <div className="  w-full md:w-[350px] rounded-md">
                   <p className="text-[16px]">
-                    {profileData?.name || userInfo.name}
+                    {profileData?.username}
                   </p>
                 </div>
               </div>
+            {profileData?.email && <>
+            
               <div className="mb-3 flex flex-col md:flex-row">
                 <label
                   htmlFor="userPass"
@@ -155,10 +203,12 @@ function PersonalDetails() {
                 </label>
                 <div className="  w-full md:w-[350px] rounded-md">
                   <p className="text-[16px]">
-                    {profileData?.name || userInfo.email}
+                    {profileData?.email}
                   </p>
                 </div>
               </div>
+            </>}
+            {profileData?.phoneNumber && <>
               <div className="mb-3 flex flex-col md:flex-row">
                 <label
                   htmlFor="userPass"
@@ -168,12 +218,14 @@ function PersonalDetails() {
                 </label>
                 <div className=" 0 w-full md:w-[350px] rounded-md">
                   <p className="text-[16px]">
-                    {profileData?.name || userInfo.num}
+                    {profileData?.phoneNumber}
                   </p>
                 </div>
               </div>
+            </>}  
 
-              <div className="my-5">
+          {authType === "local"&& <>
+            <div className="my-5">
                 <Button
                   style={{
                     padding: "10px 20px",
@@ -188,6 +240,7 @@ function PersonalDetails() {
                   Change password
                 </Button>
               </div>
+          </>}
             </div>
           </form>
         </div>

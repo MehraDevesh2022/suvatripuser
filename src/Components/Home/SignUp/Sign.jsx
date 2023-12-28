@@ -107,8 +107,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
   const handleVerify = async () => {
     try {
       if (otp === "") {
-        alert("Please enter the otp");
-        return;
+         return;
       }
 
       const config = {
