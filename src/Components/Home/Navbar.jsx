@@ -63,7 +63,7 @@ function Navbar() {
   
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.isLoggedIn ]);
+  }, []);
   
   const handleProfileClick = () => {
     setShowProfileDropdown(!showProfileDropdown);
@@ -71,10 +71,14 @@ function Navbar() {
 
   const handleLogout = () => {
     actions.login(false);
+    
     actions.setProfileData({});
     actions.setAuthType('local');
     localStorage.removeItem('token');
     localStorage.removeItem('authType');
+    if(location.pathname === '/personaldetails')
+    navigate('/'); 
+
     // Additional cleanup if needed
   };
 
