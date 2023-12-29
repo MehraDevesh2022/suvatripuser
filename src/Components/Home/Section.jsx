@@ -4,36 +4,12 @@ import { useAppContext } from "../../context/store";
 import ViewImg from "../../Assets/img/simple.png";
 
 function Section() {
-  const [specialData, setSpecialData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const { state } = useAppContext();
-  useEffect(() => {
-    console.log(state.hotel , "state.hotel inside section");
-    if(state.hotel){
-      setSpecialData(state.hotel);
-      setIsLoading(false);
-    }else{
-      setIsLoading(true);
-    }
-  }, [state.hotel]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const obj = [
-    {
-      Header: "The Header",
-      para: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-      img: ViewImg,
-    },
-    {
-      Header: "The Header",
-      para: "Lorem, ipsum dolor sit amet consectetur adipisicing elit Lorem, ipsum dolor sit amet consectetur adipisicing elit",
-      img: ViewImg,
-    },
-    {
-      Header: "The Header",
-      para: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-      img: ViewImg,
-    },
-  ];
+  useEffect(() => {
+    setIsLoading(!state.hotel.length); // Set loading to true if hotel data is not available
+  }, [state.hotel]);
 
   return (
     <div>
@@ -56,7 +32,7 @@ function Section() {
             {isLoading ? (
               <div>Loading...</div>
             ) : (
-              specialData.slice(0, 3).map((data, index) => {
+              state.hotel.slice(0, 3).map((data, index) => {
                 return (
                   <div
                     key={index}
@@ -64,17 +40,17 @@ function Section() {
                   >
                     <div className="w-full md:w-[210px] h-[130px]">
                       <img
-                        src={data.img || ViewImg}
+                        src={data.propertyPicture[0]?.link || ViewImg}
                         alt="viewImages"
                         className="w-full h-full rounded-tl-md rounded-tr-md"
                       />
                     </div>
                     <div className="w-full md:w-[210px]  px-1 pt-2 pb-[2px]">
                       <h3 className="leading-7  text-[25px]">
-                        {data.Header || "Special Header"}
+                        {data.propertyName || "Special Header"}
                       </h3>
                       <p className="text-[14px] leading-5">
-                        {data.para || "Special Paragraph"}
+                        {data.description || "Special Paragraph"}
                       </p>
                     </div>
                   </div>
@@ -89,4 +65,3 @@ function Section() {
 }
 
 export default Section;
-

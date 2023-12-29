@@ -26,8 +26,6 @@ function Home() {
               Authorization: token ? `Bearer ${token}` : undefined,
               My_Secret: MY_SECRET,
             };
-
-            console.log(headers, 'hhhhhhhhhhhh');
     
             const response = await axios.get(
               "http://localhost:8000/hotel/get-all-hotels",
@@ -36,7 +34,7 @@ function Home() {
               }
             );
 
-            console.log(response.data.data , "response.data.data inside home");
+            // console.log(response.data.data , "response.data.data inside home");
     
             if (response.data.isHotelAccess) {
               // while user were not logged in

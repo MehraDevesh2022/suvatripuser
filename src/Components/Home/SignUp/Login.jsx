@@ -6,11 +6,13 @@ import { FaPhone } from "react-icons/fa6";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import Forget from "./Forget";
+import { useAppContext } from "../../../context/store";
+
 // import {LoginSocialFacebook} from 'reactjs-social-login';
 import { LoginButton } from "react-facebook";
 import { useGoogleLogin } from "@react-oauth/google";
 // import {FACEBOOK_APP_ID} from '../../../config';
-function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
+function Login({ handleBackdropClick, setHandleLoginShow }) {
   const [showForgotPass, setShowForgotPass] = useState(true);
   const [loginData, setLoginData] = useState({
     email: "",
@@ -22,6 +24,7 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
     password: false,
   });
 
+  const {  actions } = useAppContext();
   const handleShowSignUp = () => setHandleLoginShow(false);
   const handleForgotPass = () => setShowForgotPass(false);
 
@@ -47,11 +50,11 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
-  
+        actions.login(true); 
         handleBackdropClick();
-        setIsLoggedIn(true);
       }
     } catch (error) {
+      actions.login(false);
       console.error("Error during login:", error);
     }
   };
@@ -89,11 +92,13 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
     
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
-    
+        actions.login(true);
+      
         handleBackdropClick();
-        setIsLoggedIn(true);
+      
       }
     } catch (error) {
+      actions.login(false);
       console.error("Error during login:", error);
     }
   }
@@ -115,12 +120,13 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
         config
       );
 
-      console.log(result, "result");
+    
       if (result.data.token) {
+
         localStorage.setItem("token", result.data.token);
-       
+        actions.login(true);
         handleBackdropClick();
-        setIsLoggedIn(true);
+       
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -238,7 +244,7 @@ function Login({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
             </div>
           </div>
         ) : (
-          <Forget handleBackdropClick ={handleBackdropClick} />
+          <Forget handleBackdropClick ={handleBackdropClick} setHandleLoginShow ={setHandleLoginShow} />
         )
 
       }

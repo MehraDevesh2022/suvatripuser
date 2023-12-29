@@ -9,17 +9,17 @@ import axios from "axios";
 // import { useGoogleOAuth, signIn } from "@react-oauth/google"; // Import the useGoogleOAuth hook
 import { useGoogleLogin } from "@react-oauth/google";
 import { LoginButton } from "react-facebook";
-
+import { useAppContext } from "../../../context/store";
 // import { LoginSocialFacebook } from "reactjs-social-login";
 import Forget from "./Forget";
 import SignReset from "./SignReset";
-import { set } from "date-fns";
 
-function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
+
+function Sign({ handleBackdropClick, setHandleLoginShow }) {
   // For reset Password
   const [clickSignUp, setClickSignup] = useState(false);
  
-
+  const {  actions } = useAppContext();
   const [fieldWarnings, setFieldWarnings] = useState({
     username: false,
     email: false,
@@ -128,9 +128,10 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
         setClickSignup(true);
         localStorage.setItem("token", token);
         handleBackdropClick();
-        setIsLoggedIn(true);
+        actions.login(true);
       }
     } catch (error) {
+      actions.login(false); 
       console.error("Error during signup:", error);
     }
   };
@@ -156,9 +157,10 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
         // localStorage.setItem("authWith", "google");
         // navigate("/home");
         handleBackdropClick();
-        setIsLoggedIn(true);
+       actions.login(true);
       }
     } catch (error) {
+      actions.login(false);
       console.error("Error during Google login:", error);
     }
   }
@@ -186,9 +188,10 @@ function Sign({ handleBackdropClick, setHandleLoginShow, setIsLoggedIn }) {
         // localStorage.setItem("authWith", "facebook");
         // navigate("/home");
         handleBackdropClick();
-        setIsLoggedIn(true);
+        actions.login(true);
       }
     } catch (error) {
+      actions.login(false);
       console.error("Error during Facebook login:", error);
     }
   };

@@ -7,8 +7,6 @@ import config from "../../config";
 import { useAppContext } from "../../context/store";
 
 function Hotel() {
-  const [hotels, setHotels] = useState([]);
-
   const { actions, state } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,14 +30,10 @@ function Hotel() {
         console.log(response.data.data);
 
         if (response.data.isHotelAccess) {
-          // while user were not logged in
-          setHotels(response.data.data);
+          // while the user is not logged in
           actions.setHotel(response.data.data);
-         
-
           setIsLoading(false);
         } else {
-          setHotels(response.data.data);
           setIsLoading(false);
         }
       } catch (error) {
@@ -49,46 +43,9 @@ function Hotel() {
     };
 
     fetchHotels();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const HotelObject = [
-    {
-      Title: "Luxe Properties",
-      content:
-        " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia laboriosam praesentium iste recusandae nam, ",
-      photoLink: Picture,
-    },
-    {
-      Title: "Luxe Properties",
-      content:
-        " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia laboriosam praesentium iste recusandae nam, ",
-      photoLink: Picture,
-    },
-    {
-      Title: "Luxe Properties",
-      content:
-        " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia laboriosam praesentium iste recusandae nam",
-      photoLink: Picture,
-    },
-    {
-      Title: "Luxe Properties",
-      content:
-        " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia laboriosam praesentium iste recusandae nam, ",
-      photoLink: Picture,
-    },
-    {
-      Title: "Luxe Properties",
-      content:
-        " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia laboriosam praesentium iste recusandae nam, ",
-      photoLink: Picture,
-    },
-    {
-      Title: "Luxe Properties",
-      content:
-        " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia laboriosam praesentium iste recusandae nam",
-      photoLink: Picture,
-    },
-  ];
   return (
     <div className="w-full bg-[#fff]">
       <div className="my-5 w-full md:w-[1050px] mx-auto  p-3 bg-[#fff] rounded-lg">
@@ -119,12 +76,12 @@ function Hotel() {
           <div>Loading...</div>
         ) : (
           <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center">
-            {hotels.map((data, index) => {
+            {state.hotel.map((data, index) => {
               return (
                 <div key={index} className="">
                   <div className="w-[320px] h-[250px]  rounded-tl-lg rounded-tr-lg">
                     <img
-                      src={data.propertyPicture[0]?.link}
+                      src={data.propertyPicture[0]?.link || Picture}
                       alt="hotel_images"
                       className="w-full h-full rounded-tl-lg rounded-tr-lg"
                     />
