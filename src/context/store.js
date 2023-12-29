@@ -7,6 +7,8 @@ const initialState = {
   userData: null,
   isLoading: false,
   hotelDetails: {},
+  profileData: {},
+  authType : "local"
 };
 
 // action types
@@ -18,6 +20,8 @@ const actionTypes = {
   SET_HOTEL: "SET_HOTEL",
   SET_USER_DATA: "SET_USER_DATA",
   SET_HOTEL_DETAILS: "SET_HOTEL_DETAILS",
+  SET_PROFILE_DATA: "SET_PROFILE_DATA",
+  SET_AUTH_TYPE: "SET_AUTH_TYPE",
 };
 
 const appReducer = (state, action) => {
@@ -34,6 +38,11 @@ const appReducer = (state, action) => {
       return { ...state, isLoading: action.payload };
     case actionTypes.SET_HOTEL_DETAILS:
       return { ...state, hotelDetails: action.payload };
+    case actionTypes.SET_PROFILE_DATA:
+      return { ...state, profileData: action.payload };
+    case actionTypes.SET_AUTH_TYPE:
+      return { ...state, authType: action.payload };
+
     default:
       return state;
   }
@@ -45,14 +54,20 @@ const AppContext = createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
-  const login = () => dispatch({ type: actionTypes.LOGIN });
+  const login = (isLoggedIn) => dispatch({ type: actionTypes.LOGIN, payload: isLoggedIn });
   const logout = () => dispatch({ type: actionTypes.LOGOUT });
   const isLoading = () => dispatch({ type: actionTypes.IS_LOADING });
+  
+  const setAuthType = (authType) =>
+    dispatch({ type: actionTypes.SET_AUTH_TYPE, payload: authType });
 
   const setHotel = (hotel) =>
     dispatch({ type: actionTypes.SET_HOTEL, payload: hotel });
   const setUserData = (userData) =>
     dispatch({ type: actionTypes.SET_USER_DATA, payload: userData });
+const setProfileData = (profileData) =>
+    dispatch({ type: actionTypes.SET_PROFILE_DATA, payload: profileData });
+
 
   const setHotelDetails = (hotelDetails) =>
     dispatch({ type: actionTypes.SET_HOTEL_DETAILS, payload: hotelDetails });
@@ -66,6 +81,9 @@ const AppProvider = ({ children }) => {
       setUserData,
       isLoading,
       setHotelDetails,
+      setProfileData,
+      setAuthType
+      
     },
   };
 

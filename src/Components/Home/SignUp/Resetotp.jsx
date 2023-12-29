@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import ResetPassword from "./ResetPassword";
 
-function Resendotp({ email, handleBackdropClick }) {
+function Resendotp({ email, handleBackdropClick , setHandleLoginShow }) {
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [otpError, setOtpError] = useState("");
@@ -92,6 +92,8 @@ function Resendotp({ email, handleBackdropClick }) {
           email={email}
           handleBackdropClick={handleBackdropClick}
           otp={otp}
+          setHandleLoginShow={setHandleLoginShow}
+        
         />
       )}
     </div>

@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import LoginImg from '../../../Assets/img/Rectangle.png';
-import { FcGoogle } from 'react-icons/fc';
-import { FaSquareFacebook } from "react-icons/fa6";
-import { FaPhone } from "react-icons/fa6";
 import Button from 'react-bootstrap/Button';
 import Resendotp from './Resetotp';
 import axios from 'axios';
 
-function Forget({ handleBackdropClick }) {
+function Forget({ handleBackdropClick , setHandleLoginShow }) {
     const [email, setEmail] = useState("");
     const [resetPassword, setResetPassword] = useState(true);
     const [fieldWarning, setFieldWarning] = useState(false);
@@ -70,7 +67,7 @@ function Forget({ handleBackdropClick }) {
                     </div>
                 </div>
             ) : (
-                <Resendotp email={email} handleBackdropClick={handleBackdropClick} />
+                <Resendotp email={email} handleBackdropClick={handleBackdropClick} setHandleLoginShow  ={setHandleLoginShow} />
             )}
         </div>
     );

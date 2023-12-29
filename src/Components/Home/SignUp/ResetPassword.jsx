@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import LoginImg from "../../../Assets/img/Rectangle.png";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-
-function ResetPassword({ email, handleBackdropClick, otp }) {
+import Login from "./Login";
+function ResetPassword({ email, handleBackdropClick, otp , setHandleLoginShow }) {
+  const [success, setSuccess] = useState(false); // [1]
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -30,14 +31,11 @@ function ResetPassword({ email, handleBackdropClick, otp }) {
         },
         config
       );
-
-      console.log(response.data, "response.data");
       if (response.data.success && response.data.success === true) {
-        localStorage.setItem("token", response.data.token);
-        console.log(response.data.token, "response.data.token");
-        handleBackdropClick();
-      }
+        setSuccess(true);
+        }
     } catch (error) {
+       setSuccess(false);
       console.log(error, "error");
     }
   };
@@ -56,6 +54,7 @@ function ResetPassword({ email, handleBackdropClick, otp }) {
 
   return (
     <div>
+     {!success ? <>
       <div className="flex flex-row items-start">
         <div className="w-[400px] h-[430px] hidden md:block rounded-lg">
           <img
@@ -109,6 +108,7 @@ function ResetPassword({ email, handleBackdropClick, otp }) {
           </div>
         </div>
       </div>
+     </> : <Login handleBackdropClick ={handleBackdropClick}  setHandleLoginShow ={setHandleLoginShow} />}
     </div>
   );
 }

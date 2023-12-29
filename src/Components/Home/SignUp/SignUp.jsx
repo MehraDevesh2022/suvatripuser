@@ -3,9 +3,9 @@ import Modal from "react-bootstrap/Modal";
 import Login from "./Login";
 import Sign from "./Sign";
 
-function SignUp({ show, setShow, setIsLoggedIn }) {
+function SignUp({ show, setShow }) {
   const [handleLoginShow, setHandleLoginShow] = useState(true);
-  const [forgotPass, setForgetpass] = useState(true);
+
   const modalStyle = {
     fontFamily: "'Popins', sans-serif",
     backgroundColor: "#fff",
@@ -52,14 +52,14 @@ function SignUp({ show, setShow, setIsLoggedIn }) {
               handleLoginShow={handleLoginShow}
               setHandleLoginShow={setHandleLoginShow}
               handleBackdropClick={handleBackdropClick}
-              setIsLoggedIn={setIsLoggedIn}
+            
             />
           ) : (
             <Sign
               handleBackdropClick={handleBackdropClick}
               handleLoginShow={handleLoginShow}
               setHandleLoginShow={setHandleLoginShow}
-              setIsLoggedIn={setIsLoggedIn}
+          
             />
           )}
         </Modal.Body>

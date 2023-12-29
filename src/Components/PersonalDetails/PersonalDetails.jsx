@@ -4,15 +4,19 @@ import Footer from "../Fotter/Footer";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
-
+import { useAppContext } from "../../context/store";
 function PersonalDetails() {
   const [show, setShow] = useState(false);
-  const [profileData, setProfileData] = useState({});
+  // const [profileData, setProfileData] = useState({});
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [authType , setAuthType] = useState("local");
+  // const [authType , setAuthType] = useState("local");
   const [showPasswordError, setShowPasswordError] = useState(false);
+  const { state } = useAppContext();
+  const authType = state.authType;
+const profileData = state.profileData;
+ 
 
   const handleClose = () => {
     setShow(false);
@@ -54,8 +58,6 @@ function PersonalDetails() {
                 "Content-Type": "application/json",
             },
         };
-
-        console.log(localStorage.getItem("token"));
         const response = await axios.post(
             "http://localhost:8000/auth/update-password",
             {
@@ -74,40 +76,7 @@ function PersonalDetails() {
     }
 };
 
-const personalProfile = async () => {
-  try {
-    const token = localStorage.getItem("token");
-  
-    console.log("Token:", token);
-    if (!token) {
-      console.error("Token is missing");
-      return;
-    }
-  
 
-    console.log("Token:", token);
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-     
-    };
-
-    const response = await axios.get("http://localhost:8000/auth/profile", config);
-
-
-    if (response.data.success && response.data.success === true) {
-      setProfileData(response.data.user);
-      setAuthType(response.data.authType);
-      console.log(response.data.authType);
-    }
-  } catch (error) {
-    console.error("Error fetching profile:", error);
-  }
-};
-
-
-  useEffect(() => {
-    personalProfile();
-  }, []);
 
 
 
