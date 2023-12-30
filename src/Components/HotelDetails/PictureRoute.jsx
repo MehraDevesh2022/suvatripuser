@@ -12,8 +12,8 @@ function PictureRoute() {
             <Routes>
                 <Route path='/' element={<AllPicture />} />
                 <Route path='/roompic' element={<RoomPic />} />
-                <Route path='/roompic/property' element={<Popertypic />} />
-                <Route path='/roompic/property/nearbypic' element={<Nearbypic />} />
+                <Route path='/property' element={<Popertypic />} />
+                <Route path='/nearbypic' element={<Nearbypic />} />
             </Routes>
         </div>
     )

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HotelRooms from './HotelRooms';
-import HotelAnimites from './HotelAnimites';
-import HotelDiscription from './HotelDiscription';
+import HotelAmenities from './HotelAnimites';
+import HotelDescription from './HotelDiscription';
 import HotelReviews from './HotelReviews';
 import HotelSupport from './HotelSupport';
 import HotelPhotos from './HotelPhotos';
@@ -10,12 +10,12 @@ import HotelPhotos from './HotelPhotos';
 function NestedRouting() {
   return (
     <Routes>
-      <Route path='/:id' element={<HotelRooms />} />
-      <Route path='/:id/amenities' element={<HotelAnimites />} />
-      <Route path='/:id/description' element={<HotelDiscription />} />
-      <Route path='/:id/review' element={<HotelReviews />} />
-      <Route path='/:id/support' element={<HotelSupport />} />
-      <Route path='/:id/photos/' element={<HotelPhotos />} />
+      <Route path='/' element={<HotelRooms />} />
+      <Route path='amenities' element={<HotelAmenities />} />
+      <Route path='description' element={<HotelDescription />} />
+      <Route path='review' element={<HotelReviews />} />
+      <Route path='support' element={<HotelSupport />} />
+      <Route path='photos/*' element={<HotelPhotos />} />
     </Routes>
   );
 }
