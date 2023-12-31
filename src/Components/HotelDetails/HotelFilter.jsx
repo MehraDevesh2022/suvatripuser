@@ -8,10 +8,13 @@ function HotelFilter() {
     const hotelId = state.hotelDetails?._id;
   
     const isActive = (path) => location.pathname.includes(path);
+
+    // mobile device
+    const isMobile = window.innerWidth <= 768;
   
     const navItemStyle = {
       backgroundColor: '#edf2f7',
-      padding: '12px 18px',
+      padding: '12px 25px',
       borderRadius: '8px',
       fontSize: '15px',
       fontWeight: '600',
@@ -19,10 +22,21 @@ function HotelFilter() {
       cursor: 'pointer',
       textAlign: 'center',
     };
+
+    const mobileStyle = {
+      padding: '10px',
+      borderRadius: '8px',
+      fontSize: '12px',
+      fontWeight: '600',
+      marginBottom: '10px',
+      marginLeft:'10px',
+      textAlign: 'center',
+    }
+  
   
     const hotelPages = [
       { path: `/hoteldetails/${hotelId}/`, label: 'Room' },
-      { path: `/hoteldetails/${hotelId}/amenities`, label: 'Amenities' },
+      { path: `/hoteldetails/${hotelId}/amenities`, label: 'Ameninites' },
       { path: `/hoteldetails/${hotelId}/description`, label: 'Description' },
       { path: `/hoteldetails/${hotelId}/review`, label: 'Review' },
       { path: `/hoteldetails/${hotelId}/support`, label: 'Support' },
@@ -30,7 +44,7 @@ function HotelFilter() {
     ];
   
     return (
-      <div className='grid grid-cols-3 md:grid-cols-6 gap-4 px-2 md:px-0'>
+      <div className='w-[350px] mx-auto md:w-full flex flex-row justify-between items-center scroller'>
         {hotelPages.map((page) => (
           <Link
             key={page.path}
@@ -39,7 +53,7 @@ function HotelFilter() {
               isActive(page.path) ? 'text-[#f7484d]' : ''
             }`}
           >
-            <div style={navItemStyle}>{page.label}</div>
+            <div style={isMobile ? mobileStyle : navItemStyle}>{page.label}</div>
           </Link>
         ))}
       </div>
@@ -47,4 +61,10 @@ function HotelFilter() {
   }
   
   export default HotelFilter;
+  
 ;
+
+
+
+// grid grid-cols-3 md:grid-cols-6 gap-4 px-2 md:px-0
+// Amenities
