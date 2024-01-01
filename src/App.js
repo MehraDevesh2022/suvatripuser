@@ -44,7 +44,7 @@ function App() {
       if (!token) {
         console.error('Token is missing');
         actions.login(false); 
-        if(location.pathname === '/personaldetails')
+        if(location.pathname === '/personaldetails' || location.pathname === '/booking' ) 
         navigate('/'); 
         return;
       }
