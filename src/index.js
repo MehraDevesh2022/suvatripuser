@@ -9,9 +9,11 @@ import { clientId } from "./config";
 import { AppProvider } from "./context/store";
 import { FacebookProvider,  } from "react-facebook";
 import { FACEBOOK_APP_ID } from "./config";
+import {BrowserRouter} from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <BrowserRouter>
     <AppProvider>
     <GoogleOAuthProvider clientId={clientId}>
     <FacebookProvider appId={FACEBOOK_APP_ID}>
@@ -21,6 +23,7 @@ root.render(
       </FacebookProvider>
     </GoogleOAuthProvider>
       </AppProvider>
+      </BrowserRouter>
   </React.StrictMode>
 );
 
