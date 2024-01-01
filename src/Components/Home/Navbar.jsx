@@ -3,8 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Logo from '../../Assets/img/logo.png';
 import { Link } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa6';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+
+import {  useNavigate} from 'react-router-dom';
 import SignUp from './SignUp/SignUp';
 import ProfileDropdown from './SignUp/ProfileDropdown';
 import { useAppContext } from '../../context/store';
@@ -13,68 +13,20 @@ function Navbar() {
   const [showSignup, setShowSignup] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const { state, actions } = useAppContext();
-  const navigate = useNavigate();
   const location = useLocation();
-  const personalProfile = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        console.error('Token is missing');
-        actions.login(false); 
-        if(location.pathname === '/personaldetails')
-        navigate('/'); 
-        return;
-      }
-  
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-  
-      const response = await axios.get('http://localhost:8000/auth/profile', config);
-  
-      if (response.data.success && response.data.success === true) {
-        console.log(response.data.user, 'response.data.user');
-        actions.setProfileData(response.data.user);
-        actions.setAuthType(response.data.authType);
-        actions.login(true);
-      }
-    } catch (error) {
-      actions.setProfileData({});
-      console.error('Error fetching profile:', error);
-    }
-  };
-  
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!state.isLoggedIn) {
-        actions.login(false);
-        if(location.pathname === '/personaldetails')
-           navigate('/'); 
-        return;
-      }
-  
-      try {
-        await personalProfile();
-      } catch (error) {
-        console.error('Error in fetchData:', error);
-      }
-    };
-  
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  
+  const navigate = useNavigate();
+ 
   const handleProfileClick = () => {
     setShowProfileDropdown(!showProfileDropdown);
   };
+  
 
   const handleLogout = () => {
     actions.login(false);
-    
+ 
+      localStorage.removeItem("isLoggedIn")
+      localStorage.removeItem("token")
     actions.setProfileData({});
-    actions.setAuthType('local');
-    localStorage.removeItem('token');
     localStorage.removeItem('authType');
     if(location.pathname === '/personaldetails')
     navigate('/'); 

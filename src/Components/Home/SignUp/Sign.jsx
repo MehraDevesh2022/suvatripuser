@@ -18,8 +18,9 @@ import SignReset from "./SignReset";
 function Sign({ handleBackdropClick, setHandleLoginShow }) {
   // For reset Password
   const [clickSignUp, setClickSignup] = useState(false);
+  const {state , actions} = useAppContext();
  
-  const {  actions } = useAppContext();
+
   const [fieldWarnings, setFieldWarnings] = useState({
     username: false,
     email: false,
@@ -92,14 +93,12 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       if (response.data.success && response.data.success === true) {
         setClickSignup(true);
         setToken(response.data.token);
-        localStorage.setItem("token", response.data.token);
       }
     } catch (error) {
       console.error("Error during signup:", error);
     }
-  
-    // state management
-    setClickSignup(true);
+  // state management
+     setClickSignup(true);
   };
   
   
@@ -125,13 +124,19 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       );
 
       if (response.data.success && response.data.success === true) {
+      
         setClickSignup(true);
-        localStorage.setItem("token", token);
-        handleBackdropClick();
         actions.login(true);
+        localStorage.setItem("token", token);
+        localStorage.setItem('isLoggedIn', JSON.stringify(true));
+        handleBackdropClick();
+     
       }
     } catch (error) {
+
       actions.login(false); 
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("token");
       console.error("Error during signup:", error);
     }
   };
@@ -153,24 +158,22 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       );
 
       if (response.data.token) {
+        actions.login(true);
+        localStorage.setItem('isLoggedIn', JSON.stringify(true));
         localStorage.setItem("token", response.data.token);
-        // localStorage.setItem("authWith", "google");
-        // navigate("/home");
         handleBackdropClick();
-       actions.login(true);
+     
       }
     } catch (error) {
       actions.login(false);
+      localStorage.removeItem("isLoggedIn")
+      localStorage.removeItem("token")
       console.error("Error during Google login:", error);
     }
   }
 
   const handleSuccess = async (response) => {
-    // console.log(response.authResponse.accessToken, "accessToken");
-
-    // console.log(response.authResponse.userID, "userID");
-    // console.log(response, "response");
-
+  
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const result = await axios.post(
@@ -182,16 +185,19 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
         config
       );
 
-      console.log(result, "result");
       if (result.data.token) {
-        localStorage.setItem("token", result.data.token);
-        // localStorage.setItem("authWith", "facebook");
-        // navigate("/home");
-        handleBackdropClick();
+
         actions.login(true);
+        localStorage.setItem('isLoggedIn', JSON.stringify(true));
+        localStorage.setItem("token", result.data.token);
+        handleBackdropClick();
+      
       }
     } catch (error) {
+      
       actions.login(false);
+      localStorage.removeItem("isLoggedIn")
+      localStorage.removeItem("token")
       console.error("Error during Facebook login:", error);
     }
   };

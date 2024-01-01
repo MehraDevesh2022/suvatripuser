@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "../Home/Navbar";
 import Footer from "../Fotter/Footer";
 import Button from "react-bootstrap/Button";
@@ -16,10 +16,12 @@ function PersonalDetails() {
   const { state } = useAppContext();
   const authType = state.authType;
 const profileData = state.profileData;
- 
+  
 
   const handleClose = () => {
     setShow(false);
+
+
     setOldPassword("");
     setNewPassword("");
     setPasswordError("");
