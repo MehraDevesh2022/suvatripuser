@@ -20,7 +20,7 @@ function HotelDetail() {
     const fetchHotel = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/hotel/get-hotel-by-id/${param?.id}`
+          `${process.env.REACT_APP_BASE_URL}/hotel/get-hotel-by-id/${param?.id}`
         );
         console.log(response.data.data, "response.data.data");
         actions.setHotelDetails(response.data.data);

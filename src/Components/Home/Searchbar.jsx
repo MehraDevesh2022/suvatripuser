@@ -18,6 +18,8 @@ function Searchbar() {
     child: 0,
   });
 
+   console.log(process.env.REACT_APP_BASE_URL , "process.env.REACT_APP_BASE_URL");
+
   const [location, setLocation] = useState("India");
   const {state, actions} = useAppContext();
   const [showCalender, setShowCalender] = useState(false);
@@ -93,23 +95,28 @@ function Searchbar() {
     console.log(searchData);
     try {
         actions.isLoading(true);
-      const token = localStorage.getItem("token");
+    
+        const params = {
+          location: encodeURIComponent(searchData.location),
+          startDate: encodeURIComponent(searchData.startDate.toISOString()),
+          endDate: encodeURIComponent(searchData.endDate.toISOString()),
+          children: options.child,
+          room: options.room,
+          adult: options.adult,
+        };
 
-      const headers = {
-        Authorization: token ? `Bearer ${token}}` : undefined,
-        My_Secret: config.MY_SECRET,
-      };
 
       const response = await axios.get(
-        `http://localhost:8000/hotel/filter?location=${encodeURIComponent(
-          searchData.location
-        )}&startDate=${encodeURIComponent(
-          searchData.startDate.toISOString()
-        )}&endDate=${encodeURIComponent(searchData.endDate.toISOString())}`,
+        `${process.env.REACT_APP_BASE_URL}/hotel/filter`,
         {
-          headers,
+          params,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            My_Secret: config.MY_SECRET,
+          },
         }
-      ); 
+      );
+  
 // console.log(response.data.data); 
 
        actions.setHotel(response.data.data);

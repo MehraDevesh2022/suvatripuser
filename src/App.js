@@ -22,7 +22,7 @@ import { useAppContext } from './context/store';
 import { useLocation  , useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { is } from 'date-fns/locale';
+
 
 function App() {
 
@@ -37,7 +37,8 @@ function App() {
   };
 
 
-   
+  console.log(process.env.REACT_APP_BASE_URL, 'process.env.REACT_APP_BASE_URL');
+
   const personalProfile = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -53,7 +54,7 @@ function App() {
         headers: { Authorization: `Bearer ${token}` },
       };
   
-      const response = await axios.get('http://localhost:8000/auth/profile', config);
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/profile`, config);
   
       if (response.data.success && response.data.success === true) {
         console.log(response.data.user, 'response.data.user'); 
