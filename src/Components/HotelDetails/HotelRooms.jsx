@@ -32,7 +32,7 @@ function HotelRooms() {
 
     const renderAmenities = (amenities) => {
         return amenities.map((amenity, index) => (
-            <p key={index} className="mb-1">
+            <p key={index} className="mb-1 text-sm md:text-[17px]">
                 <span>{amenity.icon}</span> {amenity.label}
             </p>
         ));
@@ -58,20 +58,20 @@ function HotelRooms() {
                             <FaUser key={index} className="inline mx-2" />
                         ))}
                     </div>
-                    <p className="mb-1 mt-2">
-                        <span className="text-[16px]">--</span> Room Only
+                    <p className="mb-1 mt-2 text-[13px] md:text-[17px]">
+                        <span className="text-[12px] md:text-[16px]">--</span> Room Only
                     </p>
-                    <p className="mb-1">
-                        <span className="text-[16px]">--</span> Free Cancellation
+                    <p   className="mb-1  text-[13px] md:text-[17px]">
+                        <span className="text-[12px] md:text-[16px]">--</span> Free Cancellation
                     </p>
-                    <p className="mb-1">
-                        <span className="text-[16px]">--</span> Child Friendly
+                    <p   className="mb-1  text-[13px] md:text-[17px]">
+                        <span className="text-[12px] md:text-[16px]">--</span> Child Friendly
                     </p>
-                    <p className="mb-1">
-                        <span className="text-[16px]">--</span> Breakfast Included
+                    <p  className="mb-1  text-[12px] md:text-[17px]">
+                        <span className="text-[12px] md:text-[16px]">--</span> Breakfast Included
                     </p>
                 </div>
-                <div className="border-r-[1px] px-4 border-slate-400">
+                <div className="border-r-[0px] md:border-r-[1px] px-4 border-slate-400">
                     <h3 className="text-[20px] md:text-[25px] font-[600] mb-3 text-[#f86d71]">
                         Amenities
                     </h3>

@@ -31,7 +31,7 @@ function FilterSection() {
                     <div>
                         <FilterMap />
                     </div>
-                    <div className='w-[250px] h-[900px] bg-[#fff]  py-2 rounded-lg mt-4 overflow-y-auto scrollbar-custom'>
+                    <div className='w-[250px] h-[900px]  shadow-md py-2 rounded-lg mt-4 overflow-y-auto scrollbar-custom'>
                         <div>
                             <h3 className='text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1'>Select Filters</h3>
                             <div className='px-3'>
@@ -141,11 +141,11 @@ function FilterSection() {
                             <h3 className='text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1'>Your Budget</h3>
                             <div className='flex flex-row justify-center items-center p-2'>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Minimum" aria-label="Username" aria-describedby="basic-addon1" />
+                                    <input type="text" class="form-control" placeholder="Min" aria-label="Username" aria-describedby="basic-addon1" />
                                 </div>
                                 <span className='text-[25px] font-[600] px-1'><FaArrowsAltH className='inline' /></span>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Maximum" aria-label="Username" aria-describedby="basic-addon1" />
+                                    <input type="text" class="form-control" placeholder="Max" aria-label="Username" aria-describedby="basic-addon1" />
                                 </div>
 
                             </div>

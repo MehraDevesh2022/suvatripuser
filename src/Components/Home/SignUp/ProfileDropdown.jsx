@@ -11,7 +11,7 @@ function ProfileDropdown({ handleLogout, closeDropdown }) {
     if (window.innerWidth <= 768) {
       return "1rem"; // Adjust this value for mobile screens
     } else {
-      return "16rem"; // Default value for larger screens
+      return "5rem"; // Default value for larger screens
     }
   };
 

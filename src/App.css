@@ -4,7 +4,7 @@ scrollbar-color: #f84c50 #e2e8f0; /* You can adjust the colors as needed */
 }
 
 .scrollbar-custom::-webkit-scrollbar {
-width: 5px;
+width: 0px;
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {

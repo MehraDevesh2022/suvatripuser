@@ -55,7 +55,7 @@ function Home() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
     return (
-        <div className='w-full h-screen'>
+        <div className='min-w-full h-screen overflow-x-hidden'>
             <div>
                 <Navbar />
                 <Header />

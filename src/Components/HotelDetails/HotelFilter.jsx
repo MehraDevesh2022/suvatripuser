@@ -14,7 +14,7 @@ function HotelFilter() {
   
     const navItemStyle = {
       backgroundColor: '#edf2f7',
-      padding: '12px 25px',
+      padding: '12px 30px',
       borderRadius: '8px',
       fontSize: '15px',
       fontWeight: '600',
@@ -49,8 +49,8 @@ function HotelFilter() {
           <Link
             key={page.path}
             to={page.path}
-            className={`no-underline text-slate-500 ${
-              isActive(page.path) ? 'text-[#f7484d]' : ''
+            className={`no-underline ${
+              isActive(page.path) ? 'text-[#f7484d]' : 'text-slate-500'
             }`}
           >
             <div style={isMobile ? mobileStyle : navItemStyle}>{page.label}</div>

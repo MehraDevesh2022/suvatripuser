@@ -38,6 +38,13 @@ function Searchbar() {
     fontWeight: "500",
     // Add other styles as needed
   };
+  const calenderInput = {
+    fontSize: "20px",
+    fontWeight: "500",
+    border: "none",      // To remove the border
+    outline: "none",     // To remove the outline
+    // Add other styles as needed
+};
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -161,7 +168,7 @@ function Searchbar() {
                   <Form onClick={handleCalender}>
                     <input
                       type="text"
-                      style={customStyle}
+                      style={calenderInput}
                       className="form-control bg-transparent"
                       id="floatingInputValue"
                       placeholder="check-In"
@@ -177,7 +184,7 @@ function Searchbar() {
                   <Form onClick={handleCalender}>
                     <input
                       type="text"
-                      style={customStyle}
+                      style={calenderInput}
                       className="form-control bg-transparent"
                       id="floatingInputValue"
                       placeholder="check-out"
@@ -314,7 +321,7 @@ function Searchbar() {
       <div className="w-[150px] absolute bottom-[-24px] left-[110px] md:left-[450px]">
         <Link to="/filter">
           <button
-            className="bg-[#129035] w-full py-2 font-[600] text-[20px] text-slate-100 rounded-[20px] z-0"
+            className="bg-[#129035] w-full py-2 font-[600] uppercase text-[20px] text-slate-100 rounded-[20px] z-0"
             onClick={handleSearch}
           >
             Search
