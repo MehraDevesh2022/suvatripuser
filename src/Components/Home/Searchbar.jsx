@@ -18,7 +18,7 @@ function Searchbar() {
     child: 0,
   });
 
-   console.log(process.env.REACT_APP_BASE_URL , "process.env.REACT_APP_BASE_URL");
+   console.log(process.env.REACT_APP_BASE_URL , "hotel search");
 
   const [location, setLocation] = useState("India");
   const {state, actions} = useAppContext();
@@ -92,7 +92,7 @@ function Searchbar() {
       // Add more parameters as needed
     };
 
-    console.log(searchData);
+    console.log(searchData , "location");
     try {
         actions.isLoading(true);
     
@@ -107,9 +107,9 @@ function Searchbar() {
 
 
       const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/hotel/filter`,
+        `http://localhost:8000/hotel/filter`,
         {
-          params,
+          params, 
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             My_Secret: config.MY_SECRET,
@@ -117,7 +117,7 @@ function Searchbar() {
         }
       );
   
-// console.log(response.data.data); 
+console.log(response.data.data); 
 
        actions.setHotel(response.data.data);
         actions.isLoading(false); 
