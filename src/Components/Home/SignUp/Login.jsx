@@ -48,7 +48,7 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
     try {
       // Make a POST request to the backend API
       const response = await axios.post(
-        "http://localhost:8000/auth/login",
+        `${process.env.REACT_APP_BASE_URL}/auth/login`,
         loginData
       );
 
@@ -93,7 +93,7 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/signup/google",
+        `${process.env.REACT_APP_BASE_URL}/auth/signup/google`,
         { googleAccessToken: accessToken },
         config
       );
@@ -122,7 +122,7 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const result = await axios.post(
-        "http://localhost:8000/auth/signup/fb",
+        `${process.env.REACT_APP_BASE_URL}/auth/signup/fb`,
         {
           userId: response.authResponse.userID,
           accessToken: response.authResponse.accessToken,

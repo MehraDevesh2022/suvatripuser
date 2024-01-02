@@ -85,7 +85,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
         },
       };
       const response = await axios.post(
-        "http://localhost:8000/auth/signup/user",
+        "${process.env.REACT_APP_BASE_URL}/auth/signup/user",
         formData,
         config
       );
@@ -115,7 +115,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
         },
       };
       const response = await axios.post(
-        "http://localhost:8000/auth/user-otp",
+        `${process.env.REACT_APP_BASE_URL}/auth/user-otp`,
         {
           email: formData.email,
           otp: otp,
@@ -152,7 +152,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/signup/google",
+        `${process.env.REACT_APP_BASE_URL}/auth/signup/google`,
         { googleAccessToken: accessToken },
         config
       );
@@ -177,7 +177,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const result = await axios.post(
-        "http://localhost:8000/auth/signup/fb",
+        `${process.env.REACT_APP_BASE_URL}/auth/signup/fb`,
         {
           userId: response.authResponse.userID,
           accessToken: response.authResponse.accessToken,

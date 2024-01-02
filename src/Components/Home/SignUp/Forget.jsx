@@ -18,7 +18,7 @@ function Forget({ handleBackdropClick , setHandleLoginShow }) {
         }
 
         try {
-            const response = await axios.post("http://localhost:8000/auth/forgot-password", {
+            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/forgot-password`, {
                 email: email
             });
             console.log(response.data, "response.data");

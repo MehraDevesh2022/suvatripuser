@@ -23,7 +23,7 @@ function ResetPassword({ email, handleBackdropClick, otp , setHandleLoginShow })
 
       const config = { headers: { "Content-Type": "application/json" } };
       const response = await axios.post(
-        "http://localhost:8000/auth/reset-password",
+        `${process.env.REACT_APP_BASE_URL}/auth/reset-password`,
         {
           email: email,
           newPassword: password,

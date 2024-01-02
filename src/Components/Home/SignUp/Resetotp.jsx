@@ -22,7 +22,7 @@ function Resendotp({ email, handleBackdropClick , setHandleLoginShow }) {
         },
       };
       const response = await axios.post(
-        "http://localhost:8000/auth/user-otp",
+        `${process.env.REACT_APP_BASE_URL}/auth/user-otp`,
         {
           email: email,
           otp: otp,

@@ -28,7 +28,7 @@ function Home() {
             };
     
             const response = await axios.get(
-              "http://localhost:8000/hotel/get-all-hotels",
+              `${process.env.REACT_APP_BASE_URL}/hotel/get-all-hotels`,
               {
                 headers,
               }
