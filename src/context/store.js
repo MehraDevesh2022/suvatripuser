@@ -4,10 +4,13 @@ import { useReducer, useContext, createContext } from "react";
 const initialState = {
   isLoggedIn: false,
   hotel: [],
+  roomData : [],
   userData: null,
   isLoading: false,
   hotelDetails: {},
+  roomDetails: {},
   profileData: {},
+
   authType : "local"
 };
 
@@ -22,6 +25,8 @@ const actionTypes = {
   SET_HOTEL_DETAILS: "SET_HOTEL_DETAILS",
   SET_PROFILE_DATA: "SET_PROFILE_DATA",
   SET_AUTH_TYPE: "SET_AUTH_TYPE",
+  SET_ROOM_DATA: "SET_ROOM_DATA",
+  SET_ROOM_DETAILS: "SET_ROOM_DETAILS",
 };
 
 const appReducer = (state, action) => {
@@ -42,6 +47,10 @@ const appReducer = (state, action) => {
       return { ...state, profileData: action.payload };
     case actionTypes.SET_AUTH_TYPE:
       return { ...state, authType: action.payload };
+     case actionTypes.SET_ROOM_DATA:
+      return { ...state, roomData: action.payload };
+    case actionTypes.SET_ROOM_DETAILS:
+      return { ...state, roomDetails: action.payload };
 
     default:
       return state;
@@ -67,7 +76,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: actionTypes.SET_USER_DATA, payload: userData });
 const setProfileData = (profileData) =>
     dispatch({ type: actionTypes.SET_PROFILE_DATA, payload: profileData });
-
+    
+    const setRoomData = (roomData) => dispatch({ type: actionTypes.SET_ROOM_DATA, payload: roomData });
+  const setRoomDetails = (roomDetails) => dispatch({ type: actionTypes.SET_ROOM_DETAILS, payload: roomDetails });
+   
 
   const setHotelDetails = (hotelDetails) =>
     dispatch({ type: actionTypes.SET_HOTEL_DETAILS, payload: hotelDetails });
@@ -82,7 +94,10 @@ const setProfileData = (profileData) =>
       isLoading,
       setHotelDetails,
       setProfileData,
-      setAuthType
+      setAuthType,
+      setRoomData,
+      setRoomDetails
+      
       
     },
   };

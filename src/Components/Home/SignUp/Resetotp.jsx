@@ -33,6 +33,7 @@ function Resendotp({ email, handleBackdropClick , setHandleLoginShow }) {
 
       if (response.data.success && response.data.success === true) {
         setIsOtpSent(true);
+         
       }
     } catch (error) {
       console.error("Error during OTP verification:", error);

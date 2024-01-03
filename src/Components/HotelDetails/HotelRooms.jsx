@@ -9,15 +9,57 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useAppContext } from "../../context/store";
-
+import axios from "axios";
 function HotelRooms() {
     const [number, setNumber] = useState(1);
     const [show, setShow] = useState(false);
     const { state } = useAppContext();
     const hotelData = state.hotelDetails;
+    const [firstName, setFirstName] = useState(''); 
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [arrivalHours, setArrivalHours] = useState('');
+    const [arrivalMinutes, setArrivalMinutes] = useState('');
+    const [arrivalAmPm, setArrivalAmPm] = useState('AM');
+    const [smokingPreference, setSmokingPreference] = useState('');
+
+    const [specialRequest, setSpecialRequest] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+
+ const handleArrivalTimeChange = (type, value) => {
+        switch (type) {
+            case 'hours':
+                setArrivalHours(value);
+                break;
+            case 'minutes':
+                setArrivalMinutes(value);
+                break;
+            case 'amPm':
+                setArrivalAmPm(value);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleSmokingPreferenceChange = (value) => {
+        setSmokingPreference(value);
+    };
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+         if( JSON.parse(localStorage.getItem('isLoggedIn')) && localStorage.getItem('token') && state.isLoggedIn){
+            setFirstName(state?.profileData?.username?.split(" ")[0]);
+            setLastName(state?.profileData?.username?.split(" ")[1]);
+            setEmail(state?.profileData?.email);
+            setPhoneNumber(state?.profileData?.phoneNumber);
+              setShow(true);
+
+         }else{
+            alert("Please Login First for Booking");
+         }
+    }
     const inlineStyle = {
         backgroundColor: '#f3f5f8',
         padding: '10px 10px'
@@ -42,6 +84,56 @@ function HotelRooms() {
         ));
     };
 
+
+    const handleSubmit = async () => {
+        const estimatedArrival = `${arrivalHours}:${arrivalMinutes} ${arrivalAmPm}`;
+         
+        const formData = {
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            estimatedArival :estimatedArrival,
+            smokingPreference,
+            specialRequest,
+            hotel_id: hotelData._id,
+            room_id : hotelData?.rooms._id,
+            roomNumber : hotelData?.roomsNo,
+            UUID :  hotelData?.UUID,
+            user_id : state?.profileData?._id,
+            status : "confirmd"
+
+        };
+
+        console.log(formData);
+
+    try {
+
+        const token = localStorage.getItem("token");
+
+        const headers = {
+            Authorization: token ? `Bearer ${token}` : undefined,
+        }
+
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/reservation`, formData, {headers});
+
+        if (response.data.status) {
+            alert("Your Booking is Done");
+        } else {
+            alert("Something went wrong");
+        }
+
+        handleClose();
+        
+    } catch (error) {
+        console.log(error, "error");
+        handleClose();  
+    }
+
+        
+   
+    };
+
     return (
         <div>
             <Modal show={show} onHide={handleClose} size="lg" centered>
@@ -55,57 +147,120 @@ function HotelRooms() {
                             <Row>
                                 <Col>
                                     <div class="input-group mb-3">
-                                        <input type="text" style={inlineStyle} className="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1" />
+                                        <input type="text" style={inlineStyle} className="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1"
+                                            value={firstName}
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                        />
                                     </div>
                                 </Col>
                                 <Col>
                                     <div class="input-group mb-3">
-                                        <input type="text" style={inlineStyle} className="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1" />
+                                        <input type="text" style={inlineStyle} className="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1"
+                                            value={lastName}
+                                            onChange={(e) => setLastName(e.target.value)}
+                                        />
                                     </div>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col>
                                     <div class="input-group mb-3">
-                                        <input type="number" style={inlineStyle} className="form-control" placeholder="Number" aria-label="Number" aria-describedby="basic-addon1" />
+                                        <input type="number" style={inlineStyle} className="form-control" placeholder="Number" aria-label="Number" aria-describedby="basic-addon1"
+                                            value={phoneNumber}
+                                            onChange={(e) => setPhoneNumber(e.target.value)}
+                                        />
                                     </div>
                                 </Col>
                                 <Col>
                                     <div class="input-group mb-3">
-                                        <input type="Email" style={inlineStyle} className="form-control" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" />
+                                        <input type="Email" style={inlineStyle} className="form-control" placeholder="Email" aria-label="email" aria-describedby="basic-addon1"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}  
+                                        />
                                     </div>
                                 </Col>
                             </Row>
                             <Row>
-                                <div class="input-group mb-3">
-                                    <input type="Email" style={inlineStyle} className="form-control" placeholder="Estimated Arrival Time" aria-label="Estimated Arrival Time" aria-describedby="basic-addon1" />
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text" id="basic-addon1">Arrival Time</span>
                                 </div>
-                            </Row>
-                            <Row className='mb-2 px-2'>
-                                <p className='text-xl font-[500] tracking-wider mb-1'>Do you Prefer Smoking Room ? </p>
-                                <div className='px-3'>
-                                    <div className="form-check mb-1">
-                                        <input className="form-check-input" type="checkbox" value="Yes" id="flexCheckDefault" />
-                                        <label className="form-check-label text-[20px] font-[400]" htmlFor="flexCheckDefault">
-                                            Yes
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="No" id="flexCheckDefault" />
-                                        <label className="form-check-label text-[20px] font-[400]" htmlFor="flexCheckDefault">
-                                            No
-                                        </label>
-                                    </div>
+                                <input
+                                    type="number"
+                                    style={inlineStyle}
+                                    className="form-control"
+                                    placeholder="Hours"
+                                    aria-label="Arrival Hours"
+                                    aria-describedby="basic-addon1"
+                                    value={arrivalHours}
+                                    onChange={(e) => handleArrivalTimeChange('hours', e.target.value)}
+                                />
+                                <span className="mx-2">:</span>
+                                <input
+                                    type="number"
+                                    style={inlineStyle}
+                                    className="form-control"
+                                    placeholder="Minutes"
+                                    aria-label="Arrival Minutes"
+                                    aria-describedby="basic-addon1"
+                                    value={arrivalMinutes}
+                                    onChange={(e) => handleArrivalTimeChange('minutes', e.target.value)}
+                                />
+                                <select
+                                    className="form-select"
+                                    aria-label="Arrival AM/PM"
+                                    value={arrivalAmPm}
+                                    onChange={(e) => handleArrivalTimeChange('amPm', e.target.value)}
+                                >
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </div>
+                        </Row>
+                        <Row className="mb-2 px-2">
+                            <p className="text-xl font-[500] tracking-wider mb-1">Do you Prefer Smoking Room ? </p>
+                            <div className="px-3">
+                                <div className="form-check mb-1">
+                                    <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        name="smokingPreference"
+                                        id="smokingYes"
+                                        value="Yes"
+                                        checked={smokingPreference === 'Yes'}
+                                        onChange={() => handleSmokingPreferenceChange('Yes')}
+                                    />
+                                    <label className="form-check-label text-[20px] font-[400]" htmlFor="smokingYes">
+                                        Yes
+                                    </label>
                                 </div>
-                            </Row>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        name="smokingPreference"
+                                        id="smokingNo"
+                                        value="No"
+                                        checked={smokingPreference === 'No'}
+                                        onChange={() => handleSmokingPreferenceChange('No')}
+                                    />
+                                    <label className="form-check-label text-[20px] font-[400]" htmlFor="smokingNo">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </Row>
                             <Row>
                                 <div className='mb-3'>
-                                    <textarea name="textarea" className='w-full h-[150px] border-[1px] border-slate-300 bg-[#f3f5f8] outline-none rounded-md px-2 py-1' placeholder='Any Special Requests' ></textarea>
+                                    <textarea name="textarea" className='w-full h-[150px] border-[1px] border-slate-300 bg-[#f3f5f8] outline-none rounded-md px-2 py-1' placeholder='Any Special Requests'
+                                        value={specialRequest}
+                                        onChange={(e) => setSpecialRequest(e.target.value)}
+                                    ></textarea>
                                 </div>
                             </Row>
 
                             <div className='w-full md:w-[400px] mx-auto'>
-                                <button className='w-full bg-[#f62c31] px-4 py-3 rounded-lg text-[#fff] font-[600]' onClick={handleClose}>Complete Your Booking</button>
+                                <button className='w-full bg-[#f62c31] px-4 py-3 rounded-lg text-[#fff] font-[600]' onClick={handleSubmit}>Complete Your Booking</button>
                             </div>
                         </Container>
             </Modal.Body>

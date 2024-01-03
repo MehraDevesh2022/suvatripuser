@@ -85,13 +85,15 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
         },
       };
       const response = await axios.post(
-        "${process.env.REACT_APP_BASE_URL}/auth/signup/user",
+        `${process.env.REACT_APP_BASE_URL}/auth/signup/user`,
         formData,
         config
       );
   
       if (response.data.success && response.data.success === true) {
         setClickSignup(true);
+         
+          
         setToken(response.data.token);
       }
     } catch (error) {
@@ -127,6 +129,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       
         setClickSignup(true);
         actions.login(true);
+        actions.setProfileData(response.data.user);
         localStorage.setItem("token", token);
         localStorage.setItem('isLoggedIn', JSON.stringify(true));
         handleBackdropClick();
@@ -158,6 +161,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       );
 
       if (response.data.token) {
+        actions.setProfileData(response.data.user);
         actions.login(true);
         localStorage.setItem('isLoggedIn', JSON.stringify(true));
         localStorage.setItem("token", response.data.token);
@@ -186,7 +190,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       );
 
       if (result.data.token) {
-
+        actions.setProfileData(result.data.user);
         actions.login(true);
         localStorage.setItem('isLoggedIn', JSON.stringify(true));
         localStorage.setItem("token", result.data.token);

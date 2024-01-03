@@ -61,7 +61,7 @@ const profileData = state.profileData;
             },
         };
         const response = await axios.post(
-            "${process.env.REACT_APP_BASE_URL}/auth/update-password",
+            `${process.env.REACT_APP_BASE_URL}/auth/update-password`,
             {
                 currentPassword: oldPassword,
                 newPassword: newPassword,
