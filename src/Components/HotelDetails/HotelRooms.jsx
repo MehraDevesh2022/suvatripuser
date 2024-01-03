@@ -18,6 +18,10 @@ function HotelRooms() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const inlineStyle = {
+        backgroundColor: '#f3f5f8',
+        padding: '10px 10px'
+    }
 
     useEffect(() => {
 
@@ -41,9 +45,70 @@ function HotelRooms() {
     return (
         <div>
             <Modal show={show} onHide={handleClose} size="lg" centered>
-                <Modal.Body>
-                    {/* Your modal content here */}
-                </Modal.Body>
+            <Modal.Body>
+                        <Container>
+                            <Row>
+                                <div className='mb-3'>
+                                    <h3 className='text-3xl font-[700] tracking-wider'>Enter Your Details</h3>
+                                </div>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style={inlineStyle} className="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1" />
+                                    </div>
+                                </Col>
+                                <Col>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style={inlineStyle} className="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1" />
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <div class="input-group mb-3">
+                                        <input type="number" style={inlineStyle} className="form-control" placeholder="Number" aria-label="Number" aria-describedby="basic-addon1" />
+                                    </div>
+                                </Col>
+                                <Col>
+                                    <div class="input-group mb-3">
+                                        <input type="Email" style={inlineStyle} className="form-control" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" />
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <div class="input-group mb-3">
+                                    <input type="Email" style={inlineStyle} className="form-control" placeholder="Estimated Arrival Time" aria-label="Estimated Arrival Time" aria-describedby="basic-addon1" />
+                                </div>
+                            </Row>
+                            <Row className='mb-2 px-2'>
+                                <p className='text-xl font-[500] tracking-wider mb-1'>Do you Prefer Smoking Room ? </p>
+                                <div className='px-3'>
+                                    <div className="form-check mb-1">
+                                        <input className="form-check-input" type="checkbox" value="Yes" id="flexCheckDefault" />
+                                        <label className="form-check-label text-[20px] font-[400]" htmlFor="flexCheckDefault">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" value="No" id="flexCheckDefault" />
+                                        <label className="form-check-label text-[20px] font-[400]" htmlFor="flexCheckDefault">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </Row>
+                            <Row>
+                                <div className='mb-3'>
+                                    <textarea name="textarea" className='w-full h-[150px] border-[1px] border-slate-300 bg-[#f3f5f8] outline-none rounded-md px-2 py-1' placeholder='Any Special Requests' ></textarea>
+                                </div>
+                            </Row>
+
+                            <div className='w-full md:w-[400px] mx-auto'>
+                                <button className='w-full bg-[#f62c31] px-4 py-3 rounded-lg text-[#fff] font-[600]' onClick={handleClose}>Complete Your Booking</button>
+                            </div>
+                        </Container>
+            </Modal.Body>
             </Modal>
 
             <div className="w-full bg-slate-50 my-3 grid grid-cols-2 md:grid-cols-4 gap-4 p-2 rounded-lg shadow-md">
@@ -81,7 +146,7 @@ function HotelRooms() {
                         { icon: <MdOutlineHomeWork className="inline mr-2" />, label: 'Restaurant' },
                         { icon: <FaWifi className="inline mr-2" />, label: 'Free Wifi' },
                         { icon: <LuParkingCircle className="inline mr-2" />, label: 'Free Parking' },
-                    ])}
+                    ])} 
                 </div>
                 <div className="pl-5 border-r-[1px] border-slate-400">
                     <h3 className="text-[25px] font-[600] mb-2 text-[#f86d71]">Price</h3>
