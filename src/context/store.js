@@ -79,7 +79,7 @@ const setProfileData = (profileData) =>
     
     const setRoomData = (roomData) => dispatch({ type: actionTypes.SET_ROOM_DATA, payload: roomData });
   const setRoomDetails = (roomDetails) => dispatch({ type: actionTypes.SET_ROOM_DETAILS, payload: roomDetails });
-
+   
 
   const setHotelDetails = (hotelDetails) =>
     dispatch({ type: actionTypes.SET_HOTEL_DETAILS, payload: hotelDetails });

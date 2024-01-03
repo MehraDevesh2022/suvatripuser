@@ -34,7 +34,7 @@ function Home() {
               }
             );
 
-            // console.log(response.data.data , "response.data.data inside home");
+            console.log(response.data.data , "response.data.data inside home");
     
             if (response.data.isHotelAccess) {
               // while user were not logged in
@@ -75,7 +75,7 @@ function Home() {
               }
             );
 
-            console.log(response.data.data , "response.data.data inside home");
+            // console.log(response.data.data , "response.data.data inside home");
     
             if (response.data.success) {
               // while user were not logged in

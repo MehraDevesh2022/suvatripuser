@@ -55,6 +55,7 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
       console.log(response.data, "response.data");
 
       if (response.data.token) {
+        actions.setProfileData(response.data.user);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("isLoggedIn", JSON.stringify(true));
         actions.login(true);
@@ -100,6 +101,7 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
 
       if (response.data.token) {
         actions.login(true);
+        actions.setProfileData(response.data.user);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("isLoggedIn", JSON.stringify(true));
 
@@ -134,6 +136,7 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
         localStorage.setItem("token", result.data.token);
         localStorage.setItem("isLoggedIn", JSON.stringify(true));
         actions.login(true);
+        actions.setProfileData(result.data.user);
         handleBackdropClick();
       }
     } catch (error) {
