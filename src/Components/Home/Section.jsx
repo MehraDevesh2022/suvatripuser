@@ -6,6 +6,13 @@ import ViewImg from "../../Assets/img/simple.png";
 function Section() {
   const { state } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
+  const buttoStyle = {
+    padding: '10px 18px',
+    textAlign: 'center',
+    backgroundColor: '#e3292d',
+    border: 'none',
+    borderRadius: '40px',
+  }
 
   useEffect(() => {
     setIsLoading(!state.hotel.length); // Set loading to true if hotel data is not available
@@ -13,10 +20,10 @@ function Section() {
 
   return (
     <div>
-      <div className="w-full md:w-[1050px] bg-[#fff] shadow-md mx-auto p-3 mt-5 rounded-md">
+      <div className="w-full md:w-[1050px] bg-[#fff] shadow-md border-[1px] border-slate-100 mx-auto p-3 mt-5 rounded-md">
         <section className="flex flex-col md:flex-row items-center p-2">
-          <div className="w-full md:w-[300px] bg-[#fff] shadow-md  border-[1px] border-slate-100 p-3 rounded-md">
-            <p className="leading-3 bg-slate-700 w-[100px] p-2  rounded-md text-slate-200">
+          <div className="w-full md:w-[300px] bg-[#fff]   p-3 rounded-md">
+            <p className="leading-3 bg-slate-700 w-[120px] py-2 px-2 uppercase  rounded-md text-slate-200">
               Introducing
             </p>
             <h2 className="text-[30px] text-[#f62c31] font-[700] tracking-wider uppercase leading-8 ">
@@ -26,7 +33,7 @@ function Section() {
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur
               consectetur mollitia{" "}
             </p>
-            <Button>Know more</Button>
+            <Button style={buttoStyle}>Know more</Button>
           </div>
           <div className="flex flex-col md:flex-row items-center md:items-start w-full md:w-[650px] mx-auto  p-0">
             {isLoading ? (

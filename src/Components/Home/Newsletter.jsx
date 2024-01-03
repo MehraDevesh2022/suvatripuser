@@ -5,7 +5,7 @@ import AppStore from '../../Assets/img/Appstore.jpg'
 
 function Newsletter() {
     return (
-        <div>
+        <div className='bg-[#fff] py-2'>
             <div className='w-full md:w-[1100px]  mx-auto flex flex-col md:flex-row justify-between items-start my-6'>
                 <div>
                     <div className='flex flex-row'>

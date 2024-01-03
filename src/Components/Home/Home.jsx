@@ -99,7 +99,7 @@ function Home() {
 
 
     return (
-        <div className='w-full h-screen'>
+        <div className='min-w-full h-screen overflow-x-hidden'>
             <div>
                 <Navbar />
                 <Header />

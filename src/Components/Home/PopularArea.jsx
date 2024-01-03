@@ -4,20 +4,21 @@ import { FaArrowRight } from 'react-icons/fa';
 
 function PopularArea() {
     const [hoveredItem, setHoveredItem] = useState(null);
+    let timeoutId;
 
     const handleMouseEnter = (index) => {
         setHoveredItem(index);
     };
 
     const handleMouseLeave = () => {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
             setHoveredItem(null);
         }, 200);
     };
 
     const handleContentMouseEnter = () => {
         // Clearing the timeout to prevent mouse leave event when clicking on the button
-        clearTimeout();
+        clearTimeout(timeoutId);
     };
 
     const handleContentMouseLeave = () => {
@@ -47,13 +48,13 @@ function PopularArea() {
 
     return (
         <div>
-            <div className='min-w-fit max-w-[1050px] bg-[#fff] mx-auto my-3 shadow-md p-3 rounded-lg border-[1px] border-slate-100'>
+            <div className='w-full md:w-[1050px] bg-[#fff] mx-auto my-3 shadow-md p-4 rounded-lg border-[1px] border-slate-100'>
                 <h3 className='text-2xl md:text-4xl font-[800] tracking-wider px-3 mb-2'>Popular area to stay in Kathmandu</h3>
                 <div className='flex flex-col md:flex-row justify-center items-center'>
                     {popularPlace.map((item, index) => (
                         <div key={index} className='relative'>
                             <div
-                                className='w-[300px] h-[250px] cursor-pointer mt-2 mx-2 rounded-lg -z-10'
+                                className='w-[300px] h-[200px] cursor-pointer mt-2 mx-2 rounded-lg -z-10'
                                 onMouseEnter={() => handleMouseEnter(index)}
                                 onMouseLeave={handleMouseLeave}
                             >
@@ -66,6 +67,7 @@ function PopularArea() {
                             {hoveredItem === index && (
                                 <div
                                     className='absolute top-5 left-1 w-[300px] px-3 py-1 rounded-lg z-10'
+                                    onMouseEnter={handleContentMouseEnter}
                                     onMouseLeave={handleContentMouseLeave}
                                 >
                                     <h4 className='font-[600] text-[#fff] tracking-wide'>{item.Title}</h4>
