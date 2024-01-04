@@ -61,16 +61,14 @@ function Home() {
 
 
     return (
-        <div className='min-w-full h-screen overflow-x-hidden'>
-            <div>
+        <div className='min-w-full h-screen'>
                 <Navbar />
                 <Header />
                 <Section />
                 <PopularArea />
                 <Hotel />
                 <Newsletter />
-                <Footer />
-            </div>
+                <Footer />          
         </div>
     )
 }

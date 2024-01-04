@@ -47,8 +47,8 @@ function Hotel() {
   }, []);
 
   return (
-    <div className="w-full bg-[#fff]">
-      <div className="my-5 w-full md:w-[1050px] mx-auto  p-3 bg-[#fff] rounded-lg">
+    <div className="w-full">
+      <div className="my-3 bg-[#fff] w-full md:w-[1050px] mx-auto  p-3  rounded-lg">
         <div className="flex flex-row justify-between items-center">
           <div className="text-[55px] font-[900] tracking-wide leading-4">
             Hotel

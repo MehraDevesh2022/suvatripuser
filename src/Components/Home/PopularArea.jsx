@@ -49,8 +49,8 @@ function PopularArea() {
     return (
         <div>
             <div className='w-full md:w-[1050px] bg-[#fff] mx-auto my-3 shadow-md p-4 rounded-lg border-[1px] border-slate-100'>
-                <h3 className='text-2xl md:text-4xl font-[800] tracking-wider px-3 mb-2'>Popular area to stay in Kathmandu</h3>
-                <div className='flex flex-col md:flex-row justify-center items-center'>
+                <h3 className='text-2xl md:text-3xl font-[800] tracking-wider px-2 mb-2'>Popular area to stay in Kathmandu</h3>
+                <div className='flex flex-col md:flex-row justify-between items-center'>
                     {popularPlace.map((item, index) => (
                         <div key={index} className='relative'>
                             <div
