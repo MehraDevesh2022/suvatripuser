@@ -57,44 +57,6 @@ function Home() {
 
 
 
-      useEffect(() => {
-        const fetchRoomData = async () => {
-          try {
-            const token = localStorage.getItem("token");
-            console.log(token , "token inside home");
-    
-            const headers = {
-              Authorization: token ? `Bearer ${token}` : undefined,
-              My_Secret: MY_SECRET,
-            };
-    
-            const response = await axios.get(
-              `${process.env.REACT_APP_BASE_URL}/room/get-all-rooms`,
-              {
-                headers,
-              }
-            );
-
-            // console.log(response.data.data , "response.data.data inside home");
-    
-            if (response.data.success) {
-              // while user were not logged in
-              actions.setRoomData(response.data.data);
-        
-            } 
-            
-          } catch (error) {
-            console.error("Error fetching special data:", error);
-            // Handle error as needed
-          }
-        }
-
-        fetchRoomData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      
-      }, [])
-
-
 
 
 

@@ -35,6 +35,7 @@ function HotelAnimites() {
         nearbyLocations: hotelDetial?.nearbyLocations ?? ['Kathmandu Park (2km)', 'Teo Park (2.3km)'],
     };
 
+ // get rooms data using this hotel id
 
     useEffect(() => {
 

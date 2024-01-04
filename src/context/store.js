@@ -9,8 +9,9 @@ const initialState = {
   isLoading: false,
   hotelDetails: {},
   roomDetails: {},
-  profileData: {},
 
+    
+  
   authType : "local"
 };
 
