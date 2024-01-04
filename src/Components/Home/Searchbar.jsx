@@ -36,6 +36,8 @@ function Searchbar() {
   const customStyle = {
     fontSize: "20px", // Adjust the font size as needed
     fontWeight: "500",
+    border: "none",      // To remove the border
+    outline: "none",  
     // Add other styles as needed
   };
   const calenderInput = {

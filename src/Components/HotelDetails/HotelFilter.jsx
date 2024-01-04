@@ -35,7 +35,7 @@ function HotelFilter() {
   
   
     const hotelPages = [
-      { path: `/hoteldetails/${hotelId}/`, label: 'Room' },
+      { path: `/hoteldetails/${hotelId}`, label: 'Room' },
       { path: `/hoteldetails/${hotelId}/amenities`, label: 'Ameninites' },
       { path: `/hoteldetails/${hotelId}/description`, label: 'Description' },
       { path: `/hoteldetails/${hotelId}/review`, label: 'Review' },
