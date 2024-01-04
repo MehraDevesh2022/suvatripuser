@@ -3,15 +3,18 @@ import { FaUser, FaWifi } from "react-icons/fa";
 import { LuParkingCircle } from "react-icons/lu";
 import { MdOutlineHomeWork } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
+import { format } from "date-fns";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Form from "react-bootstrap/Form";
+import { DateRangePicker } from "react-date-range";
 import { useAppContext } from "../../context/store";
 import axios from "axios";
 function HotelRooms() {
-    const [number, setNumber] = useState(1);
+    const [selectedRooms, setSelectedRooms] = useState({});
     const [show, setShow] = useState(false);
     const { state } = useAppContext();
     const hotelData = state.hotelDetails;
@@ -26,7 +29,54 @@ function HotelRooms() {
     
     const [specialRequest, setSpecialRequest] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [showCalender, setShowCalender] = useState(false);
+    const [openOptions, setOpenOptions] = useState(false);
+    const [date, setDate] = useState([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: "selection",
+        },
+    ]);
 
+    const formatStartDate = format(date[0].startDate, "dd.MMM");
+    const formatEndDate = format(date[0].endDate, "dd.MMM");
+
+    const handleCalender = () => {
+        setShowCalender(true);
+        setOpenOptions(false);
+    };
+
+    const hideCalender = () => {
+        setShowCalender(false);
+        setOpenOptions(true);
+    };
+
+    const handleDateSelect = (ranges) => {
+        setDate([ranges.selection]);
+        console.log(date[0].startDate, "ranges")
+        hideCalender(); 
+    };
+   
+      const calenderInput = {
+        fontSize: "20px",
+        fontWeight: "500",
+        border: "none",      
+        outline: "none",   
+        
+    };
+
+  
+  
+
+
+      const formatDateWithDayName = (dateObject) => {
+        const options = { weekday: "long" };
+        return dateObject.toLocaleDateString("en-US", options);
+      };
+      const currentDay = formatDateWithDayName(date[0].startDate);
+      const lastDay = formatDateWithDayName(date[0].endDate);
+    
 
  const handleArrivalTimeChange = (type, value) => {
         switch (type) {
@@ -69,13 +119,30 @@ function HotelRooms() {
     useEffect(() => {
 
     }, []); 
-    const IncrementNumber = () => {
-        setNumber((prevNum) => prevNum + 1);
+    const IncrementNumber = (roomId , numberOfRoom) => {
+        setSelectedRooms((prevSelectedRooms) => {
+            const updatedRooms = { ...prevSelectedRooms };
+            const currentCount = updatedRooms[roomId] || 0;
+         
+            if (currentCount < numberOfRoom) {
+                updatedRooms[roomId] = currentCount + 1;
+            } else {
+                // If trying to exceed, keep it at the maximum available number
+                updatedRooms[roomId] = numberOfRoom;
+            }
+    
+            return updatedRooms;
+        });
     };
-
-    const DecreaseNumber = () => {
-        setNumber((prevNum) => (prevNum > 0 ? prevNum - 1 : prevNum));
+    
+    const DecreaseNumber = (roomId) => {
+        setSelectedRooms((prevSelectedRooms) => {
+            const updatedRooms = { ...prevSelectedRooms };
+            updatedRooms[roomId] = Math.max((updatedRooms[roomId] || 0) - 1, 0);
+            return updatedRooms;
+        });
     };
+    
 
     const renderAmenities = (amenities) => {
         return amenities.map((amenity, index) => (
@@ -87,26 +154,42 @@ function HotelRooms() {
 
 
     const handleSubmit = async () => {
-        const estimatedArrival = `${arrivalHours}:${arrivalMinutes} ${arrivalAmPm}`;
+
+
+        const selectedRoomsArray = Object.entries(selectedRooms)
+        .filter(([roomId, count]) => count > 0)
+        .map(([roomId, count]) => ({ roomId, count }));
+
+   
+    if (selectedRoomsArray.length === 0) {
+        alert("Please select at least one room.");
+        return;
+    }
+
+    const estimatedArrival = `${arrivalHours}:${arrivalMinutes} ${arrivalAmPm}`;
+      console.log(selectedRoomsArray , "data")
+    // Prepare the data to be sent to the server
+    const formData = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        estimatedArrival,
+        smokingPreference,
+        specialRequest,
+        hotel_id: hotelData._id,
+        rooms: selectedRoomsArray, 
+        checkInDate: date[0].startDate,
+        checkOutDate: date[0].endDate,
+        user_id: state?.profileData?._id,
+        status: "confirmd"
+    };
+
+
+     
          
-        const formData = {
-            firstName,
-            lastName,
-            email,
-            phoneNumber,
-            estimatedArival :estimatedArrival,
-            smokingPreference,
-            specialRequest,
-            hotel_id: hotelData._id,
-            room_id : hotelData?.rooms._id,
-            roomNumber : hotelData?.roomsNo,
-            UUID :  hotelData?.UUID,
-            user_id : state?.profileData?._id,
-            status : "confirmd"
-
-        };
-
-        console.log(formData);
+    console.log(formData, "formData");
+       
 
     try {
 
@@ -134,6 +217,8 @@ function HotelRooms() {
         
    
     };
+
+    console.log(roomsDeatils , "roomsDeatils.length");
 
     return (
         <div>
@@ -218,6 +303,63 @@ function HotelRooms() {
                                 </select>
                             </div>
                         </Row>
+
+                    {/* chekin chekout adding */}
+                           <Row>
+
+                           <div className="relative w-full md:w-[360px] my-2 md:my-0 flex flex-row justify-between md:justify-start items-center">
+                <div className=" bg-[#f2f5f8] w-[180px] p-3 ml-0 md:ml-6 rounded-lg">
+                  <p className="bg-[#fff] w-[100px] text-[#f62c31] text-center py-[2px] rounded-lg">
+                    Check-In
+                  </p>
+                  <Form onClick={handleCalender}>
+                    <input
+                      type="text"
+                      style={calenderInput}
+                      className="form-control bg-transparent"
+                      id="floatingInputValue"
+                      placeholder="check-In"
+                      value={formatStartDate}
+                    />
+                    <p className="mt-1 ml-[1px]">{currentDay}</p>
+                  </Form>
+                </div>
+                <div className="bg-[#f2f5f8] w-[180px] p-3 mx-1 rounded-lg">
+                  <p className="bg-[#fff] w-[100px] text-[#f62c31] text-center py-[2px] rounded-lg">
+                    Check-Out
+                  </p>
+                  <Form onClick={handleCalender}>
+                    <input
+                      type="text"
+                      style={calenderInput}
+                      className="form-control bg-transparent"
+                      id="floatingInputValue"
+                      placeholder="check-out"
+                      value={formatEndDate}
+                    />
+                    <p className="mt-1 ml-[1px]">{lastDay}</p>
+                  </Form>
+                </div>
+                {showCalender ? (
+                  <div className="absolute top-[150px] left-1 md:left-6 z-10">
+                     <DateRangePicker
+                                            editableDateInputs={true}
+                                            onChange={handleDateSelect}
+                                            moveRangeOnFirstSelection={false}
+                                            ranges={date}
+                                            months={2}
+                                            direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
+                                            rangeColors={["#f33e5b", "#3ecf8e", "#fed14c"]}
+                                        />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              
+
+                           </Row>
+            
                         <Row className="mb-2 px-2">
                             <p className="text-xl font-[500] tracking-wider mb-1">Do you Prefer Smoking Room ? </p>
                             <div className="px-3">
@@ -260,6 +402,9 @@ function HotelRooms() {
                                 </div>
                             </Row>
 
+
+                  
+
                             <div className='w-full md:w-[400px] mx-auto'>
                                 <button className='w-full bg-[#f62c31] px-4 py-3 rounded-lg text-[#fff] font-[600]' onClick={handleSubmit}>Complete Your Booking</button>
                             </div>
@@ -267,7 +412,9 @@ function HotelRooms() {
             </Modal.Body>
             </Modal>
 
-            <div className="w-full bg-slate-50 my-3 grid grid-cols-2 md:grid-cols-4 gap-4 p-2 rounded-lg shadow-md">
+          {roomsDeatils?.length > 0 ? <>
+          {roomsDeatils?.map((room, index) =>(
+                <div className="w-full bg-slate-50 my-3 grid grid-cols-2 md:grid-cols-4 gap-4 p-2 rounded-lg shadow-md" key={room._id}>
                 {/* Details from hotelData */}
                 <div className="border-r-[1px] px-3 border-slate-400">
                     <h3 className="text-[20px] md:text-[25px] font-[600] mb-0 text-[#f86d71]">
@@ -280,7 +427,7 @@ function HotelRooms() {
                         ))}
                     </div>
                     <p className="mb-1 mt-2 text-[13px] md:text-[17px]">
-                        <span className="text-[12px] md:text-[16px]">--</span> Room Only
+                        <span className="text-[12px] md:text-[16px]">--</span> Room Type : {room?.roomType}
                     </p>
                     <p   className="mb-1  text-[13px] md:text-[17px]">
                         <span className="text-[12px] md:text-[16px]">--</span> Free Cancellation
@@ -315,18 +462,18 @@ function HotelRooms() {
                         No of Rooms
                     </h3>
                     <div className="flex flex-row items-center mb-3">
-                        <button onClick={DecreaseNumber}>
+                       <button onClick={() => DecreaseNumber(room._id)}>
                             <GrFormPrevious className="text-[25px] font-[700]" />
                         </button>
                         <span className="bg-slate-600 rounded-lg px-2 text-[#fff] text-[16px]">
-                            {number > 0 ? `+${number}` : number}
+                           {selectedRooms[room._id] || 0}
                         </span>
-                        <button onClick={IncrementNumber}>
+                       <button onClick={() => IncrementNumber(room._id , room?.noOfRooms)}>
                             <MdOutlineNavigateNext className="text-[25px]" />
                         </button>
                         <span
                             className={`${show ? 'bg-[#129035]' : 'bg-slate-600'} text-[13px] text-[#fff] px-2 py-1 ml-0 md:ml-2 rounded-lg cursor-pointer`}
-                            onClick={handleShow}
+                           
                         >
                             {show ? 'selected' : 'Select'}
                         </span>
@@ -337,6 +484,18 @@ function HotelRooms() {
                     <p className="text-[21px]">Total</p>
                 </div>
             </div>
+
+          ))}
+            <div className="w-full md:w-[400px] mx-auto">
+           
+            <button
+              className="w-full bg-[#f62c31] px-4 py-3 rounded-lg text-[#fff] font-[600]"
+              onClick={handleShow}
+            >
+              Submit
+            </button>
+             </div>
+          </> : <><div>no room founds</div></>}
         </div>
     );
 }
