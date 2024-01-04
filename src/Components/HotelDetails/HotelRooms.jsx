@@ -15,6 +15,7 @@ function HotelRooms() {
     const [show, setShow] = useState(false);
     const { state } = useAppContext();
     const hotelData = state.hotelDetails;
+    const roomsDeatils = state.roomData;
     const [firstName, setFirstName] = useState(''); 
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -22,7 +23,7 @@ function HotelRooms() {
     const [arrivalMinutes, setArrivalMinutes] = useState('');
     const [arrivalAmPm, setArrivalAmPm] = useState('AM');
     const [smokingPreference, setSmokingPreference] = useState('');
-
+    
     const [specialRequest, setSpecialRequest] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
