@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useMemo } from "react";
 import { FaUser, FaWifi } from "react-icons/fa";
+import { CiWifiOff } from "react-icons/ci";
 import { LuParkingCircle } from "react-icons/lu";
 import { MdOutlineHomeWork } from "react-icons/md";
+import { AiOutlineKey } from "react-icons/ai";
+import { FaHouseChimneyCrack } from "react-icons/fa6";
 import { GrFormPrevious } from "react-icons/gr";
-import { format } from "date-fns";
+import { format, isWeekend } from "date-fns";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
@@ -26,7 +29,7 @@ function HotelRooms() {
   const [arrivalMinutes, setArrivalMinutes] = useState("");
   const [arrivalAmPm, setArrivalAmPm] = useState("AM");
   const [smokingPreference, setSmokingPreference] = useState("");
-
+  const [isWeekEnd, setIsWeekend] = useState(false); // [true, false, true, false, true, false, true
   const [specialRequest, setSpecialRequest] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [showCalender, setShowCalender] = useState(false);
@@ -45,6 +48,14 @@ function HotelRooms() {
   const handleCalender = () => {
     setShowCalender(true);
     setOpenOptions(false);
+  };
+
+  const getPriceBasedOnDay = () => {
+    const currentDate = new Date('January 8, 2024 23:15:30');
+    const currentDayOfWeek = currentDate.getDay();
+    const isWeekend = currentDayOfWeek === 0 || currentDayOfWeek === 6;
+   // it will return true or false
+    return isWeekend;
   };
 
   const hideCalender = () => {
@@ -113,7 +124,10 @@ function HotelRooms() {
     padding: "10px 10px",
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setIsWeekend(getPriceBasedOnDay())
+
+  }, []);
   const IncrementNumber = (roomId, numberOfRoom) => {
     setSelectedRooms((prevSelectedRooms) => {
       const updatedRooms = { ...prevSelectedRooms };
@@ -150,15 +164,15 @@ function HotelRooms() {
     const selectedRoomsArray = Object.entries(selectedRooms)
       .filter(([roomId, count]) => count > 0)
       .map(([roomId, count]) => ({ roomId, count }));
-
+  
     if (selectedRoomsArray.length === 0) {
       alert("Please select at least one room.");
       return;
     }
-
+  
     const estimatedArrival = `${arrivalHours}:${arrivalMinutes} ${arrivalAmPm}`;
     console.log(selectedRoomsArray, "data");
-    // Prepare the data to be sent to the server
+  
     const formData = {
       firstName,
       lastName,
@@ -174,38 +188,64 @@ function HotelRooms() {
       user_id: state?.profileData?._id,
       status: "confirmd",
     };
-
+  
     console.log(formData, "formData");
-
+  
     try {
       const token = localStorage.getItem("token");
-
+  
       const headers = {
         Authorization: token ? `Bearer ${token}` : undefined,
       };
-
+  
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/reservation`,
         formData,
         { headers }
       );
-
+  
       if (response.data.status) {
         alert("Your Booking is Done");
+  
+        // Reset the component's state to initial values or empty values
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPhoneNumber("");
+        setArrivalHours("");
+        setArrivalMinutes("");
+        setArrivalAmPm("AM");
+        setSmokingPreference("");
+        setSpecialRequest("");
+        setDate([
+          {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: "selection",
+          },
+        ]);
+        setIsWeekend(false);
+        setSelectedRooms({});
       } else {
         alert("Something went wrong");
       }
-
+  
       handleClose();
     } catch (error) {
       console.log(error, "error");
       handleClose();
     }
   };
+  
 
   console.log(roomsDeatils, "roomsDeatils.length");
 
-
+ // fromate currency in nepali
+ const formatPriceNumber = useMemo(() => {
+  return (price, currency) => {
+    return new Intl.NumberFormat('ne-NP', { style: 'currency', currency }).format(price);
+  };
+}, []);
 
 
   return (
@@ -369,9 +409,9 @@ function HotelRooms() {
                       moveRangeOnFirstSelection={false}
                       ranges={date}
                       months={2}
-                    //   direction={
-                    //     window.innerWidth < 768 ? "vertical" : "horizontal"
-                    //   }
+                      //   direction={
+                      //     window.innerWidth < 768 ? "vertical" : "horizontal"
+                      //   }
                       rangeColors={["#f33e5b", "#3ecf8e", "#fed14c"]}
                     />
                   </div>
@@ -425,7 +465,7 @@ function HotelRooms() {
             <Row>
               <div className="mb-3">
                 <h3 className="text-3xl font-[700] tracking-wider">
-                    Special Request
+                  Special Request
                 </h3>
                 <textarea
                   name="textarea"
@@ -459,41 +499,49 @@ function HotelRooms() {
               {/* Details from hotelData */}
               <div className="border-r-[1px] px-3 border-slate-400">
                 <h3 className="text-[20px] md:text-[25px] font-[600] mb-0 text-[#f86d71]">
-                  {hotelData.propertyName}
+                  {room?.roomType}
                 </h3>
                 <div>
                   {/* Render icons based on data */}
-                  {Array.from({ length: hotelData.roomsNo }).map((_, index) => (
+                  {Array.from({ length: room?.guests }).map((_, index) => (
                     <FaUser key={index} className="inline mx-2" />
                   ))}
                 </div>
                 <p className="mb-1 mt-2 text-[13px] md:text-[17px]">
-                  <span className="text-[12px] md:text-[16px]">--</span> Room
+                  <span className="text-[12px] md:text-[16px]">-</span> Room
                   Type : {room?.roomType}
                 </p>
                 <p className="mb-1  text-[13px] md:text-[17px]">
-                  <span className="text-[12px] md:text-[16px]">--</span> Free
-                  Cancellation
+                  <span className="text-[12px] md:text-[16px]">-</span>{" "}
+                  {hotelData?.paymentPolicy[0]?.cancleOption === "Yes"
+                    ? "Free Cancellation"
+                    : "Non Refundable"}
                 </p>
                 <p className="mb-1  text-[13px] md:text-[17px]">
-                  <span className="text-[12px] md:text-[16px]">--</span> Child
-                  Friendly
+                  <span className="text-[12px] md:text-[16px]">-</span>{" "}
+                  {hotelData?.hotelRules?.allowChildren === "no"
+                    ? "Not Child Friendly"
+                    : "Child Friendly"}
                 </p>
                 <p className="mb-1  text-[12px] md:text-[17px]">
-                  <span className="text-[12px] md:text-[16px]">--</span>{" "}
+                  <span className="text-[12px] md:text-[16px]">-</span>{" "}
                   Breakfast Included
                 </p>
+                {hotelData?.facilities?.recreation?.map((item, idx) => (
+                  <>
+                    <p className="mb-1  text-[12px] md:text-[17px]" key={idx}>
+                      <span className="text-[12px] md:text-[16px]">-</span>{" "}
+                      {item}
+                    </p>
+                  </>
+                ))}
               </div>
               <div className="border-r-[0px] md:border-r-[1px] px-4 border-slate-400">
                 <h3 className="text-[20px] md:text-[25px] font-[600] mb-3 text-[#f86d71]">
                   Amenities
                 </h3>
                 {renderAmenities([
-                  {
-                    icon: <FaWifi className="inline mr-2" />,
-                    label: "Free Wifi",
-                  },
-                  {
+                  hotelData?.parking?.isParkingAvailable === "yesFree" && {
                     icon: <LuParkingCircle className="inline mr-2" />,
                     label: "Free Parking",
                   },
@@ -505,21 +553,30 @@ function HotelRooms() {
                     icon: <FaWifi className="inline mr-2" />,
                     label: "Free Wifi",
                   },
+              
                   {
-                    icon: <LuParkingCircle className="inline mr-2" />,
-                    label: "Free Parking",
+                    icon: <AiOutlineKey className="inline mr-2" />,
+                    label: "Key Card Access",
+                  },
+                  {
+                    icon: <FaHouseChimneyCrack className="inline mr-2" />,
+                    label: "Housekeeping",
                   },
                 ])}
               </div>
+
               <div className="pl-5 border-r-[1px] border-slate-400">
                 <h3 className="text-[25px] font-[600] mb-2 text-[#f86d71]">
                   Price
                 </h3>
-                <p className="mb-2 text-[20px] font-[800]">
-                  {hotelData.currency} {hotelData.price}
+                <p className="mb-2 text-[20px] font-[300]">
+                  {" "} {formatPriceNumber(isWeekend ? room?.weekendPrice : room?.weekdayPrice , hotelData?.currency)}
                 </p>
                 <p className="mb-2 text-slate-500">
-                  +{hotelData.taxes} Taxes & Fees
+                   Non Refundable Price : {formatPriceNumber(room?.nonRefundPrice , hotelData?.currency)}
+                </p>
+                <p className="mb-2 text-slate-500">
+                  +{hotelData.taxes || 750 } Taxes & Fees
                 </p>
                 <p className="mb-2 text-slate-500">Per Night</p>
               </div>
@@ -541,14 +598,14 @@ function HotelRooms() {
                   </button>
                   <span
                     className={`${
-                      show ? "bg-[#129035]" : "bg-slate-600"
+                      selectedRooms[room._id] ? "bg-[#129035]" : "bg-slate-600"
                     } text-[13px] text-[#fff] px-2 py-1 ml-0 md:ml-2 rounded-lg cursor-pointer`}
                   >
-                    {show ? "selected" : "Select"}
+                    {selectedRooms[room._id] ? "selected" : "Select"}
                   </span>
                 </div>
                 <p className="text-[21px] font-[700] mb-1">
-                  {hotelData.currency} {hotelData.total}
+                 {formatPriceNumber(isWeekend ? room?.weekendPrice : room?.weekdayPrice , hotelData.currency)}
                 </p>
                 <p className="text-[21px]">Total</p>
               </div>
@@ -559,7 +616,7 @@ function HotelRooms() {
               className="w-full bg-[#f62c31] px-4 py-3 rounded-lg text-[#fff] font-[600]"
               onClick={handleShow}
             >
-              Submit
+          Book Now
             </button>
           </div>
         </>
