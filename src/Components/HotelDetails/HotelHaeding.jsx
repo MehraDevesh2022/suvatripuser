@@ -9,7 +9,7 @@ function HotelHaeding() {
 
 
   const hotelName = hotelDetial?.propertyName || 'Barcelo Anfa'; 
-  const country = hotelDetial?.country || 'Nepal'; 
+  const country = hotelDetial?.country + " " +  hotelDetial?.city + " " + hotelDetial?.address  || 'Nepal'; 
   const rating = hotelDetial?.rating || 0; 
 
   return (
@@ -18,7 +18,7 @@ function HotelHaeding() {
         <div className='flex flex-row justify-start items-center mb-0'>
           <h3 className='mt-2 mb-0 text-[30px] md:text-[35px] font-[700] tracking-wider'>{hotelName}</h3>
           <div className='mx-3 text-[#FFD250]'>
-            {starArray.map((item, index) => (
+            {Array.from({length : Number(rating)}).map((item, index) => (
               <FaStar key={index} className={`inline ml-1 text-${index < rating ? 'yellow' : 'gray-300'} font-[900]`} />
             ))}
           </div>

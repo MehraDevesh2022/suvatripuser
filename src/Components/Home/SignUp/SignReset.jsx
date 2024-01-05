@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 function SignReset({ otpHandler  }) {
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
-
+   console.log("page 1");
   const handleVerifyOTP = () => {
     // Validate OTP (for example, check if it is a 6-digit number)
     const isValidOTP = /^\d{6}$/.test(otp);
@@ -33,6 +33,7 @@ function SignReset({ otpHandler  }) {
           <img src={LoginImg} alt='login_img' className='w-full h-full rounded-lg' />
         </div>
         <div className='w-[400px] px-4 py-3'>
+            <h5 className='text-2xl font-bold text-gray-500 text-center'>Enter Email Otp</h5>
           <div className='my-3 text-center cursor-pointer hover:underline'>Resend OTP</div>
           <div className='mb-3'>
             <input
