@@ -13,13 +13,12 @@ import { useAppContext } from "../../../context/store";
 // import { LoginSocialFacebook } from "reactjs-social-login";
 import Forget from "./Forget";
 import SignReset from "./SignReset";
-
-
+import VerfyPhoneOtp from "./VerfyPhoneOtp";
 function Sign({ handleBackdropClick, setHandleLoginShow }) {
   // For reset Password
   const [clickSignUp, setClickSignup] = useState(false);
-  const {state , actions} = useAppContext();
- 
+  const { state, actions } = useAppContext();
+  const [isPhoneOtp, setIsPhoneOtp] = useState(false);
 
   const [fieldWarnings, setFieldWarnings] = useState({
     username: false,
@@ -40,6 +39,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
     phoneNumber: "",
   });
   const [otp, setOTP] = useState("");
+  const [phoneOtp, setPhoneOtp] = useState("");
   const [token, setToken] = useState();
   const handleShow = () => setHandleLoginShow(true);
   // const navigate = useNavigate();
@@ -52,11 +52,8 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
     setFieldWarnings((prev) => ({ ...prev, [name]: value.trim() === "" }));
   };
 
-  const handleOtp = (otp) => {
  
-    setOTP(otp);
-    handleVerify();
-  };
+
 
   const handleSignUp = async () => {
     // Reset field warnings
@@ -66,7 +63,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       phoneNumber: formData.phoneNumber.trim() === "",
       password: formData.password.trim() === "",
     });
-  
+
     // Check if any field is empty
     if (
       formData.username.trim() === "" ||
@@ -77,7 +74,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       // If any field is empty, do not submit the form
       return;
     }
-  
+
     try {
       const config = {
         headers: {
@@ -89,26 +86,22 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
         formData,
         config
       );
-  
+
       if (response.data.success && response.data.success === true) {
         setClickSignup(true);
-         
-          
+
         setToken(response.data.token);
       }
     } catch (error) {
       console.error("Error during signup:", error);
     }
-  // state management
-     setClickSignup(true);
+  
   };
-  
-  
 
   const handleVerify = async () => {
     try {
       if (otp === "") {
-         return;
+        return;
       }
 
       const config = {
@@ -126,23 +119,64 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       );
 
       if (response.data.success && response.data.success === true) {
-      
-        setClickSignup(true);
-        actions.login(true);
-        actions.setProfileData(response.data.user);
-        localStorage.setItem("token", token);
-        localStorage.setItem('isLoggedIn', JSON.stringify(true));
-        handleBackdropClick();
-     
+        setIsPhoneOtp(true);
       }
     } catch (error) {
-
-      actions.login(false); 
+      actions.login(false);
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("token");
       console.error("Error during signup:", error);
     }
   };
+
+  const handleOtp = (otp) => {
+    setOTP(otp);
+    handleVerify();
+  };
+
+
+  const handleVerifyPhone = async () => {
+    try {
+      if (otp === "") {
+        return;
+      }
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/auth/user-phone-otp`,
+        {
+          phoneNumber: formData.phoneNumber,
+          otp: phoneOtp,
+        },
+        config
+      );
+
+      if (response.data.success && response.data.success === true) {
+        setClickSignup(true);
+        actions.login(true);
+        actions.setProfileData(response.data.user);
+        localStorage.setItem("token", token);
+        localStorage.setItem("isLoggedIn", JSON.stringify(true));
+        handleBackdropClick();
+      }
+    } catch (error) {
+      actions.login(false);
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("token");
+      console.error("Error during signup:", error);
+    }
+  };
+
+  const handlePhoneOtp = (otp) => {
+  setPhoneOtp(otp)
+    handleVerifyPhone();
+  };
+
+
 
   async function handleGoogleLoginSuccess(tokenResponse) {
     const accessToken = tokenResponse.access_token;
@@ -163,21 +197,19 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       if (response.data.token) {
         actions.setProfileData(response.data.user);
         actions.login(true);
-        localStorage.setItem('isLoggedIn', JSON.stringify(true));
+        localStorage.setItem("isLoggedIn", JSON.stringify(true));
         localStorage.setItem("token", response.data.token);
         handleBackdropClick();
-     
       }
     } catch (error) {
       actions.login(false);
-      localStorage.removeItem("isLoggedIn")
-      localStorage.removeItem("token")
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("token");
       console.error("Error during Google login:", error);
     }
   }
 
   const handleSuccess = async (response) => {
-  
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const result = await axios.post(
@@ -192,16 +224,14 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
       if (result.data.token) {
         actions.setProfileData(result.data.user);
         actions.login(true);
-        localStorage.setItem('isLoggedIn', JSON.stringify(true));
+        localStorage.setItem("isLoggedIn", JSON.stringify(true));
         localStorage.setItem("token", result.data.token);
         handleBackdropClick();
-      
       }
     } catch (error) {
-      
       actions.login(false);
-      localStorage.removeItem("isLoggedIn")
-      localStorage.removeItem("token")
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("token");
       console.error("Error during Facebook login:", error);
     }
   };
@@ -224,91 +254,107 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
             />
           </div>
           <div className="w-[350px] px-4 py-3">
-          <div className="mb-2">
-  <input
-    type="text"
-    name="username"
-    placeholder="User Name"
-    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
-      fieldWarnings.username && formData.username.trim() === ""
-        ? "border-red-500"
-        : ""
-    }`}
-    value={formData.username}
-    onChange={handleInputChange}
-    onBlur={() => setFieldWarnings({ ...fieldWarnings, username: true })}
-  />
-  {fieldWarnings.username && formData.username.trim() === "" && (
-    <div className="text-red-500 text-sm mt-1">Username is required</div>
-  )}
-</div>
+            <div className="mb-2">
+              <input
+                type="text"
+                name="username"
+                placeholder="User Name"
+                className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                  fieldWarnings.username && formData.username.trim() === ""
+                    ? "border-red-500"
+                    : ""
+                }`}
+                value={formData.username}
+                onChange={handleInputChange}
+                onBlur={() =>
+                  setFieldWarnings({ ...fieldWarnings, username: true })
+                }
+              />
+              {fieldWarnings.username && formData.username.trim() === "" && (
+                <div className="text-red-500 text-sm mt-1">
+                  Username is required
+                </div>
+              )}
+            </div>
 
-<div className="mb-2">
-  <input
-    type="email"
-    name="email"
-    placeholder="Email"
-    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
-      fieldWarnings.email && formData.email.trim() === ""
-        ? "border-red-500"
-        : ""
-    }`}
-    value={formData.email}
-    onChange={handleInputChange}
-    onBlur={() => setFieldWarnings({ ...fieldWarnings, email: true })}
-  />
-  {fieldWarnings.email && formData.email.trim() === "" && (
-    <div className="text-red-500 text-sm mt-1">Email is required</div>
-  )}
-</div>
+            <div className="mb-2">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                  fieldWarnings.email && formData.email.trim() === ""
+                    ? "border-red-500"
+                    : ""
+                }`}
+                value={formData.email}
+                onChange={handleInputChange}
+                onBlur={() =>
+                  setFieldWarnings({ ...fieldWarnings, email: true })
+                }
+              />
+              {fieldWarnings.email && formData.email.trim() === "" && (
+                <div className="text-red-500 text-sm mt-1">
+                  Email is required
+                </div>
+              )}
+            </div>
 
-<div className="mb-2">
-  <input
-    type="number"
-    name="phoneNumber"
-    placeholder="Enter the phone"
-    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
-      fieldWarnings.phoneNumber && formData.phoneNumber.trim() === ""
-        ? "border-red-500"
-        : ""
-    }`}
-    value={formData.phoneNumber}
-    onChange={handleInputChange}
-    onBlur={() => setFieldWarnings({ ...fieldWarnings, phoneNumber: true })}
-  />
-  {fieldWarnings.phoneNumber && formData.phoneNumber.trim() === "" && (
-    <div className="text-red-500 text-sm mt-1">
-      Phone Number is required
-    </div>
-  )}
-</div>
+            <div className="mb-2">
+              <input
+                type="number"
+                name="phoneNumber"
+                placeholder="Enter the phone"
+                className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                  fieldWarnings.phoneNumber &&
+                  formData.phoneNumber.trim() === ""
+                    ? "border-red-500"
+                    : ""
+                }`}
+                value={formData.phoneNumber}
+                onChange={handleInputChange}
+                onBlur={() =>
+                  setFieldWarnings({ ...fieldWarnings, phoneNumber: true })
+                }
+              />
+              {fieldWarnings.phoneNumber &&
+                formData.phoneNumber.trim() === "" && (
+                  <div className="text-red-500 text-sm mt-1">
+                    Phone Number is required
+                  </div>
+                )}
+            </div>
 
-<div className="mb-2">
-  <input
-    type="Password"
-    name="password"
-    placeholder="Enter your password"
-    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
-      fieldWarnings.password && formData.password.trim() === ""
-        ? "border-red-500"
-        : ""
-    }`}
-    value={formData.password}
-    onChange={handleInputChange}
-    onBlur={() => setFieldWarnings({ ...fieldWarnings, password: true })}
-  />
-  <div className="text-right">
-    <p
-      className="text-slate-500 hover:underline text-[16px] cursor-pointer"
-      onClick={handleForgotPass}
-    >
-      Forgot Password
-    </p>
-  </div>
-  {fieldWarnings.password && formData.password.trim() === "" && (
-    <div className="text-red-500 text-sm mt-1">Password is required</div>
-  )}
-</div>
+            <div className="mb-2">
+              <input
+                type="Password"
+                name="password"
+                placeholder="Enter your password"
+                className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                  fieldWarnings.password && formData.password.trim() === ""
+                    ? "border-red-500"
+                    : ""
+                }`}
+                value={formData.password}
+                onChange={handleInputChange}
+                onBlur={() =>
+                  setFieldWarnings({ ...fieldWarnings, password: true })
+                }
+              />
+              <div className="text-right">
+                <p
+                  className="text-slate-500 hover:underline text-[16px] cursor-pointer"
+                  onClick={handleForgotPass}
+                >
+                  Forgot Password
+                </p>
+              </div>
+              {fieldWarnings.password && formData.password.trim() === "" && (
+                <div className="text-red-500 text-sm mt-1">
+                  Password is required
+                </div>
+              )}
+            </div>
 
             <div className="w-full my-3">
               <Button
@@ -378,9 +424,9 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
           </div>
         </div>
       ) : clickSignUp ? (
-        <SignReset otpHandler={handleOtp} />
+        <>{!isPhoneOtp ? <SignReset otpHandler={handleOtp} /> : <VerfyPhoneOtp  otpHandler ={handlePhoneOtp}/>}</>
       ) : (
-        <Forget handleBackdropClick={handleBackdropClick}  />
+        <Forget handleBackdropClick={handleBackdropClick} />
       )}
     </div>
   );
