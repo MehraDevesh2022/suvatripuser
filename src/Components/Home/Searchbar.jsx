@@ -110,14 +110,14 @@ function Searchbar() {
     try {
       actions.isLoading(true);
 
-      const params = {
-        location: encodeURIComponent(searchData.location),
-        checkIn: date[0].startDate.toLocaleString(), // Convert start date to milliseconds
-        checkOut: date[0].endDate.toLocaleString(), // Convert end date to milliseconds
-        children: options.child,
-        room: options.room,
-        adult: options.adult,
-      };
+      // const params = {
+      //   location: encodeURIComponent(searchData.location),
+      //   checkIn: date[0].startDate.toLocaleString(), // Convert start date to milliseconds
+      //   checkOut: date[0].endDate.toLocaleString(), // Convert end date to milliseconds
+      //   children: options.child,
+      //   room: options.room,
+      //   adult: options.adult,
+      // };
       actions.isLoading(true);
 
       const params = {
@@ -131,21 +131,14 @@ function Searchbar() {
 
       const response = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/hotel/filter`,
-      const response = await axios.post(
-        `http://localhost:8000/hotel/filter`,
-        params,
+         params,
         {
-          params,
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             My_Secret: config.MY_SECRET,
           },
         }
       );
-
-      console.log(response.data.data);
-
-      console.log(response.data.data);
 
       actions.setHotel(response.data.data);
       actions.isLoading(false);
@@ -173,11 +166,10 @@ function Searchbar() {
             },
           }
         );
-        if (response.data.success && response.data.success === true)
-           {
-            actions.setAllRooms(response.data.data);
-            console.log(state.allRooms  , "all rooms");
-           }
+        if (response.data.success && response.data.success === true) {
+          actions.setAllRooms(response.data.data);
+          console.log(state.allRooms, "all rooms");
+        }
       } catch (error) {
         console.error("Error fetching rooms:", error);
         // Handle error as needed
@@ -252,7 +244,7 @@ function Searchbar() {
                       editableDateInputs={true}
                       onChange={(item) => {
                         console.log(new Date(item.selection.startDate));
-                        setDate([item.selection])
+                        setDate([item.selection]);
                       }}
                       moveRangeOnFirstSelection={false}
                       ranges={date}
