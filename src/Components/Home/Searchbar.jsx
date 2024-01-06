@@ -92,6 +92,12 @@ function Searchbar() {
   };
 
   const handleSearch = async () => {
+    Date.prototype.toJSON = function () {
+      const hoursDiff = this.getHours() - this.getTimezoneOffset() / 60;
+      this.setHours(hoursDiff);
+      return this.toISOString();
+    };
+
     const searchData = {
       location,
       startDate: date[0].startDate,
@@ -100,7 +106,18 @@ function Searchbar() {
     };
 
     // console.log(searchData , "location");
+    console.log(searchData, "location");
     try {
+      actions.isLoading(true);
+
+      const params = {
+        location: encodeURIComponent(searchData.location),
+        checkIn: date[0].startDate.toLocaleString(), // Convert start date to milliseconds
+        checkOut: date[0].endDate.toLocaleString(), // Convert end date to milliseconds
+        children: options.child,
+        room: options.room,
+        adult: options.adult,
+      };
       actions.isLoading(true);
 
       const params = {
@@ -114,6 +131,9 @@ function Searchbar() {
 
       const response = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/hotel/filter`,
+      const response = await axios.post(
+        `http://localhost:8000/hotel/filter`,
+        params,
         {
           params,
           headers: {
@@ -125,9 +145,15 @@ function Searchbar() {
 
       console.log(response.data.data);
 
+      console.log(response.data.data);
+
+      actions.setHotel(response.data.data);
+      actions.isLoading(false);
       actions.setHotel(response.data.data);
       actions.isLoading(false);
     } catch (error) {
+      console.error("Error fetching hotels:", error);
+      // Handle error as needed
       console.error("Error fetching hotels:", error);
       // Handle error as needed
     }
@@ -224,7 +250,10 @@ function Searchbar() {
                   <div className="absolute top-[150px] left-1 md:left-6 z-10">
                     <DateRangePicker
                       editableDateInputs={true}
-                      onChange={(item) => setDate([item.selection])}
+                      onChange={(item) => {
+                        console.log(new Date(item.selection.startDate));
+                        setDate([item.selection])
+                      }}
                       moveRangeOnFirstSelection={false}
                       ranges={date}
                       months={2}
