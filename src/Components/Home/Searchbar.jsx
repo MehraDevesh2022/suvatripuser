@@ -18,10 +18,8 @@ function Searchbar() {
     child: 0,
   });
 
-   console.log(process.env.REACT_APP_BASE_URL , "hotel search");
-
   const [location, setLocation] = useState("India");
-  const {state, actions} = useAppContext();
+  const { state, actions } = useAppContext();
   const [showCalender, setShowCalender] = useState(false);
   const [date, setDate] = useState([
     {
@@ -36,17 +34,17 @@ function Searchbar() {
   const customStyle = {
     fontSize: "20px", // Adjust the font size as needed
     fontWeight: "500",
-    border: "none",      // To remove the border
-    outline: "none",  
+    border: "none", // To remove the border
+    outline: "none",
     // Add other styles as needed
   };
   const calenderInput = {
     fontSize: "20px",
     fontWeight: "500",
-    border: "none",      // To remove the border
-    outline: "none",     // To remove the outline
+    border: "none", // To remove the border
+    outline: "none", // To remove the outline
     // Add other styles as needed
-};
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -101,40 +99,67 @@ function Searchbar() {
       // Add more parameters as needed
     };
 
-    console.log(searchData , "location");
+    // console.log(searchData , "location");
     try {
-        actions.isLoading(true);
-    
-        const params = {
-          location: encodeURIComponent(searchData.location),
-          startDate: encodeURIComponent(searchData.startDate.toISOString()),
-          endDate: encodeURIComponent(searchData.endDate.toISOString()),
-          children: options.child,
-          room: options.room,
-          adult: options.adult,
-        };
+      actions.isLoading(true);
 
+      const params = {
+        location: encodeURIComponent(searchData.location),
+        startDate: encodeURIComponent(searchData.startDate.toISOString()),
+        endDate: encodeURIComponent(searchData.endDate.toISOString()),
+        children: options.child,
+        room: options.room,
+        adult: options.adult,
+      };
 
       const response = await axios.get(
-        `http://localhost:8000/hotel/filter`,
+        `${process.env.REACT_APP_BASE_URL}/hotel/filter`,
         {
-          params, 
+          params,
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             My_Secret: config.MY_SECRET,
           },
         }
       );
-  
-console.log(response.data.data); 
 
-       actions.setHotel(response.data.data);
-        actions.isLoading(false); 
+      console.log(response.data.data);
+
+      actions.setHotel(response.data.data);
+      actions.isLoading(false);
     } catch (error) {
-        console.error("Error fetching hotels:", error);
-        // Handle error as needed
+      console.error("Error fetching hotels:", error);
+      // Handle error as needed
     }
   };
+
+  // get all rooms
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/room/get-all-rooms`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              My_Secret: config.MY_SECRET,
+            },
+          }
+        );
+        if (response.data.success && response.data.success === true)
+           {
+            actions.setAllRooms(response.data.data);
+            console.log(state.allRooms  , "all rooms");
+           }
+      } catch (error) {
+        console.error("Error fetching rooms:", error);
+        // Handle error as needed
+      }
+    };
+
+    fetchRooms();
+  }, []);
 
   return (
     <div className="w-full md:w-[1100px] mx-auto bg-[#fff] py-2 px-2 rounded-[15px] border-l-2 border-r-2 border-b-[10px] border-[#129035] relative">
