@@ -16,7 +16,7 @@ function HotelHaeding() {
     <div>
       <div className='px-2 md:px-0'>
         <div className='flex flex-row justify-start items-center mb-0'>
-          <h3 className='mt-2 mb-0 text-[30px] md:text-[35px] font-[700] tracking-wider'>{hotelName}</h3>
+          <h3 className='mt-2 mb-0 text-[20px] md:text-[35px] font-[700] tracking-wider'>{hotelName}</h3>
           <div className='mx-3 text-[#FFD250]'>
             {Array.from({length : Number(rating)}).map((item, index) => (
               <FaStar key={index} className={`inline ml-1 text-${index < rating ? 'yellow' : 'gray-300'} font-[900]`} />

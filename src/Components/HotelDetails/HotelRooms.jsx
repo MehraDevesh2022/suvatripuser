@@ -72,8 +72,6 @@ function HotelRooms() {
   const calenderInput = {
     fontSize: "20px",
     fontWeight: "500",
-    border: "none",
-    outline: "none",
   };
 
   const formatDateWithDayName = (dateObject) => {
@@ -154,7 +152,7 @@ function HotelRooms() {
 
   const renderAmenities = (amenities) => {
     return amenities.map((amenity, index) => (
-      <p key={index} className="mb-1 text-sm md:text-[17px]">
+      <p key={index} className="mb-1 text-[11px] md:text-[17px]">
         <span>{amenity.icon}</span> {amenity.label}
       </p>
     ));
@@ -249,18 +247,18 @@ function HotelRooms() {
 
 
   return (
-    <div>
-      <Modal show={show} onHide={handleClose} size="lg" centered>
+    <div className="relative pt-3 pb-5 mb-4">
+      <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Body>
           <Container>
-            <Row>
+            <Row onClick={hideCalender}>
               <div className="mb-3">
                 <h3 className="text-3xl font-[700] tracking-wider">
                   Enter Your Details
                 </h3>
               </div>
             </Row>
-            <Row>
+            <Row onClick={hideCalender}>
               <Col>
                 <div class="input-group mb-3">
                   <input
@@ -290,9 +288,9 @@ function HotelRooms() {
                 </div>
               </Col>
             </Row>
-            <Row>
+            <Row onClick={hideCalender}>
               <Col>
-                <div class="input-group mb-3">
+                <div className="input-group mb-3">
                   <input
                     type="number"
                     style={inlineStyle}
@@ -320,17 +318,17 @@ function HotelRooms() {
                 </div>
               </Col>
             </Row>
-            <Row>
+            <Row onClick={hideCalender}>
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
-                  <span className="input-group-text" id="basic-addon1">
+                  <span className="input-group-text py-3 text-sm" id="basic-addon1">
                     Arrival Time
                   </span>
                 </div>
                 <input
                   type="number"
                   style={inlineStyle}
-                  className="form-control"
+                  className="form-control mx-1"
                   placeholder="Hours"
                   aria-label="Arrival Hours"
                   aria-describedby="basic-addon1"
@@ -339,11 +337,11 @@ function HotelRooms() {
                     handleArrivalTimeChange("hours", e.target.value)
                   }
                 />
-                <span className="mx-2">:</span>
+                <span className="mx-1 font-[600] text-[35px]">:</span>
                 <input
                   type="number"
                   style={inlineStyle}
-                  className="form-control"
+                  className="form-control mx-1"
                   placeholder="Minutes"
                   aria-label="Arrival Minutes"
                   aria-describedby="basic-addon1"
@@ -367,10 +365,10 @@ function HotelRooms() {
             </Row>
 
             {/* chekin chekout adding */}
-            <Row>
-              <div className="relative w-full md:w-[360px] my-2 md:my-0 flex flex-row justify-between md:justify-start items-center">
-                <div className=" bg-[#f2f5f8] w-[180px] p-3 ml-0 md:ml-6 rounded-lg">
-                  <p className="bg-[#fff] w-[100px] text-[#f62c31] text-center py-[2px] rounded-lg">
+            <Row className="mx-auto mt-1 mb-3 w-full  bg-[#fff] border-[1px] border-slate-100 shadow-md rounded-lg">
+            
+                <div className="col">
+                  <p className="bg-[#fff] w-[100px] text-[#f62c31] text-center font-bold py-[2px] rounded-lg">
                     Check-In
                   </p>
                   <Form onClick={handleCalender}>
@@ -385,8 +383,8 @@ function HotelRooms() {
                     <p className="mt-1 ml-[1px]">{currentDay}</p>
                   </Form>
                 </div>
-                <div className="bg-[#f2f5f8] w-[180px] p-3 mx-1 rounded-lg">
-                  <p className="bg-[#fff] w-[100px] text-[#f62c31] text-center py-[2px] rounded-lg">
+                <div  className="col">
+                  <p className="bg-[#fff] w-[100px] font-bold text-[#f62c31] text-center py-[2px] rounded-lg">
                     Check-Out
                   </p>
                   <Form onClick={handleCalender}>
@@ -402,27 +400,27 @@ function HotelRooms() {
                   </Form>
                 </div>
                 {showCalender ? (
-                  <div className="absolute top-[150px] left-1 md:left-6 z-10">
+                  <div className="absolute top-[400px] left-0 md:left-12 z-10">
                     <DateRangePicker
                       editableDateInputs={true}
                       onChange={handleDateSelect}
                       moveRangeOnFirstSelection={false}
                       ranges={date}
                       months={2}
-                      //   direction={
-                      //     window.innerWidth < 768 ? "vertical" : "horizontal"
-                      //   }
+                        direction={
+                          window.innerWidth < 768 ? "vertical" : "horizontal"
+                        }
                       rangeColors={["#f33e5b", "#3ecf8e", "#fed14c"]}
                     />
                   </div>
                 ) : (
                   ""
                 )}
-              </div>
+              
             </Row>
 
-            <Row className="mb-2 px-2">
-              <p className="text-xl font-[500] tracking-wider mb-1">
+            <Row className="mb-2 px-2" onClick={hideCalender}>
+              <p className="text-2xl font-[500] tracking-wider mb-1">
                 Do you Prefer Smoking Room ?{" "}
               </p>
               <div className="px-3">
@@ -462,7 +460,7 @@ function HotelRooms() {
                 </div>
               </div>
             </Row>
-            <Row>
+            <Row onClick={hideCalender}>
               <div className="mb-3">
                 <h3 className="text-3xl font-[700] tracking-wider">
                   Special Request
@@ -493,7 +491,7 @@ function HotelRooms() {
         <>
           {roomsDeatils?.map((room, index) => (
             <div
-              className="w-full bg-slate-50 my-3 grid grid-cols-2 md:grid-cols-4 gap-4 p-2 rounded-lg shadow-md"
+              className="w-full bg-slate-50  mt-2 mb-3 grid grid-cols-2 md:grid-cols-4 gap-4 p-2 rounded-lg shadow-md"
               key={room._id}
             >
               {/* Details from hotelData */}
@@ -507,17 +505,17 @@ function HotelRooms() {
                     <FaUser key={index} className="inline mx-2" />
                   ))}
                 </div>
-                <p className="mb-1 mt-2 text-[13px] md:text-[17px]">
+                <p className="mb-1 mt-2 text-[12px] md:text-[17px]">
                   <span className="text-[12px] md:text-[16px]">-</span> Room
                   Type : {room?.roomType}
                 </p>
-                <p className="mb-1  text-[13px] md:text-[17px]">
+                <p className="mb-1  text-[12px] md:text-[17px]">
                   <span className="text-[12px] md:text-[16px]">-</span>{" "}
                   {hotelData?.paymentPolicy[0]?.cancleOption === "Yes"
                     ? "Free Cancellation"
                     : "Non Refundable"}
                 </p>
-                <p className="mb-1  text-[13px] md:text-[17px]">
+                <p className="mb-1  text-[12px] md:text-[17px]">
                   <span className="text-[12px] md:text-[16px]">-</span>{" "}
                   {hotelData?.hotelRules?.allowChildren === "no"
                     ? "Not Child Friendly"
@@ -610,21 +608,21 @@ function HotelRooms() {
                 <p className="text-[21px]">Total</p>
               </div>
             </div>
-          ))}
-          <div className="w-full md:w-[400px] mx-auto">
-            <button
-              className="w-full bg-[#f62c31] px-4 py-3 rounded-lg text-[#fff] font-[600]"
-              onClick={handleShow}
-            >
-          Book Now
-            </button>
-          </div>
+          ))} 
         </>
       ) : (
         <>
           <div>no room founds</div>
         </>
       )}
+        <div className="absolute right-1 bottom-0 py-0">
+                <button
+                  className="bg-[#f62c31] px-2 py-2 rounded-lg text-[#fff] font-[600]"
+                  onClick={handleShow}
+                >
+                  Book Now
+                </button>
+          </div>
     </div>
   );
 }
