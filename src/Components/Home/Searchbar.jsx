@@ -188,7 +188,7 @@ function Searchbar() {
               <div
                 className=" bg-[#f2f5f8] w-full md:w-[300px] p-3 cursor-pointer rounded-lg"
                 onClick={completeOff}
-              >
+              > 
                 <Form>
                   <p className="bg-[#fff]  text-[#f62c31] w-[150px] text-center py-[2px] rounded-lg">
                     City, Area, Hotel
