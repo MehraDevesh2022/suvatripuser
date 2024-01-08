@@ -6,45 +6,50 @@ import { FaArrowsAltH } from "react-icons/fa";
 import { useAppContext } from "../../context/store";
 
 function FilterSection() {
-  const [minBudget, setMinBudget] = useState("");
-  const [maxBudget, setMaxBudget] = useState("");
+  const [minBudget, setMinBudget] = useState('');
+  const [maxBudget, setMaxBudget] = useState('');
   const { state, actions } = useAppContext();
   const hotels = state.hotel;
+
+  const [selectedFilters, setSelectedFilters] = useState({
+    starRating: [],
+    priceRange: [],
+    propertyType: [],
+    facilities: [],
+  });
 
   const fetchFilteredHotels = async (queryParams) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/hotel/get/filterd?${new URLSearchParams(
-          queryParams
-        )}`
+        `http://localhost:8000/hotel/get/filterd?${new URLSearchParams(queryParams)}`
       );
       const res = await response.json();
 
-      if (res.data.success) {
-        actions.setHotel(res.data.data);
-      }
+        actions.setHotel(res.data);
+        console.log('Filtered hotels:', res);
+    
     } catch (error) {
-      console.error("Error fetching filtered hotels:", error);
+      console.error('Error fetching filtered hotels:', error);
     }
   };
 
   useEffect(() => {
-    console.log("Hotels updated:", hotels);
-  }, [state.hotel]);
+    console.log('Hotels updated:', hotels);
+  }, [state.hotel , hotels]);
 
   const handleCheckboxChange = (filterType, value) => {
-    const queryParams = { ...state.queryParams };
+    const updatedFilters = { ...selectedFilters };
 
-    if (queryParams[filterType]) {
-      queryParams[filterType].includes(value)
-        ? (queryParams[filterType] = queryParams[filterType].filter(
-            (item) => item !== value
-          ))
-        : (queryParams[filterType] = [...queryParams[filterType], value]);
+    const index = updatedFilters[filterType].indexOf(value);
+    if (index === -1) {
+      updatedFilters[filterType].push(value);
     } else {
-      queryParams[filterType] = [value];
+      updatedFilters[filterType].splice(index, 1);
     }
 
+    setSelectedFilters(updatedFilters);
+
+    const queryParams = buildQueryParams(updatedFilters);
     fetchFilteredHotels(queryParams);
   };
 
@@ -57,17 +62,38 @@ function FilterSection() {
   };
 
   const handleBudgetFilter = () => {
-    const queryParams = { ...state.queryParams };
-
+    const queryParams = buildQueryParams(selectedFilters);
     if (minBudget) {
-      queryParams["minBudget"] = parseInt(minBudget, 10);
+      queryParams['minBudget'] = parseInt(minBudget, 10);
     }
-
     if (maxBudget) {
-      queryParams["maxBudget"] = parseInt(maxBudget, 10);
+      queryParams['maxBudget'] = parseInt(maxBudget, 10);
+    }
+    fetchFilteredHotels(queryParams);
+  };
+
+  const buildQueryParams = (filters) => {
+    const queryParams = {};
+
+    if (filters.starRating.length > 0) {
+      queryParams.starRating = filters.starRating.join(',');
     }
 
-    fetchFilteredHotels(queryParams);
+    if (filters.propertyType.length > 0) {
+      queryParams.propertyType = filters.propertyType.join(',');
+    }
+
+    if (filters.facilities.length > 0) {
+      queryParams.facilities = filters.facilities.join(',');
+    }
+
+    if (filters.priceRange.length > 0) {
+      queryParams.priceRange = filters.priceRange.join(',');
+    }
+
+    // Add other filter types as needed
+
+    return queryParams;
   };
 
   return (
@@ -534,21 +560,34 @@ function FilterSection() {
                   <input
                     className="form-check-input"
                     type="checkbox"
-                    value="Last Minute Deal"
+                    value="Free Wifi"
                     id="flexCheckDefaultee"
+                    onChange={() =>
+                      handleCheckboxChange("facilities", "Free Wifi")
+                    }
                   />
-                  <label className="form-check-label" for="flexCheckDefaultee">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckDefaultee"
+                  >
                     Free Wifi
                   </label>
                 </div>
+                
                 <div className="form-check">
                   <input
                     className="form-check-input"
                     type="checkbox"
-                    value="5 Star"
+                    value="No Smoking Room"
                     id="flexCheckDefaulttt"
+                    onChange={() =>
+                      handleCheckboxChange("facilities", "No smoking rooms")
+                    }
                   />
-                  <label className="form-check-label" for="flexCheckDefaulttt">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckDefaulttt"
+                  >
                     No Smoking Room
                   </label>
                 </div>
@@ -556,13 +595,21 @@ function FilterSection() {
                   <input
                     className="form-check-input"
                     type="checkbox"
-                    value=" North Nepal"
-                    id="flexCheckDefaultyy"
+                    value="Free parking"
+                    id="  Free-parking"
+                    onChange={() =>
+                      handleCheckboxChange("facilities", "Free parking")
+                    }
                   />
-                  <label className="form-check-label" for="flexCheckDefaultyy">
-                    Free Airport pick-up
+                  <label
+                    className="form-check-label"
+                    htmlFor="  Free-parking"
+                  >
+                    Free parking
                   </label>
                 </div>
+            
+            
               </div>
             </div>
             {/* Facilities-2 */}
