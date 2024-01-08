@@ -9,7 +9,7 @@ const initialState = {
   isLoading: false,
   hotelDetails: {},
   roomDetails: {},
-
+  allRooms: [],
     
   
   authType : "local"
@@ -28,6 +28,7 @@ const actionTypes = {
   SET_AUTH_TYPE: "SET_AUTH_TYPE",
   SET_ROOM_DATA: "SET_ROOM_DATA",
   SET_ROOM_DETAILS: "SET_ROOM_DETAILS",
+  SET_ALL_ROOMS: "SET_ALL_ROOMS",
 };
 
 const appReducer = (state, action) => {
@@ -52,6 +53,9 @@ const appReducer = (state, action) => {
       return { ...state, roomData: action.payload };
     case actionTypes.SET_ROOM_DETAILS:
       return { ...state, roomDetails: action.payload };
+
+       case actionTypes.SET_ALL_ROOMS:
+      return { ...state, allRooms: action.payload };  
 
     default:
       return state;
@@ -81,6 +85,7 @@ const setProfileData = (profileData) =>
     const setRoomData = (roomData) => dispatch({ type: actionTypes.SET_ROOM_DATA, payload: roomData });
   const setRoomDetails = (roomDetails) => dispatch({ type: actionTypes.SET_ROOM_DETAILS, payload: roomDetails });
    
+  const setAllRooms = (allRooms) => dispatch({ type: actionTypes.SET_ALL_ROOMS, payload: allRooms });
 
   const setHotelDetails = (hotelDetails) =>
     dispatch({ type: actionTypes.SET_HOTEL_DETAILS, payload: hotelDetails });
@@ -92,6 +97,7 @@ const setProfileData = (profileData) =>
       logout,
       setHotel,
       setUserData,
+      setAllRooms,
       isLoading,
       setHotelDetails,
       setProfileData,
