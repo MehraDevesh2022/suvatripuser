@@ -19,3 +19,9 @@ background-color: #f84c50; /* Adjust the color as needed */
 .scroller::-webkit-scrollbar {
     width: 0px;
 }
+
+.flag-icon {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
