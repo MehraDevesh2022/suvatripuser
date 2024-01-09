@@ -264,7 +264,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
                 className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
                   fieldWarnings.username && formData.username.trim() === ""
                     ? "border-red-500"
-                    : ""
+                    : "" 
                 }`}
                 value={formData.username}
                 onChange={handleInputChange}
