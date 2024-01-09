@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import config from "../../config";
 import { useAppContext } from "../../context/store";
+import lbDate from "lbdate";
 
 function Searchbar() {
   const [openOptions, setOpenOptions] = useState(false);
@@ -92,6 +93,8 @@ function Searchbar() {
   };
 
   const handleSearch = async () => {
+    lbDate.init();
+
     Date.prototype.toJSON = function () {
       const hoursDiff = this.getHours() - this.getTimezoneOffset() / 60;
       this.setHours(hoursDiff);
@@ -100,8 +103,8 @@ function Searchbar() {
 
     const searchData = {
       location,
-      startDate: date[0].startDate,
-      endDate: date[0].endDate,
+      startDate: JSON.stringify(date[0].startDate),
+      endDate: JSON.stringify(date[0].endDate),
       // Add more parameters as needed
     };
 
@@ -122,8 +125,8 @@ function Searchbar() {
 
       const params = {
         location: encodeURIComponent(searchData.location),
-        startDate: encodeURIComponent(searchData.startDate.toISOString()),
-        endDate: encodeURIComponent(searchData.endDate.toISOString()),
+        checkIn: date[0].startDate, // Convert start date to milliseconds
+        checkOut: date[0].endDate, // Convert end date to milliseconds
         children: options.child,
         room: options.room,
         adult: options.adult,
