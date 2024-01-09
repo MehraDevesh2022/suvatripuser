@@ -1,0 +1,145 @@
+
+        {
+            "_id": "659952006f9645d173dd21a0",
+            "vendor_id": "65992338112a3c6fde930efe",
+            "rooms": [],
+            "propertyName": "Nature view",
+            "propertyType": "Hotel",
+            "rating": "4",
+            "currency": "NPR",
+            "contactNo": "991199119911",
+            "country": "nepal",
+            "city": "Kathmandu",
+            "address": " Nepalreport  Lalitpur. ",
+            "zipCode": "262501",
+            "state": "Kathmandu",
+            "roomsNo": 3,
+            "propertyPicture": [
+                {
+                    "link": "http://localhost:8000/uploads/propertyPicture/509165739.jpg",
+                    "main": "true"
+                },
+                {
+                    "link": "http://localhost:8000/uploads/propertyPicture/509165772.jpg",
+                    "main": "false"
+                },
+                {
+                    "link": "http://localhost:8000/uploads/propertyPicture/510060701.jpg",
+                    "main": "false"
+                }
+            ],
+            "roomPicture": [
+                {
+                    "link": "http://localhost:8000/uploads/roomPicture/510060701.jpg",
+                    "main": "true"
+                },
+                {
+                    "link": "http://localhost:8000/uploads/roomPicture/510238345.jpg",
+                    "main": "false"
+                },
+                {
+                    "link": "http://localhost:8000/uploads/roomPicture/510238347.jpg",
+                    "main": "false"
+                }
+            ],
+            "areaPicture": [
+                {
+                    "link": "http://localhost:8000/uploads/areaPicture/510238340.jpg",
+                    "main": "true"
+                },
+                {
+                    "link": "http://localhost:8000/uploads/areaPicture/510238345.jpg",
+                    "main": "false"
+                }
+            ],
+            "facilities": {
+                "accommodation": [
+                    "Free parking",
+                    "Key card access",
+                    "Daily housekeeping",
+                    "No smoking rooms",
+                    "Lift",
+                    "Room service"
+                ],
+                "recreation": [
+                    "Gardens",
+                    "Indoor swimming pool",
+                    "Outdoor swimming pool",
+                    "Fitness center",
+                    "Spa",
+                    "Beach"
+                ],
+                "connectivity": []
+            },
+            "ammenities": {
+                "bathroom": [],
+                "inRoom": []
+            },
+            "hotelRules": {
+                "allowChildren": "yes",
+                "checkInData": {
+                    "from": "14:00",
+                    "until": "15:00"
+                },
+                "checkOutData": {
+                    "from": "16:00",
+                    "until": "18:00"
+                }
+            },
+            "paymentPolicy": [
+                {
+                    "paymentOption": "Both",
+                    "cancleOption": "Yes",
+                    "canclePeriod": "Until two days before arrival",
+                    "description": "<p><span style=\"background-color: rgb(248, 250, 252); color: rgb(15, 23, 42);\">Kathmandu is the capital and largest city of Nepal. It is located in the Nepal Himal subregion and has a population of over 1.5 million people. The city is known for its unique architecture,</span></p>"
+                }
+            ],
+            "parking": {
+                "isParkingAvailable": "yesFree",
+                "parkingCost": "0",
+                "costType": "Per day",
+                "parkingLocation": "On Site"
+            },
+            "transportation": {
+                "providePickUpService": "yes",
+                "chargeType": "Free",
+                "pickupCharge": ""
+            },
+            "latitude": 28.219653597850368,
+            "longitude": 85.00000926862987,
+            "description": "<p><span style=\"background-color: rgb(248, 250, 252); color: rgb(15, 23, 42);\">Kathmandu is the capital and largest city of Nepal. It is located in the Nepal Himal subregion and has a population of over 1.5 million people. The city is known for its unique architecture,</span></p>",
+            "taxFile": [
+                {
+                    "link": "http://localhost:8000/uploads/documents/tax/logo.png"
+                }
+            ],
+            "propertyFile": [
+                {
+                    "link": "http://localhost:8000/uploads/documents/property/logo.png"
+                }
+            ],
+            "isVerified": false,
+            "UUID": "e7d8f00d-d3ca-4f4c-82ef-3b215e6b053c",
+            "__v": 0
+        },
+   
+
+{
+    "_id": "659952006f9645d173dd21a4",
+    "hotel_id": "659952006f9645d173dd21a0",
+    "roomType": "Quadruple",
+    "guests": "5",
+    "singleBed": 1,
+    "doubleBed": 0,
+    "kingBed": 2,
+    "superKingBed": 2,
+    "totalBeds": 5,
+    "bathroom": "5",
+    "weekdayPrice": "7777",
+    "weekendPrice": "8888",
+    "nonRefundPrice": "888",
+    "noOfRooms": "3",
+    "UUID": "fb156286-4860-4bc4-a823-46376c904667",
+    "__v": 0
+}
+

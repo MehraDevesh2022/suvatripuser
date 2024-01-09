@@ -19,8 +19,6 @@ function Searchbar() {
     child: 0,
   });
 
-  console.log(process.env.REACT_APP_BASE_URL, "hotel search");
-
   const [location, setLocation] = useState("India");
   const { state, actions } = useAppContext();
   const [showCalender, setShowCalender] = useState(false);
@@ -37,15 +35,15 @@ function Searchbar() {
   const customStyle = {
     fontSize: "20px", // Adjust the font size as needed
     fontWeight: "500",
-    border: "none",      // To remove the border
+    border: "none", // To remove the border
     outline: "none",
     // Add other styles as needed
   };
   const calenderInput = {
     fontSize: "20px",
     fontWeight: "500",
-    border: "none",      // To remove the border
-    outline: "none",     // To remove the outline
+    border: "none", // To remove the border
+    outline: "none", // To remove the outline
     // Add other styles as needed
   };
 
@@ -110,8 +108,19 @@ function Searchbar() {
       // Add more parameters as needed
     };
 
+    // console.log(searchData , "location");
     console.log(searchData, "location");
     try {
+      actions.isLoading(true);
+
+      // const params = {
+      //   location: encodeURIComponent(searchData.location),
+      //   checkIn: date[0].startDate.toLocaleString(), // Convert start date to milliseconds
+      //   checkOut: date[0].endDate.toLocaleString(), // Convert end date to milliseconds
+      //   children: options.child,
+      //   room: options.room,
+      //   adult: options.adult,
+      // };
       actions.isLoading(true);
 
       const params = {
@@ -123,9 +132,9 @@ function Searchbar() {
         adult: options.adult,
       };
 
-      const response = await axios.post(
-        `http://localhost:8000/hotel/filter`,
-        params,
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/hotel/filter`,
+         params,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -134,15 +143,44 @@ function Searchbar() {
         }
       );
 
-      console.log(response.data.data);
-
+      actions.setHotel(response.data.data);
+      actions.isLoading(false);
       actions.setHotel(response.data.data);
       actions.isLoading(false);
     } catch (error) {
       console.error("Error fetching hotels:", error);
       // Handle error as needed
+      console.error("Error fetching hotels:", error);
+      // Handle error as needed
     }
   };
+
+  // get all rooms
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/room/get-all-rooms`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              My_Secret: config.MY_SECRET,
+            },
+          }
+        );
+        if (response.data.success && response.data.success === true) {
+          actions.setAllRooms(response.data.data);
+          console.log(state.allRooms, "all rooms");
+        }
+      } catch (error) {
+        console.error("Error fetching rooms:", error);
+        // Handle error as needed
+      }
+    };
+
+    fetchRooms();
+  }, []);
 
   return (
     <div className="w-full md:w-[1100px] mx-auto bg-[#fff] py-2 px-2 rounded-[15px] border-l-2 border-r-2 border-b-[10px] border-[#129035] relative">
@@ -153,7 +191,7 @@ function Searchbar() {
               <div
                 className=" bg-[#f2f5f8] w-full md:w-[300px] p-3 cursor-pointer rounded-lg"
                 onClick={completeOff}
-              >
+              > 
                 <Form>
                   <p className="bg-[#fff]  text-[#f62c31] w-[150px] text-center py-[2px] rounded-lg">
                     City, Area, Hotel
@@ -209,7 +247,7 @@ function Searchbar() {
                       editableDateInputs={true}
                       onChange={(item) => {
                         console.log(new Date(item.selection.startDate));
-                        setDate([item.selection])
+                        setDate([item.selection]);
                       }}
                       moveRangeOnFirstSelection={false}
                       ranges={date}
