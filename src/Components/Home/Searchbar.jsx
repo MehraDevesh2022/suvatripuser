@@ -9,26 +9,35 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import config from "../../config";
 import { useAppContext } from "../../context/store";
-import lbDate from "lbdate";
+import { usePlacesWidget } from "react-google-autocomplete";
 
-function Searchbar() {
+function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
-    adult: 2,
-    room: 1,
-    child: 0,
+    adult: adultD || 2,
+    room: roomD || 1,
+    child: childD || 0,
   });
-
-  const [location, setLocation] = useState("India");
+  const [location, setLocation] = useState(locationD || "India");
   const { state, actions } = useAppContext();
   const [showCalender, setShowCalender] = useState(false);
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: checkInD ? new Date(checkInD) : new Date(),
+      endDate: checkOutD ? new Date(checkOutD) : new Date(),
       key: "selection",
     },
   ]);
+
+  const { ref, autocompleteRef } = usePlacesWidget({
+    apiKey: 'AIzaSyBi5Bq8YbATnUhPpwQdhtENLTQQROVV6N0',
+    onPlaceSelected: (place) => {
+      setLocation(place.address_components[0].long_name);
+    },
+    options: {
+      types: ["(cities)"]
+    },
+  });
 
   const formatStartDate = format(date[0].startDate, "dd.MMM");
   const formatEndDate = format(date[0].endDate, "dd.MMM");
@@ -92,69 +101,6 @@ function Searchbar() {
     setOpenOptions(true);
   };
 
-  const handleSearch = async () => {
-    lbDate.init();
-
-    Date.prototype.toJSON = function () {
-      const hoursDiff = this.getHours() - this.getTimezoneOffset() / 60;
-      this.setHours(hoursDiff);
-      return this.toISOString();
-    };
-
-    const searchData = {
-      location,
-      startDate: JSON.stringify(date[0].startDate),
-      endDate: JSON.stringify(date[0].endDate),
-      // Add more parameters as needed
-    };
-
-    // console.log(searchData , "location");
-    console.log(searchData, "location");
-    try {
-      actions.isLoading(true);
-
-      // const params = {
-      //   location: encodeURIComponent(searchData.location),
-      //   checkIn: date[0].startDate.toLocaleString(), // Convert start date to milliseconds
-      //   checkOut: date[0].endDate.toLocaleString(), // Convert end date to milliseconds
-      //   children: options.child,
-      //   room: options.room,
-      //   adult: options.adult,
-      // };
-      actions.isLoading(true);
-
-      const params = {
-        location: encodeURIComponent(searchData.location),
-        checkIn: date[0].startDate, // Convert start date to milliseconds
-        checkOut: date[0].endDate, // Convert end date to milliseconds
-        children: options.child,
-        room: options.room,
-        adult: options.adult,
-      };
-
-      const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/hotel/filter`,
-         params,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            My_Secret: config.MY_SECRET,
-          },
-        }
-      );
-
-      actions.setHotel(response.data.data);
-      actions.isLoading(false);
-      actions.setHotel(response.data.data);
-      actions.isLoading(false);
-    } catch (error) {
-      console.error("Error fetching hotels:", error);
-      // Handle error as needed
-      console.error("Error fetching hotels:", error);
-      // Handle error as needed
-    }
-  };
-
   // get all rooms
 
   useEffect(() => {
@@ -191,7 +137,7 @@ function Searchbar() {
               <div
                 className=" bg-[#f2f5f8] w-full md:w-[300px] p-3 cursor-pointer rounded-lg"
                 onClick={completeOff}
-              > 
+              >
                 <Form>
                   <p className="bg-[#fff]  text-[#f62c31] w-[150px] text-center py-[2px] rounded-lg">
                     City, Area, Hotel
@@ -203,6 +149,7 @@ function Searchbar() {
                     style={customStyle}
                     placeholder="Durban"
                     value={location}
+                    ref={ref}
                     onChange={(e) => setLocation(e.target.value)}
                   />
                 </Form>
@@ -370,10 +317,10 @@ function Searchbar() {
         </div>
       </>
       <div className="w-[150px] absolute bottom-[-24px] left-[110px] md:left-[450px]">
-        <Link to="/filter">
+        <Link to={`/filter?location=${location}&checkIn=${date[0].startDate}&checkOut=${date[0].endDate}&children=${options.child}&room=${options.room}&adult=${options.adult}`}>
           <button
             className="bg-[#129035] w-full py-2 font-[600] uppercase text-[20px] text-slate-100 rounded-[20px] z-0"
-            onClick={handleSearch}
+          // onClick={handleSearch}
           >
             Search
           </button>

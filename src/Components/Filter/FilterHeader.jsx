@@ -3,10 +3,6 @@ import { FaArrowDown } from "react-icons/fa6";
 import { useAppContext } from "../../context/store";
 import { BiUpArrowAlt } from "react-icons/bi";
 
-
-
-
-
 function FilterHeader() {
     const [useArrow, setArrow] = useState(false)
 

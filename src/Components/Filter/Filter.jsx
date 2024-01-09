@@ -1,14 +1,68 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Home/Navbar'
 import Searchbar from '../Home/Searchbar'
 import Footer from '../Fotter/Footer'
 import FilterSection from './FilterSection'
 import FixedFilter from './FixedFilter'
 import { FaFilter } from "react-icons/fa";
-
+import lbDate from 'lbdate'
+import axios from 'axios'
+import { useAppContext } from '../../context/store'
+import config from "../../config";
 
 function Filter() {
     const [scrollLock, setScrollLock] = useState(false);
+    const searchParams = new URLSearchParams(window.location.search);
+    const location = searchParams.get('location');
+    const checkIn = searchParams.get('checkIn');
+    const children = searchParams.get('children');
+    const checkOut = searchParams.get('checkOut');
+    const room = searchParams.get('room');
+    const adult = searchParams.get('adult');
+    const { state, actions } = useAppContext();
+
+    useEffect(() => {
+        console.log(location, 'lllllll')
+        const getData = async () => {
+            lbDate.init();
+        
+            try {
+              actions.isLoading(true);
+        
+              const params = {
+                location: encodeURIComponent(location),
+                checkIn: checkIn, // Convert start date to milliseconds
+                checkOut: checkOut, // Convert end date to milliseconds
+                children: children,
+                room: room,
+                adult: adult,
+              };
+        
+              const response = await axios.post(
+                `${process.env.REACT_APP_BASE_URL}/hotel/filter`,
+                 params,
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    My_Secret: config.MY_SECRET,
+                  },
+                }
+              );
+        
+              actions.setHotel(response.data.data);
+              actions.isLoading(false);
+              actions.setHotel(response.data.data);
+              actions.isLoading(false);
+            } catch (error) {
+              console.error("Error fetching hotels:", error);
+              // Handle error as needed
+              console.error("Error fetching hotels:", error);
+              // Handle error as needed
+            }
+        }
+
+        getData();
+    }, [location, checkIn, checkOut, room, children, adult])
 
     // Function to toggle scroll lock
     const toggleScrollLock = () => {
@@ -27,7 +81,7 @@ function Filter() {
                     <Navbar />
                 </div>
                 <div className='my-5'>
-                    <Searchbar />
+                    <Searchbar checkInD={checkIn} checkOutD={checkOut} adultD={adult} childD={children} roomD={room} locationD={location} />
                 </div>
                 <div className='block md:hidden'>
                     {/* MobileFilter */}
