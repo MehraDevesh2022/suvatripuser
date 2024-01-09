@@ -4,6 +4,8 @@ import { FcGoogle } from "react-icons/fc";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { FaPhone } from "react-icons/fa6";
 import Button from "react-bootstrap/Button";
+import PhoneInput, { getCountries } from 'react-phone-number-input/input';
+import 'react-phone-number-input/style.css';
 import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 // import { useGoogleOAuth, signIn } from "@react-oauth/google"; // Import the useGoogleOAuth hook
@@ -300,7 +302,8 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
               )}
             </div>
 
-            <div className="mb-2">
+
+            {/* <div className="mb-2">
               <input
                 type="number"
                 name="phoneNumber"
@@ -323,7 +326,35 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
                     Phone Number is required
                   </div>
                 )}
-            </div>
+            </div> */}
+
+           
+            <div className="mb-2">
+   <PhoneInput
+      placeholder="Enter the phone"
+      international
+      countryCallingCodeEditable={false}
+      // defaultCountry="RU"
+      className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+        fieldWarnings.phoneNumber &&
+        formData.phoneNumber.trim() === ""
+          ? "border-red-500"
+          : ""
+      }`}
+      value={formData.phoneNumber}
+      onChange={(value) => setFormData({ ...formData, phoneNumber: value })}
+      countries={getCountries()}
+      flags
+   />
+   {fieldWarnings.phoneNumber &&
+      formData.phoneNumber.trim() === "" && (
+         <div className="text-red-500 text-sm mt-1">
+            Phone Number is required
+         </div>
+      )}
+</div>
+
+
 
             <div className="mb-2">
               <input
@@ -355,6 +386,9 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
                 </div>
               )}
             </div>
+
+
+
 
             <div className="w-full my-3">
               <Button
