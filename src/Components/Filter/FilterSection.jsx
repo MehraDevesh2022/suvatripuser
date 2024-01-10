@@ -129,13 +129,13 @@ function FilterSection() {
                     5 Star
                   </label>
                 </div>
-                {/* <div className="form-check">
+                <div className="form-check">
             <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
             <label className="form-check-label" for="flexCheckDefault">
               North Nepal
             </label>
-          </div> */}
-                {/* <div className="form-check">
+          </div>
+                <div className="form-check">
             <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
             <label className="form-check-label" for="flexCheckDefault">
               South Nepal
@@ -146,7 +146,7 @@ function FilterSection() {
             <label className="form-check-label" for="flexCheckDefault">
               Couple Friendly
             </label>
-          </div> */}
+          </div>
               </div>
             </div>
             <div>
@@ -501,7 +501,7 @@ function FilterSection() {
               </div>
             </div>
             {/* Guest rating */}
-            {/* <div>
+            <div>
         <h3 className='text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1'>Guest Rating</h3>
         <div className='px-3'>
           <div className="form-check">
@@ -549,7 +549,7 @@ function FilterSection() {
             </label>
           </div>
         </div>
-      </div> */}
+      </div>
             {/* Facilities */}
             <div>
               <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">

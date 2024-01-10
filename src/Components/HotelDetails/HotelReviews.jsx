@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GuestReview from "./GuestReview";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/esm/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import { useAppContext } from "../../context/store";
 function HotelReviews() {
   const inputStyle = {
     backgroundColor: "#f3f5f8",
@@ -15,7 +15,7 @@ function HotelReviews() {
   const [reviewData, setReviewData] = useState({
     staff_rating: 0,
     facilities_rating: 0,
-    cleaniness_rating: 0,
+    cleanliness_rating: 0,
     comfort_rating: 0,
     money_rating: 0,
     location_rating: 0,
@@ -23,9 +23,19 @@ function HotelReviews() {
     review: "",
     images: [],
   });
-
+  const { state } = useAppContext();
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    if (
+      JSON.parse(localStorage.getItem("isLoggedIn")) &&
+      localStorage.getItem("token") &&
+      state.isLoggedIn
+    ) {
+      setShow(true);
+    } else {
+      alert("Please login to write a review");
+    }
+  };
 
   const handleFileChange = (e) => {
     const files = e.target.files;
@@ -38,27 +48,42 @@ function HotelReviews() {
   const handleSubmitReview = async () => {
     try {
       const formData = new FormData();
+
       Object.entries(reviewData).forEach(([key, value]) => {
         if (key === "images") {
           value.forEach((file, index) => {
-            formData.append(`image${index + 1}`, file);
+            const fieldName = `reviewImage${index + 1}`;
+            formData.append(fieldName, file);
+            // console.log(`${fieldName}:`, file);
           });
         } else {
           formData.append(key, value);
+          // console.log(`${key}:`, value);
         }
       });
 
+      // formData.forEach((value, key) => {
+      //   console.log(`${key}: ${value}`);
+      // });
+
+      formData.append("hotel_id", state?.hotelDetails?._id);
+      formData.append("user_id", state.profileData?._id);
       const response = await fetch("http://localhost:8000/review", {
         method: "POST",
         body: formData,
       });
 
+
+      const data = await response.json();
+  if(data.success === false){
+    alert("you dont have booking for this hotel");
+  }
+
       if (response.ok) {
-        console.log("Review submitted successfully");
         setReviewData({
           staff_rating: 0,
           facilities_rating: 0,
-          cleaniness_rating: 0,
+          cleanliness_rating: 0,
           comfort_rating: 0,
           money_rating: 0,
           location_rating: 0,
@@ -76,6 +101,28 @@ function HotelReviews() {
   };
 
   const now = 89;
+
+  // getAll reviews
+
+  useEffect(() => {
+    const getReviews = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/review/${state?.hotelDetails?._id}`
+        );
+        const data = await response.json();
+        if (response.ok) {
+          console.log(data, "reviews");
+        } else {
+          console.error("Failed to get reviews");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getReviews();
+  }, [state?.hotelDetails?._id]);
 
   return (
     <div className="w-full  bg-[#fff] my-3 px-4">
@@ -101,8 +148,13 @@ function HotelReviews() {
                       placeholder="Staff rating"
                       aria-label="Staff rating"
                       aria-describedby="basic-addon1"
-                        value={reviewData.staff_rating}
-                     onChange={(e) => { setReviewData((prevData) => ({...prevData, staff_rating: e.target.value}))}}
+                      value={reviewData.staff_rating}
+                      onChange={(e) => {
+                        setReviewData((prevData) => ({
+                          ...prevData,
+                          staff_rating: e.target.value,
+                        }));
+                      }}
                     />
                   </div>
                 </Col>
@@ -119,8 +171,13 @@ function HotelReviews() {
                       placeholder="facilities rating"
                       aria-label="Staff rating"
                       aria-describedby="basic-addon1"
-                        value={reviewData.facilities_rating}
-                        onChange={(e) => { setReviewData((prevData) => ({...prevData, facilities_rating: e.target.value}))}}
+                      value={reviewData.facilities_rating}
+                      onChange={(e) => {
+                        setReviewData((prevData) => ({
+                          ...prevData,
+                          facilities_rating: e.target.value,
+                        }));
+                      }}
                     />
                   </div>
                 </Col>
@@ -139,8 +196,13 @@ function HotelReviews() {
                       placeholder="cleaniness rating"
                       aria-label="Staff rating"
                       aria-describedby="basic-addon1"
-                        value={reviewData.cleaniness_rating}
-                        onChange={(e) => { setReviewData((prevData) => ({...prevData, cleaniness_rating: e.target.value}))}}
+                      value={reviewData.cleanliness_rating}
+                      onChange={(e) => {
+                        setReviewData((prevData) => ({
+                          ...prevData,
+                          cleanliness_rating: e.target.value,
+                        }));
+                      }}
                     />
                   </div>
                 </Col>
@@ -157,8 +219,13 @@ function HotelReviews() {
                       placeholder="comfort rating"
                       aria-label="Staff rating"
                       aria-describedby="basic-addon1"
-                        value={reviewData.comfort_rating}
-                        onChange={(e) => { setReviewData((prevData) => ({...prevData, comfort_rating: e.target.value}))}}
+                      value={reviewData.comfort_rating}
+                      onChange={(e) => {
+                        setReviewData((prevData) => ({
+                          ...prevData,
+                          comfort_rating: e.target.value,
+                        }));
+                      }}
                     />
                   </div>
                 </Col>
@@ -177,8 +244,13 @@ function HotelReviews() {
                       placeholder="Money rating"
                       aria-label="Staff rating"
                       aria-describedby="basic-addon1"
-                        value={reviewData.money_rating}
-                        onChange={(e) => { setReviewData((prevData) => ({...prevData, money_rating: e.target.value}))}}
+                      value={reviewData.money_rating}
+                      onChange={(e) => {
+                        setReviewData((prevData) => ({
+                          ...prevData,
+                          money_rating: e.target.value,
+                        }));
+                      }}
                     />
                   </div>
                 </Col>
@@ -195,10 +267,15 @@ function HotelReviews() {
                       placeholder="Location rating"
                       aria-label="Staff rating"
                       aria-describedby="basic-addon1"
-                      value =  {reviewData.location_rating}
-                      onChange={(e) => setReviewData((prvData) => {
-                        return {...prvData , location_rating: e.target.value }
-                      })}
+                      value={reviewData.location_rating}
+                      onChange={(e) =>
+                        setReviewData((prvData) => {
+                          return {
+                            ...prvData,
+                            location_rating: e.target.value,
+                          };
+                        })
+                      }
                     />
                   </div>
                 </Col>
@@ -217,7 +294,12 @@ function HotelReviews() {
                     aria-label="Staff rating"
                     aria-describedby="basic-addon1"
                     value={reviewData.wifi_rating}
-                    onChange={(e) => { setReviewData((prevData) => ({...prevData, wifi_rating: e.target.value}))}}
+                    onChange={(e) => {
+                      setReviewData((prevData) => ({
+                        ...prevData,
+                        wifi_rating: e.target.value,
+                      }));
+                    }}
                   />
                 </div>
               </Row>
@@ -232,7 +314,12 @@ function HotelReviews() {
                     placeholder="Write your review here.."
                     className="w-full h-full outline-none border-none bg-[#f3f5f8] p-1"
                     value={reviewData.review}
-                    onChange={(e) => { setReviewData((prevData) => ({...prevData, review: e.target.value}))}}
+                    onChange={(e) => {
+                      setReviewData((prevData) => ({
+                        ...prevData,
+                        review: e.target.value,
+                      }));
+                    }}
                   ></textarea>
                 </div>
               </div>
