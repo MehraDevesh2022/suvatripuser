@@ -491,7 +491,7 @@ function HotelRooms() {
         <>
           {roomsDeatils?.map((room, index) => (
             <div
-              className="w-full bg-slate-50  mt-2 mb-3 grid grid-cols-2 md:grid-cols-4 gap-4 p-2 rounded-lg shadow-md"
+              className="w-full bg-slate-50  mt-2 mb-3 grid grid-cols-2 md:grid-cols-4 gap-4 px-2 py-3 rounded-lg shadow-lg h-[250px] scroller-card cursor-pointer border-[1px] border-red-200"
               key={room._id}
             >
               {/* Details from hotelData */}

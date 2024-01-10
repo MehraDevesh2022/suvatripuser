@@ -18,7 +18,7 @@ function AllPicture() {
       <h3 className='text-center'>All Picture</h3>
       <div className='min-w-fit max-w-[900px] grid grid-cols-1 md:grid-cols-3 gap-x-1 mx-auto gap-y-2 py-4'>
         {allPictures.map((picture, index) => (
-          <div key={index} className='w-full md:w-[320px] h-[250px] rounded-lg'>
+          <div key={index} className='w-full md:w-[320px] h-[250px] rounded-lg p-2'>
             <img src={picture.link || Images} alt={`picture_${index}`} className='w-full h-full rounded-lg' />
           </div>
         ))}
