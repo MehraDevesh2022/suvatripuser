@@ -107,7 +107,7 @@ function App() {
       personalProfile();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.isLoggedIn]);
+  }, []);
 
   
 

@@ -131,13 +131,13 @@ function FilterSection() {
                     5 Star
                   </label>
                 </div>
-                {/* <div className="form-check">
+                <div className="form-check">
             <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
             <label className="form-check-label" for="flexCheckDefault">
               North Nepal
             </label>
-          </div> */}
-                {/* <div className="form-check">
+          </div>
+                <div className="form-check">
             <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
             <label className="form-check-label" for="flexCheckDefault">
               South Nepal
@@ -148,7 +148,7 @@ function FilterSection() {
             <label className="form-check-label" for="flexCheckDefault">
               Couple Friendly
             </label>
-          </div> */}
+          </div>
               </div>
             </div>
             <div>
@@ -530,76 +530,54 @@ function FilterSection() {
             </div>
             {/* Guest rating */}
             <div>
-              <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">
-                Guest Rating
-              </h3>
-              <div className="px-3">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value="5 Star"
-                    id="flexCheckDefault"
-                  />
-                  <label className="form-check-label flex flex-row items-center" for="flexCheckDefault">
-                    <span>
-                      <FaStar className="text-[#FDCC0D] font-[700]" />
-                    </span>
-                    <span className="ml-2 font-[400] text-slate-800">
-                      Excellent
-                    </span>
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=" North Nepal"
-                    id="flexCheckDefault"
-                  />
-                  <label className="form-check-label flex flex-row items-center" for="flexCheckDefault">
-                    <span>
-                      <FaStar className="text-[#FDCC0D] font-[700]" />
-                    </span>
-                    <span className="ml-2 font-[400] text-slate-800">
-                      Very Good
-                    </span>
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=" North Nepal"
-                    id="flexCheckDefault"
-                  />
-                 <label className="form-check-label flex flex-row items-center" for="flexCheckDefault">
-                    <span>
-                      <FaStar className="text-[#FDCC0D] font-[700]" />
-                    </span>
-                    <span className="ml-2 font-[400] text-slate-800">
-                      Good
-                    </span>
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=" North Nepal"
-                    id="flexCheckDefault"
-                  />
-                  <label className="form-check-label flex flex-row items-center" for="flexCheckDefault">
-                    <span>
-                      <FaStar className="text-[#ccc] font-[700]" />
-                    </span>
-                    <span className="ml-2 font-[400] text-slate-800">
-                      No Rating
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
+        <h3 className='text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1'>Guest Rating</h3>
+        <div className='px-3'>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value="5 Star"
+              id="flexCheckDefault"
+            />
+            <label className="form-check-label" for="flexCheckDefault">
+              Excellent
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=" North Nepal"
+              id="flexCheckDefault"
+            />
+            <label className="form-check-label" for="flexCheckDefault">
+              Very Good
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=" North Nepal"
+              id="flexCheckDefault"
+            />
+            <label className="form-check-label" for="flexCheckDefault">
+              Good
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=" North Nepal"
+              id="flexCheckDefault"
+            />
+            <label className="form-check-label" for="flexCheckDefault">
+              No rating
+            </label>
+          </div>
+        </div>
+      </div>
             {/* Facilities */}
             <div>
               <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">
