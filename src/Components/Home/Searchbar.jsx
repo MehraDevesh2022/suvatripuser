@@ -14,9 +14,9 @@ import { usePlacesWidget } from "react-google-autocomplete";
 function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
-    adult: adultD || 2,
-    room: roomD || 1,
-    child: childD || 0,
+    adult: typeof adultD === 'number' ? adultD : 2,
+    room: typeof roomD === 'number' ? roomD : 1,
+    child: typeof childD === 'number' ? childD : 0,
   });
   const [location, setLocation] = useState(locationD || "India");
   const { state, actions } = useAppContext();
@@ -53,6 +53,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
     fontWeight: "500",
     border: "none", // To remove the border
     outline: "none", // To remove the outline
+    color: '#000'
     // Add other styles as needed
   };
 
@@ -144,7 +145,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                   </p>
                   <input
                     type="email"
-                    className="form-control w-full bg-transparent font-weight-bold text-xl"
+                    className="form-control w-full bg-transparent font-weight-bold text-xl text-[#000]"
                     id="floatingInputValue"
                     style={customStyle}
                     placeholder="Durban"
@@ -153,7 +154,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                     onChange={(e) => setLocation(e.target.value)}
                   />
                 </Form>
-                <p className="mt-1 ml-[1px]">{location}</p>
+                <p className="mt-1 ml-[1px] text-slate-500">{location}</p>
               </div>
               <div className="relative w-full md:w-[360px] my-2 md:my-0 flex flex-row justify-between md:justify-start items-center">
                 <div className=" bg-[#f2f5f8] w-[180px] p-3 ml-0 md:ml-6 rounded-lg">
@@ -169,7 +170,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                       placeholder="check-In"
                       value={formatStartDate}
                     />
-                    <p className="mt-1 ml-[1px]">{currentDay}</p>
+                    <p className="mt-1 ml-[1px] text-slate-500">{currentDay}</p>
                   </Form>
                 </div>
                 <div className="bg-[#f2f5f8] w-[180px] p-3 mx-1 rounded-lg">
@@ -185,11 +186,11 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                       placeholder="check-out"
                       value={formatEndDate}
                     />
-                    <p className="mt-1 ml-[1px]">{lastDay}</p>
+                    <p className="mt-1 ml-[1px] text-slate-500">{lastDay}</p>
                   </Form>
                 </div>
                 {showCalender ? (
-                  <div className="absolute top-[150px] left-1 md:left-6 z-10">
+                  <div className="absolute top-[150px] duration-150 left-[-20px] md:left-6 z-10">
                     <DateRangePicker
                       editableDateInputs={true}
                       onChange={(item) => {
@@ -219,16 +220,16 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                     Room and Guest
                   </p>
                   <div className="mt-4 text-center">
-                    <h3 className="leading-10 text-[18px]">
-                      <span className="text-[25px] font-[500]">
+                    <h3 className="leading-10 text-sm md:text-[18px]">
+                      <span className="text-[23px] md:text-[25px] font-[500]">
                         {options.room}
                       </span>{" "}
                       Room{" "}
-                      <span className="text-[25px] font-[500]">
+                      <span className="text-[23px] md:text-[25px] font-[500]">
                         {options.adult}
                       </span>{" "}
                       Adluts{" "}
-                      <span className="text-[20px]  md:text-[25px] font-[500]">
+                      <span className="text-[23px] md:text-[25px] font-[500]">
                         {options.child}
                       </span>{" "}
                       Child
@@ -236,7 +237,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                   </div>
                 </div>
                 {openOptions ? (
-                  <div className="absolute bg-[#fff] left-[14px] md:left-11 rounded-lg z-10">
+                  <div className="absolute bg-[#fff] left-1 md:left-11 rounded-lg z-10">
                     <div className="border-[2px] flex flex-row justify-between items-center p-1 rounded-tl-lg rounded-tr-lg">
                       <div className="w-[150px] text-[20px]">Room</div>
                       <div

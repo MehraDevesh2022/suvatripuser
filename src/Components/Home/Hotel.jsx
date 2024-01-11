@@ -90,7 +90,7 @@ function Hotel() {
                     <h3 className="font-[700]">
                       {data.propertyName || "Hotel Name"}
                     </h3>
-                    <p className="w-full">
+                    <p className="w-full line-clamp-5">
                       {data.description || "Hotel Description"}
                     </p>
                     <div className="text-right">

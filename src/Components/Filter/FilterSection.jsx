@@ -4,10 +4,11 @@ import FilterCard from "./FilterCard";
 import FilterMap from "./FilterMap";
 import { FaArrowsAltH } from "react-icons/fa";
 import { useAppContext } from "../../context/store";
+import { FaStar } from "react-icons/fa6";
 
 function FilterSection() {
-  const [minBudget, setMinBudget] = useState('');
-  const [maxBudget, setMaxBudget] = useState('');
+  const [minBudget, setMinBudget] = useState("");
+  const [maxBudget, setMaxBudget] = useState("");
   const { state, actions } = useAppContext();
   const hotels = state.hotel;
 
@@ -21,21 +22,22 @@ function FilterSection() {
   const fetchFilteredHotels = async (queryParams) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/hotel/get/filterd?${new URLSearchParams(queryParams)}`
+        `http://localhost:8000/hotel/get/filterd?${new URLSearchParams(
+          queryParams
+        )}`
       );
       const res = await response.json();
 
-        actions.setHotel(res.data);
-        console.log('Filtered hotels:', res);
-    
+      actions.setHotel(res.data);
+      console.log("Filtered hotels:", res);
     } catch (error) {
-      console.error('Error fetching filtered hotels:', error);
+      console.error("Error fetching filtered hotels:", error);
     }
   };
 
   useEffect(() => {
-    console.log('Hotels updated:', hotels);
-  }, [state.hotel , hotels]);
+    console.log("Hotels updated:", hotels);
+  }, [state.hotel, hotels]);
 
   const handleCheckboxChange = (filterType, value) => {
     const updatedFilters = { ...selectedFilters };
@@ -64,10 +66,10 @@ function FilterSection() {
   const handleBudgetFilter = () => {
     const queryParams = buildQueryParams(selectedFilters);
     if (minBudget) {
-      queryParams['minBudget'] = parseInt(minBudget, 10);
+      queryParams["minBudget"] = parseInt(minBudget, 10);
     }
     if (maxBudget) {
-      queryParams['maxBudget'] = parseInt(maxBudget, 10);
+      queryParams["maxBudget"] = parseInt(maxBudget, 10);
     }
     fetchFilteredHotels(queryParams);
   };
@@ -76,19 +78,19 @@ function FilterSection() {
     const queryParams = {};
 
     if (filters.starRating.length > 0) {
-      queryParams.starRating = filters.starRating.join(',');
+      queryParams.starRating = filters.starRating.join(",");
     }
 
     if (filters.propertyType.length > 0) {
-      queryParams.propertyType = filters.propertyType.join(',');
+      queryParams.propertyType = filters.propertyType.join(",");
     }
 
     if (filters.facilities.length > 0) {
-      queryParams.facilities = filters.facilities.join(',');
+      queryParams.facilities = filters.facilities.join(",");
     }
 
     if (filters.priceRange.length > 0) {
-      queryParams.priceRange = filters.priceRange.join(',');
+      queryParams.priceRange = filters.priceRange.join(",");
     }
 
     // Add other filter types as needed
@@ -227,6 +229,7 @@ function FilterSection() {
               </div>
             </div>
             <div>
+              {/* Star rating */}
               <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">
                 Star Rating
               </h3>
@@ -240,10 +243,15 @@ function FilterSection() {
                     onChange={() => handleCheckboxChange("starRating", "5")}
                   />
                   <label
-                    className="form-check-label"
+                    className="form-check-label flex flex-row items-center"
                     htmlFor="flexCheckDefault5"
                   >
-                    5 Star
+                    <span>
+                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">
+                      5 Star(45)
+                    </span>
                   </label>
                 </div>
 
@@ -256,10 +264,15 @@ function FilterSection() {
                     onChange={() => handleCheckboxChange("starRating", "4")}
                   />
                   <label
-                    className="form-check-label"
-                    htmlFor="flexCheckDefault4"
+                    className="form-check-label flex flex-row items-center"
+                    htmlFor="flexCheckDefault5"
                   >
-                    4 Star
+                    <span>
+                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">
+                      4 Star(45)
+                    </span>
                   </label>
                 </div>
                 <div className="form-check">
@@ -271,10 +284,15 @@ function FilterSection() {
                     onChange={() => handleCheckboxChange("starRating", "3")}
                   />
                   <label
-                    className="form-check-label"
-                    htmlFor="flexCheckDefault3"
+                    className="form-check-label flex flex-row items-center"
+                    htmlFor="flexCheckDefault5"
                   >
-                    3 Star
+                    <span>
+                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">
+                      3 Star(45)
+                    </span>
                   </label>
                 </div>
                 <div className="form-check">
@@ -286,10 +304,15 @@ function FilterSection() {
                     onChange={() => handleCheckboxChange("starRating", "2")}
                   />
                   <label
-                    className="form-check-label"
-                    htmlFor="flexCheckDefault2"
+                    className="form-check-label flex flex-row items-center"
+                    htmlFor="flexCheckDefault5"
                   >
-                    2 Star
+                    <span>
+                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">
+                      2 Star(45)
+                    </span>
                   </label>
                 </div>
                 <div className="form-check">
@@ -301,10 +324,15 @@ function FilterSection() {
                     onChange={() => handleCheckboxChange("starRating", "1")}
                   />
                   <label
-                    className="form-check-label"
-                    htmlFor="flexCheckDefault1"
+                    className="form-check-label flex flex-row items-center"
+                    htmlFor="flexCheckDefault5"
                   >
-                    1 Star
+                    <span>
+                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">
+                      1 Star(45)
+                    </span>
                   </label>
                 </div>
               </div>
@@ -325,7 +353,7 @@ function FilterSection() {
                     onChange={handleMinBudgetChange}
                   />
                 </div>
-                <span className="text-[25px] font-[600] px-1">
+                <span className="text-[20px] font-[600] px-1">
                   <FaArrowsAltH className="inline" />
                 </span>
                 <div className="input-group">
@@ -339,7 +367,7 @@ function FilterSection() {
                     onChange={handleMaxBudgetChange}
                   />
                 </div>
-                <button onClick={handleBudgetFilter}>Apply</button>
+                <button onClick={handleBudgetFilter} className="bg-slate-500 p-2 rounded-md ml-2 text-sm text-slate-100">Apply</button>
               </div>
             </div>
             <div>
@@ -573,7 +601,7 @@ function FilterSection() {
                     Free Wifi
                   </label>
                 </div>
-                
+
                 <div className="form-check">
                   <input
                     className="form-check-input"
@@ -601,15 +629,10 @@ function FilterSection() {
                       handleCheckboxChange("facilities", "Free parking")
                     }
                   />
-                  <label
-                    className="form-check-label"
-                    htmlFor="  Free-parking"
-                  >
+                  <label className="form-check-label" htmlFor="  Free-parking">
                     Free parking
                   </label>
                 </div>
-            
-            
               </div>
             </div>
             {/* Facilities-2 */}

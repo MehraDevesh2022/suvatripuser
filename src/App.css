@@ -20,6 +20,13 @@ background-color: #f84c50; /* Adjust the color as needed */
     width: 0px;
 }
 
+.scroller-card {
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.scroller-card::-webkit-scrollbar {
+  width: 0px;
+}
 .flag-icon {
   background-size: contain;
   background-position: 50%;
