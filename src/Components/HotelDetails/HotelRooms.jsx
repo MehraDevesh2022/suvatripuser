@@ -235,7 +235,6 @@ function HotelRooms() {
     }
   };
   
-
   console.log(roomsDeatils, "roomsDeatils.length");
 
  // fromate currency in nepali
