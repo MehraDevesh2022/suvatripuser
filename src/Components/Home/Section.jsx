@@ -20,8 +20,8 @@ function Section() {
 
   return (
     <div>
-      <div className="w-full md:w-[1050px] bg-[#fff] shadow-md border-[1px] border-slate-100 mx-auto p-3 mt-5 rounded-md">
-        <section className="flex flex-col md:flex-row items-center p-2">
+      <div className="w-full lg:w-[1050px] bg-[#fff] shadow-md border-[1px] border-slate-100 mx-auto p-3 mt-5 rounded-md">
+        <section className="flex flex-col md:flex-row  items-center p-2">
           <div className="w-full md:w-[300px] bg-[#fff]   p-3 rounded-md">
             <p className="leading-3 bg-slate-700 w-[120px] py-2 px-2 uppercase  rounded-md text-slate-200">
               Introducing
@@ -35,7 +35,7 @@ function Section() {
             </p>
             <Button style={buttoStyle}>Know more</Button>
           </div>
-          <div className="flex flex-col md:flex-row items-center md:items-start w-full md:w-[650px] mx-auto  p-0">
+          <div className="grid grid-cols-2 lg:flex flex-row items-center md:items-start w-full md:w-[650px]  mx-auto  p-0">
             {isLoading ? (
               <div>Loading...</div>
             ) : (
@@ -43,9 +43,9 @@ function Section() {
                 return (
                   <div
                     key={index}
-                    className="w-full md:w-[250px] mx-1 my-1 md:my-0 shadow-md border-[1px] rounded-md"
+                    className="w-full lg:w-[250px] mx-1 my-1 md:my-0 shadow-none lg:shadow-md border-[1px] rounded-md"
                   >
-                    <div className="w-full md:w-[210px] h-[130px]">
+                    <div className="w-full lg:w-[210px] h-[130px]">
                       <img
                         src={data.propertyPicture[0]?.link || ViewImg}
                         alt="viewImages"

@@ -60,7 +60,7 @@ function HotelDetail() {
       <div className='py-5 px-4 md:px-0'>
         <Searchbar />
       </div>
-      <div className='w-full md:w-[1100px]  mx-auto'>
+      <div className='w-full lg:w-[1100px]  mx-auto'>
         <HotelHaeding />
         <HotelFilter />
         <div>

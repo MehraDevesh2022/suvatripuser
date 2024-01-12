@@ -46,7 +46,7 @@ function Navbar() {
             <img src={Logo} alt="img" className="w-full h-full" />
           </div>
         </Link>
-        <div className="w-[500px] hidden md:block cursor-pointer">
+        <div className="w-[500px] hidden lg:block cursor-pointer">
           <ul className="flex flex-row justify-between items-center px-3 my-auto">
             <Link to="/about" className="no-underline text-[#000]">
               <li>About</li>

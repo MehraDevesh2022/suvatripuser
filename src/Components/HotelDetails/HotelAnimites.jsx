@@ -41,11 +41,11 @@ function HotelAnimites() {
 
     }, []); 
     return (
-        <div className='min-w-fit md:max-w-full bg-[#fff] rounded-lg my-2 px-3 py-5'>
+        <div className='min-w-fit lg:max-w-full bg-[#fff] rounded-lg my-2 px-3 py-5'>
             {/* Amenities Provides */}
-            <div className='min-w-fit md:max-w-[1000px]  mx-auto'>
+            <div className='min-w-fit lg:max-w-[1000px]  mx-auto'>
                 <h2 className='font-[600] mb-4'>Amenities Provided</h2>
-                <div style={mobileAligment} className='grid grid-cols-2 md:grid-cols-5 gap-4'>
+                <div style={mobileAligment} className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4'>
                     <div className='flex flex-col md:flex-row items-center justify-center md:justify-start'>
                         <span><LuParkingCircle className='font-[800] text-xl text-[#129035]' /></span>
                         <span className='mx-1 text-[16px] font-[500] tracking-wider'>{hotelData.privateParking}</span>
@@ -89,9 +89,9 @@ function HotelAnimites() {
                 </div>
             </div>
             {/* Locations Provides */}
-            <div className='min-w-fit md:max-w-[1000px]  mx-auto my-5'>
+            <div className='min-w-fit lg:max-w-[1000px]  mx-auto my-5'>
                 <h2 className='font-[600] mb-4'>What's Nearby?</h2>
-                <div style={mobileAligment} className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+                <div style={mobileAligment} className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4'>
                     {hotelData.nearbyLocations.map((location, index) => (
                         <div key={index} className='flex flex-col md:flex-row items-center justify-center md:justify-start'>
                             <span><FaLocationDot className='font-[800] text-xl text-slate-900' /></span>

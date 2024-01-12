@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import picture from '../../Assets/img/Rectangle.png';
 import { FaArrowRight } from 'react-icons/fa';
+import Kathmandu from '../../Assets/img/kathmandu.jpg'
+import Pokahara from '../../Assets/img/pokahara.jpg'
+import Dharan from '../../Assets/img/Dharan.jpg'
 
 function PopularArea() {
     const [hoveredItem, setHoveredItem] = useState(null);
@@ -28,33 +31,33 @@ function PopularArea() {
     const popularPlace = [
         {
             id: 1,
-            Title: 'Thamel',
-            discript: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat, cumque?',
-            img: picture,
+            Title: 'Kathmandu',
+            discript: 'Kathmandu, the capital of Nepal, is a vibrant city nestled in the Himalayas, renowned for its rich cultural heritage and diverse landscapes.',
+            img: Kathmandu,
         },
         {
             id: 2,
-            Title: 'Thamel',
-            discript: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat, cumque?',
-            img: picture,
+            Title: 'Pokhara',
+            discript: `Pokhara: Nepal's scenic gem, adorned with lakes, mountains, and adventure, offers a tranquil escape in a breathtaking natural setting.`,
+            img: Pokahara,
         },
         {
             id: 3,
-            Title: 'Thamel',
-            discript: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat, cumque?',
-            img: picture,
+            Title: 'Dharan',
+            discript: 'Dharan: A vibrant town in eastern Nepal, known for its lively culture, scenic beauty, and as a hub for education.',
+            img: Dharan,
         },
     ];
 
     return (
         <div>
-            <div className='w-full md:w-[1050px] bg-[#fff] mx-auto my-3 shadow-md p-4 rounded-lg border-[1px] border-slate-100'>
-                <h3 className='text-2xl md:text-3xl font-[800] tracking-wider px-2 mb-2'>Popular area to stay in Kathmandu</h3>
-                <div className='flex flex-col md:flex-row justify-between items-center'>
+            <div className='w-full lg:w-[1050px] bg-[#fff] mx-auto my-3 shadow-md p-4 rounded-lg border-[1px] border-slate-100'>
+                <h3 className='text-xl md:text-[28px] lg:text-3xl font-[800] tracking-wider px-2 mb-3'>Popular area to stay in Nepal</h3>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-2 lg:flex flex-row justify-between items-center'>
                     {popularPlace.map((item, index) => (
-                        <div key={index} className='relative'>
+                        <div key={index} className='relative w-full'>
                             <div
-                                className='w-[300px] h-[200px] cursor-pointer mt-2 mx-2 rounded-lg -z-10'
+                                className='w-[300px] h-[200px] cursor-pointer mt-2 mx-auto lg:mx-2 rounded-lg -z-10'
                                 onMouseEnter={() => handleMouseEnter(index)}
                                 onMouseLeave={handleMouseLeave}
                             >
@@ -66,12 +69,12 @@ function PopularArea() {
                             </div>
                             {hoveredItem === index && (
                                 <div
-                                    className='absolute top-5 left-1 w-[300px] px-3 py-1 rounded-lg z-10'
+                                    className='absolute top-4 left-4 md:left-8 lg:left-2 w-[300px] px-3 py-1 rounded-lg z-10'
                                     onMouseEnter={handleContentMouseEnter}
                                     onMouseLeave={handleContentMouseLeave}
                                 >
-                                    <h4 className='font-[600] text-[#fff] tracking-wide'>{item.Title}</h4>
-                                    <p className='text-[16px] font-[500] text-[#fff]'>{item.discript}</p>
+                                    <h4 className='font-[600] text-slate-800 tracking-wide'>{item.Title}</h4>
+                                    <p className='text-[14px] font-[500] text-slate-900'>{item.discript}</p>
                                     <button className='bg-[blue] w-[150px] py-2 text-slate-50 rounded-xl hover:opacity-75'>
                                         More Options <span><FaArrowRight className='inline' /></span>
                                     </button>

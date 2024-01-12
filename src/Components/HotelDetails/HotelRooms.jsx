@@ -66,7 +66,6 @@ function HotelRooms() {
   const handleDateSelect = (ranges) => {
     setDate([ranges.selection]);
     console.log(date[0].startDate, "ranges");
-    hideCalender();
   };
 
   const calenderInput = {
@@ -401,10 +400,13 @@ function HotelRooms() {
                 {showCalender ? (
                   <div className="absolute top-[400px] left-0 md:left-12 z-10">
                     <DateRangePicker
-                      editableDateInputs={true}
+                     editableDateInputs={true}
+                      showSelectionPreview={true}
+                      calendarFocus="forwards"
                       onChange={handleDateSelect}
                       moveRangeOnFirstSelection={false}
                       ranges={date}
+                      preventSnapRefocus={true}
                       months={2}
                         direction={
                           window.innerWidth < 768 ? "vertical" : "horizontal"
@@ -490,7 +492,7 @@ function HotelRooms() {
         <>
           {roomsDeatils?.map((room, index) => (
             <div
-              className="w-full bg-slate-50  mt-2 mb-3 grid grid-cols-2 md:grid-cols-4 gap-4 px-2 py-3 rounded-lg shadow-lg h-[250px] scroller-card cursor-pointer border-[1px] border-red-200"
+              className="w-full bg-slate-50  mt-2 mb-3 grid grid-cols-2 lg:grid-cols-4 gap-4 px-2 py-3 rounded-lg shadow-lg h-auto"
               key={room._id}
             >
               {/* Details from hotelData */}

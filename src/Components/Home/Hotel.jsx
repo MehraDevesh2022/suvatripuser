@@ -5,6 +5,8 @@ import Picture from "../../Assets/img/Rectangle.png";
 import axios from "axios";
 import config from "../../config";
 import { useAppContext } from "../../context/store";
+// Import the following library to sanitize HTML
+// import DOMPurify from "dompurify";
 
 function Hotel() {
   const { actions, state } = useAppContext();
@@ -48,12 +50,12 @@ function Hotel() {
 
   return (
     <div className="w-full">
-      <div className="my-3 bg-[#fff] w-full md:w-[1050px] mx-auto  p-3  rounded-lg">
+      <div className="my-3 bg-[#fff] w-full lg:w-[1050px] mx-auto  p-3  rounded-lg">
         <div className="flex flex-row justify-between items-center">
           <div className="text-[55px] font-[900] tracking-wide leading-4">
             Hotel
           </div>
-          <div className="w-[700px] h-[2px] hidden md:block bg-slate-950 my-auto"></div>
+          <div className="w-[700px] h-[2px] hidden lg:block bg-slate-950 my-auto"></div>
           <div>
             <Button
               style={{
@@ -75,7 +77,7 @@ function Hotel() {
         {isLoading ? (
           <div>Loading...</div>
         ) : (
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center">
+          <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center">
             {state.hotel.map((data, index) => {
               return (
                 <div key={index} className="">
