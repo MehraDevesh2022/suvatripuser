@@ -6,6 +6,7 @@ import Button from "react-bootstrap/esm/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useAppContext } from "../../context/store";
+import Starrating from "./Starrating";
 function HotelReviews() {
   const inputStyle = {
     backgroundColor: "#f3f5f8",
@@ -164,7 +165,8 @@ function HotelReviews() {
                     Rate our staff
                   </p>
                   <div className="input-group mb-0">
-                    <input
+                    <Starrating />
+                    {/* <input
                       type="number"
                       style={inputStyle}
                       className="form-control"
@@ -179,7 +181,7 @@ function HotelReviews() {
                           staff_rating: e.target.value,
                         }));
                       }}
-                    />
+                    /> */}
                   </div>
                 </Col>
                 <Col>
@@ -187,7 +189,7 @@ function HotelReviews() {
                     Rate our facilities
                   </p>
                   <div className="input-group mb-0">
-                    <input
+                    {/* <input
                       type="number"
                       style={inputStyle}
                       className="form-control"
@@ -202,7 +204,8 @@ function HotelReviews() {
                           facilities_rating: e.target.value,
                         }));
                       }}
-                    />
+                    /> */}
+                    <Starrating />
                   </div>
                 </Col>
               </Row>
@@ -212,7 +215,7 @@ function HotelReviews() {
                     Rate our cleaniness
                   </p>
                   <div className="input-group mb-0">
-                    <input
+                    {/* <input
                       type="number"
                       style={inputStyle}
                       className="form-control"
@@ -227,7 +230,8 @@ function HotelReviews() {
                           cleanliness_rating: e.target.value,
                         }));
                       }}
-                    />
+                    /> */}
+                    <Starrating />
                   </div>
                 </Col>
                 <Col>
@@ -235,7 +239,7 @@ function HotelReviews() {
                     Rate our comfort
                   </p>
                   <div className="input-group mb-0">
-                    <input
+                    {/* <input
                       type="number"
                       style={inputStyle}
                       className="form-control"
@@ -250,7 +254,8 @@ function HotelReviews() {
                           comfort_rating: e.target.value,
                         }));
                       }}
-                    />
+                    /> */}
+                    <Starrating />
                   </div>
                 </Col>
               </Row>
@@ -260,7 +265,7 @@ function HotelReviews() {
                     Value for money
                   </p>
                   <div className="input-group mb-0">
-                    <input
+                    {/* <input
                       type="number"
                       style={inputStyle}
                       className="form-control bg-[#f3f5f8]"
@@ -275,7 +280,8 @@ function HotelReviews() {
                           money_rating: e.target.value,
                         }));
                       }}
-                    />
+                    /> */}
+                    <Starrating />
                   </div>
                 </Col>
                 <Col>
@@ -283,7 +289,7 @@ function HotelReviews() {
                     Rate our Location
                   </p>
                   <div className="input-group mb-0">
-                    <input
+                    {/* <input
                       type="number"
                       style={inputStyle}
                       className="form-control"
@@ -300,16 +306,17 @@ function HotelReviews() {
                           };
                         })
                       }
-                    />
+                    /> */}
+                    <Starrating />
                   </div>
                 </Col>
               </Row>
-              <Row className="mt-3">
+              <Row className="my-3">
                 <p className="text-xl font-[600] tracking-wider">
                   Rate our wifi
                 </p>
                 <div className="input-group mb-0">
-                  <input
+                  {/* <input
                     type="number"
                     style={inputStyle}
                     className="form-control"
@@ -324,7 +331,8 @@ function HotelReviews() {
                         wifi_rating: e.target.value,
                       }));
                     }}
-                  />
+                  /> */}
+                  <Starrating />
                 </div>
               </Row>
               <div className="w-full h-[200px] mb-2">

@@ -9,6 +9,20 @@ import { FaStar } from "react-icons/fa6";
 function FilterSection() {
   const [minBudget, setMinBudget] = useState("");
   const [maxBudget, setMaxBudget] = useState("");
+  const [starColors, setStarColors] = useState({
+    5: false,
+    4: false,
+    3: false,
+    2: false,
+    1: false,
+  });
+  const [gueststarColors, setGuestStarColors] = useState({
+    Excellent: false,
+    "Very Good": false,
+    Good: false,
+    "No Rating": false,
+  });
+
   const { state, actions } = useAppContext();
   const hotels = state.hotel;
 
@@ -18,6 +32,7 @@ function FilterSection() {
     propertyType: [],
     facilities: [],
   });
+ 
 
   const fetchFilteredHotels = async (queryParams) => {
     try {
@@ -43,6 +58,7 @@ function FilterSection() {
     const updatedFilters = { ...selectedFilters };
 
     const index = updatedFilters[filterType].indexOf(value);
+
     if (index === -1) {
       updatedFilters[filterType].push(value);
     } else {
@@ -53,6 +69,19 @@ function FilterSection() {
 
     const queryParams = buildQueryParams(updatedFilters);
     fetchFilteredHotels(queryParams);
+
+    
+    // Changes by Ashutosh from here
+    // Star color changes
+
+    setStarColors((prevStarColors) => ({
+      ...prevStarColors,
+      [value]: !prevStarColors[value],
+    }));
+    setGuestStarColors((prevStarColors) => ({
+      ...prevStarColors,
+      [value]: !prevStarColors[value],
+    }));
   };
 
   const handleMinBudgetChange = (e) => {
@@ -132,23 +161,38 @@ function FilterSection() {
                   </label>
                 </div>
                 <div className="form-check">
-            <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
-            <label className="form-check-label" for="flexCheckDefault">
-              North Nepal
-            </label>
-          </div>
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=" North Nepal"
+                    id="flexCheckDefault"
+                  />
+                  <label className="form-check-label" for="flexCheckDefault">
+                    North Nepal
+                  </label>
+                </div>
                 <div className="form-check">
-            <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
-            <label className="form-check-label" for="flexCheckDefault">
-              South Nepal
-            </label>
-          </div>
-          <div className="form-check">
-            <input className="form-check-input" type="checkbox" value=" North Nepal" id="flexCheckDefault" />
-            <label className="form-check-label" for="flexCheckDefault">
-              Couple Friendly
-            </label>
-          </div>
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=" North Nepal"
+                    id="flexCheckDefault"
+                  />
+                  <label className="form-check-label" for="flexCheckDefault">
+                    South Nepal
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=" North Nepal"
+                    id="flexCheckDefault"
+                  />
+                  <label className="form-check-label" for="flexCheckDefault">
+                    Couple Friendly
+                  </label>
+                </div>
               </div>
             </div>
             <div>
@@ -234,6 +278,39 @@ function FilterSection() {
                 Star Rating
               </h3>
               <div className="px-3">
+                {[5, 4, 3, 2, 1].map((rating) => (
+                  <div key={rating} className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value={`${rating} Star`}
+                      id={`flexCheckDefault${rating}`}
+                      onChange={() =>
+                        handleCheckboxChange("starRating", `${rating}`)
+                      }
+                    />
+                    <label
+                      className="form-check-label flex flex-row items-center"
+                      htmlFor={`flexCheckDefault${rating}`}
+                    >
+                      <span>
+                        <FaStar
+                          className={`${
+                            starColors[rating]
+                              ? "text-[#FDCC0D]"
+                              : "text-[#ccc]"
+                          } font-[700]`}
+                        />
+                      </span>
+                      <span className="ml-2 font-[400] text-slate-800">
+                        {rating} Star(45)
+                      </span>
+                    </label>
+                  </div>
+                ))}
+              </div>
+
+              {/* <div className="px-3">
                 <div className="form-check">
                   <input
                     className="form-check-input"
@@ -247,14 +324,13 @@ function FilterSection() {
                     htmlFor="flexCheckDefault5"
                   >
                     <span>
-                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                      <FaStar className={`${starColor ? 'text-[#FDCC0D]': 'text-[#ccc]'} font-[700]`} />
                     </span>
                     <span className="ml-2 font-[400] text-slate-800">
                       5 Star(45)
                     </span>
                   </label>
                 </div>
-
                 <div className="form-check">
                   <input
                     className="form-check-input"
@@ -268,7 +344,7 @@ function FilterSection() {
                     htmlFor="flexCheckDefault5"
                   >
                     <span>
-                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                      <FaStar className={`${starColor ? 'text-[#FDCC0D]': 'text-[#ccc]'} font-[700]`} />
                     </span>
                     <span className="ml-2 font-[400] text-slate-800">
                       4 Star(45)
@@ -288,7 +364,7 @@ function FilterSection() {
                     htmlFor="flexCheckDefault5"
                   >
                     <span>
-                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                      <FaStar className={`${starColor ? 'text-[#FDCC0D]': 'text-[#ccc]'} font-[700]`} />
                     </span>
                     <span className="ml-2 font-[400] text-slate-800">
                       3 Star(45)
@@ -308,7 +384,7 @@ function FilterSection() {
                     htmlFor="flexCheckDefault5"
                   >
                     <span>
-                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                      <FaStar  className={`${starColor ? 'text-[#FDCC0D]': 'text-[#ccc]'} font-[700]`} />
                     </span>
                     <span className="ml-2 font-[400] text-slate-800">
                       2 Star(45)
@@ -328,14 +404,14 @@ function FilterSection() {
                     htmlFor="flexCheckDefault5"
                   >
                     <span>
-                      <FaStar className="text-[#FDCC0D] font-[700]" />
+                      <FaStar  className={`${starColor ? 'text-[#FDCC0D]': 'text-[#ccc]'} font-[700]`} />
                     </span>
                     <span className="ml-2 font-[400] text-slate-800">
                       1 Star(45)
                     </span>
                   </label>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div>
               <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">
@@ -367,7 +443,12 @@ function FilterSection() {
                     onChange={handleMaxBudgetChange}
                   />
                 </div>
-                <button onClick={handleBudgetFilter} className="bg-slate-500 p-2 rounded-md ml-2 text-sm text-slate-100">Apply</button>
+                <button
+                  onClick={handleBudgetFilter}
+                  className="bg-slate-500 p-2 rounded-md ml-2 text-sm text-slate-100"
+                >
+                  Apply
+                </button>
               </div>
             </div>
             <div>
@@ -530,54 +611,204 @@ function FilterSection() {
             </div>
             {/* Guest rating */}
             <div>
-        <h3 className='text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1'>Guest Rating</h3>
-        <div className='px-3'>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value="5 Star"
-              id="flexCheckDefault"
-            />
-            <label className="form-check-label" for="flexCheckDefault">
-              Excellent
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=" North Nepal"
-              id="flexCheckDefault"
-            />
-            <label className="form-check-label" for="flexCheckDefault">
-              Very Good
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=" North Nepal"
-              id="flexCheckDefault"
-            />
-            <label className="form-check-label" for="flexCheckDefault">
-              Good
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=" North Nepal"
-              id="flexCheckDefault"
-            />
-            <label className="form-check-label" for="flexCheckDefault">
-              No rating
-            </label>
-          </div>
-        </div>
-      </div>
+              <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">
+                Guest Rating
+              </h3>
+              <div className="px-3">
+                {["Excellent", "Very Good", "Good", "No Rating"].map(
+                  (data, rating) => (
+                    <div key={rating} className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={data}
+                        id={`flexCheckDefault${data}`}
+                        onChange={() =>
+                          handleCheckboxChange("starRating", data)
+                        }
+                        checked={gueststarColors[data]}
+                      />
+                      <label
+                        className="form-check-label flex flex-row items-center"
+                        htmlFor={`flexCheckDefault${data}`}
+                      >
+                        <span>
+                          <FaStar
+                            className={`text-${
+                              gueststarColors[data] ? "[#FDCC0D]" : "[#ccc]"
+                            } font-[700]`}
+                          />
+                        </span>
+                        <span className="ml-2 font-[400] text-slate-800">
+                          {data}
+                        </span>
+                      </label>
+                    </div>
+                  )
+                )}
+              </div>
+
+              {/* <div className="px-3">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value="Excellent"
+                    id="flexCheckDefaultExcellent"
+                    onChange={() =>
+                      handleCheckboxChange("GuestRating", "Excellent")
+                    }
+                    checked={starColor}
+                  />
+                  <label
+                    className="form-check-label flex flex-row items-center"
+                    htmlFor="flexCheckDefaultExcellent"
+                  >
+                    <span>
+                      <FaStar
+                        className={`text-${
+                          starColor ? "[#FDCC0D]" : "[#ccc]"
+                        } font-[700]`}
+                      />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">
+                      Excellent
+                    </span>
+                  </label>
+                </div>
+
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value="Very Good"
+                    id="flexCheckDefaultVeryGood"
+                    onChange={() =>
+                      handleCheckboxChange("GuestRating", "Very Good")
+                    }
+                    checked={starColor}
+                  />
+                  <label
+                    className="form-check-label flex flex-row items-center"
+                    htmlFor="flexCheckDefaultVeryGood"
+                  >
+                    <span>
+                      <FaStar
+                        className={`text-${
+                          starColor ? "[#FDCC0D]" : "[#ccc]"
+                        } font-[700]`}
+                      />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">
+                      Very Good
+                    </span>
+                  </label>
+                </div>
+
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value="Good"
+                    id="flexCheckDefaultGood"
+                    onChange={() => handleCheckboxChange("GuestRating", "Good")}
+                    checked={starColor}
+                  />
+                  <label
+                    className="form-check-label flex flex-row items-center"
+                    htmlFor="flexCheckDefaultGood"
+                  >
+                    <span>
+                      <FaStar
+                        className={`text-${
+                          starColor ? "[#FDCC0D]" : "[#ccc]"
+                        } font-[700]`}
+                      />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">Good</span>
+                  </label>
+                </div>
+
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value="No rating"
+                    id="flexCheckDefaultNoRating"
+                    onChange={() =>
+                      handleCheckboxChange("GuestRating", "No Rating")
+                    }
+                    checked={starColor}
+                  />
+                  <label
+                    className="form-check-label flex flex-row items-center"
+                    htmlFor="flexCheckDefaultNoRating"
+                  >
+                    <span>
+                      <FaStar
+                        className={`text-${
+                          starColor ? "[#FDCC0D]" : "[#ccc]"
+                        } font-[700]`}
+                      />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">
+                      No rating
+                    </span>
+                  </label>
+                </div>
+              </div> */}
+              {/* <div className="px-3">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value="5 Star"
+                    id="flexCheckDefault"
+                  />
+                  <label className="form-check-label flex flex-row items-center" for="flexCheckDefault">
+                  <span>
+                      <FaStar className={`text-[#FDCC0D] font-[700]`} />
+                    </span>
+                    <span className="ml-2 font-[400] text-slate-800">
+                      Excellent
+                    </span>
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=" North Nepal"
+                    id="flexCheckDefault"
+                  />
+                  <label className="form-check-label" for="flexCheckDefault">
+                    Very Good
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=" North Nepal"
+                    id="flexCheckDefault"
+                  />
+                  <label className="form-check-label" for="flexCheckDefault">
+                    Good
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=" North Nepal"
+                    id="flexCheckDefault"
+                  />
+                  <label className="form-check-label" for="flexCheckDefault">
+                    No rating
+                  </label>
+                </div>
+              </div> */}
+            </div>
             {/* Facilities */}
             <div>
               <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">

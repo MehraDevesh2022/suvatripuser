@@ -80,7 +80,7 @@ function Filter() {
                 <div>
                     <Navbar />
                 </div>
-                <div className='my-5'>
+                <div className='my-5 p-4 md:p-0'>
                     <Searchbar checkInD={checkIn} checkOutD={checkOut} adultD={adult} childD={children} roomD={room} locationD={location} />
                 </div>
                 <div className='block md:hidden'>
