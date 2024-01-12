@@ -13,6 +13,7 @@ function HotelReviews() {
   };
 
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [reviewData, setReviewData] = useState({
     staff_rating: 0,
     facilities_rating: 0,
@@ -21,10 +22,11 @@ function HotelReviews() {
     money_rating: 0,
     location_rating: 0,
     wifi_rating: 0,
+    highlight: "",
     review: "",
     images: [],
   });
-  const { state } = useAppContext();
+  const { state, actions } = useAppContext();
   const handleClose = () => setShow(false);
   const handleShow = () => {
     if (
@@ -74,11 +76,10 @@ function HotelReviews() {
         body: formData,
       });
 
-
       const data = await response.json();
-  if(data.success === false){
-    alert("you dont have booking for this hotel");
-  }
+      if (data.success === false) {
+        alert("you dont have booking for this hotel");
+      }
 
       if (response.ok) {
         setReviewData({
@@ -90,6 +91,7 @@ function HotelReviews() {
           location_rating: 0,
           wifi_rating: 0,
           review: "",
+          highlight: "",
           images: [],
         });
         handleClose();
@@ -108,22 +110,44 @@ function HotelReviews() {
   useEffect(() => {
     const getReviews = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           `http://localhost:8000/review/${state?.hotelDetails?._id}`
         );
         const data = await response.json();
         if (response.ok) {
-          console.log(data, "reviews");
+          actions.setAllReviews(data.data);
+          console.log(
+            state.allReviews.averageRatings[0].rating,
+            "averageRatings"
+          );
+          setLoading(false);
+          // console.log("Reviews:", data.data);
         } else {
           console.error("Failed to get reviews");
+          setLoading(false);
         }
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
 
     getReviews();
-  }, [state?.hotelDetails?._id]);
+  }, []);
+
+  const maxHighlightLength = 70;
+
+  const handleHighlightChange = (e) => {
+    const inputText = e.target.value;
+
+    if (inputText.length <= maxHighlightLength) {
+      setReviewData((prevData) => ({
+        ...prevData,
+        highlight: inputText,
+      }));
+    }
+  };
 
   return (
     <div className="w-full  bg-[#fff] my-3 px-4">
@@ -312,6 +336,35 @@ function HotelReviews() {
                 </div>
               </Row>
               <div className="w-full h-[200px] mb-2">
+                <label htmlFor="highlight" className="text-2xl font-[600] mb-2">
+                  Enter Your highlight
+                </label>
+                <div className="w-full h-[150px] border-[1px] border-slate-400 mb-3">
+                  <textarea
+                    name="highlight"
+                    id="highlight"
+                    placeholder="Write your highlight here.."
+                    className="w-full h-full outline-none border-none bg-[#f3f5f8] p-1 text-sm"
+                    value={reviewData.highlight}
+                    onChange={handleHighlightChange}
+                    maxLength={maxHighlightLength}
+                  ></textarea>
+                  <div
+                    className="text-right text-[12px] text-slate-600"
+                    style={{
+                      color:
+                        maxHighlightLength - reviewData.highlight.length < 0
+                          ? "red"
+                          : "black",
+                    }}
+                  >
+                    {maxHighlightLength - reviewData.highlight.length}{" "}
+                    characters remaining
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full h-[200px] mb-2">
                 <label htmlFor="review" className="text-2xl font-[600] mb-2">
                   Enter Your Review
                 </label>
@@ -361,101 +414,132 @@ function HotelReviews() {
           </Modal.Footer>
         </Modal>
       </>
-      <div className="flex flex-row justify-between items-start border-b-[1px] border-slate-400 py-3">
-        <div className="flex flex-row justify-start items-start">
-          <div className="w-[40px] h-[40px] text-[#fff] bg-[#129035] my-0 font-[700] text-center py-2 rounded-lg">
-            8.7
-          </div>
-          <div className="mx-2 mt-[2px]">
-            <h5 className="mb-0 text-sm font-[700]">Excellent</h5>
-            <p className="mb-0 text-[12px] font-[400] leading-3">
-              2,566 <span>review</span>
-            </p>
-          </div>
-          <div className="my-2 text-sm mx-4 text-[#129035] hidden md:block">
-            We aim for 100% real review
-          </div>
-        </div>
-        <div>
-          <button
-            className="w-[120px] h-[40px]  bg-transparent text-sm font-[600]  text-[#129035] border-[1px] border-[#129035] rounded-sm"
-            onClick={handleShow}
-          >
-            Write a review
-          </button>
-        </div>
-      </div>
-      <div className="py-4 border-b-[1px] border-slate-700">
-        <p className="text-[16px] font-[700]">Categories:</p>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="w-auto md:w-[300px]">
-            <div className="flex flex-row justify-between mb-2">
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">
-                Staff
-              </p>
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">8.9</p>
-            </div>
-            <ProgressBar now={now} striped variant="danger" />
-          </div>
-          <div className="w-auto md:w-[300px]">
-            <div className="flex flex-row justify-between mb-2">
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">
-                facilities
-              </p>
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">8.9</p>
-            </div>
-            <ProgressBar now={now} striped variant="danger" />
-          </div>
-          <div className="w-auto md:w-[300px]">
-            <div className="flex flex-row justify-between mb-2">
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">
-                cleaniness
-              </p>
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">8.9</p>
-            </div>
-            <ProgressBar now={now} striped variant="danger" />
-          </div>
-          <div className="w-auto md:w-[300px]">
-            <div className="flex flex-row justify-between mb-2">
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">
-                comfort
-              </p>
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">8.9</p>
-            </div>
-            <ProgressBar now={now} striped variant="danger" />
-          </div>
-          <div className="w-auto md:w-[300px]">
-            <div className="flex flex-row justify-between  mb-2">
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">
-                Value for money
-              </p>
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">8.9</p>
-            </div>
-            <ProgressBar now={now} striped variant="danger" />
-          </div>
-          <div className="w-auto md:w-[300px]">
-            <div className="flex flex-row justify-between mb-2">
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">
-                Location
-              </p>
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">8.9</p>
-            </div>
-            <ProgressBar now={now} striped variant="danger" />
-          </div>
-          <div className="w-auto md:w-[300px]">
-            <div className="flex flex-row justify-between mb-2">
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">
-                Free wifi
-              </p>
-              <p className="mb-0 text-[16px] font-[500] tracking-wider">8.9</p>
-            </div>
-            <ProgressBar now={now} striped variant="danger" />
-          </div>
-        </div>
-      </div>
-      <div className="py-3">
-        <GuestReview />
-      </div>
+      {loading ? (
+        <div className="text-center">Loading...</div>
+      ) : (
+        <>
+          {true ? (
+            <>
+              <div>
+                <div className="flex flex-row justify-between items-start border-b-[1px] border-slate-400 py-3">
+                  <div className="flex flex-row justify-start items-start">
+                    <div className="w-[40px] h-[40px] text-[#fff] bg-[#129035] my-0 font-[700] text-center py-2 rounded-lg">
+                      {state.allReviews.totalAvgRating}
+                    </div>
+                    <div className="mx-2 mt-[2px]">
+                      <h5 className="mb-0 text-sm font-[700]">Excellent</h5>
+                      <p className="mb-0 text-[12px] font-[400] leading-3">
+                        {state?.allReviews?.reviews?.length} <span>review</span>
+                      </p>
+                    </div>
+                    <div className="my-2 text-sm mx-4 text-[#129035] hidden md:block">
+                      We aim for 100% real review
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      className="w-[120px] h-[40px]  bg-transparent text-sm font-[600]  text-[#129035] border-[1px] border-[#129035] rounded-sm"
+                      onClick={handleShow}
+                    >
+                      Write a review
+                    </button>
+                  </div>
+                </div>
+                <div className="py-4 border-b-[1px] border-slate-700">
+                  <p className="text-[16px] font-[700]">Categories:</p>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="w-auto md:w-[300px]">
+                      <div className="flex flex-row justify-between mb-2">
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          Staff
+                        </p>
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          {state.allReviews?.averageRatings[0]?.rating}
+                        </p>
+                      </div>
+                      <ProgressBar now={now} striped variant="danger" />
+                    </div>
+                    <div className="w-auto md:w-[300px]">
+                      <div className="flex flex-row justify-between mb-2">
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          facilities
+                        </p>
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          {state.allReviews?.averageRatings[1]?.rating}
+                        </p>
+                      </div>
+                      <ProgressBar now={now} striped variant="danger" />
+                    </div>
+                    <div className="w-auto md:w-[300px]">
+                      <div className="flex flex-row justify-between mb-2">
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          cleaniness
+                        </p>
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          {state.allReviews?.averageRatings[2]?.rating}
+                        </p>
+                      </div>
+                      <ProgressBar now={now} striped variant="danger" />
+                    </div>
+                    <div className="w-auto md:w-[300px]">
+                      <div className="flex flex-row justify-between mb-2">
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          comfort
+                        </p>
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          {state.allReviews?.averageRatings[3]?.rating}
+                        </p>
+                      </div>
+                      <ProgressBar now={now} striped variant="danger" />
+                    </div>
+                    <div className="w-auto md:w-[300px]">
+                      <div className="flex flex-row justify-between  mb-2">
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          Value for money
+                        </p>
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          {state.allReviews?.averageRatings[4]?.rating}
+                        </p>
+                      </div>
+                      <ProgressBar now={now} striped variant="danger" />
+                    </div>
+                    <div className="w-auto md:w-[300px]">
+                      <div className="flex flex-row justify-between mb-2">
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          Location
+                        </p>
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          {state.allReviews?.averageRatings[5]?.rating}
+                        </p>
+                      </div>
+                      <ProgressBar now={now} striped variant="danger" />
+                    </div>
+                    <div className="w-auto md:w-[300px]">
+                      <div className="flex flex-row justify-between mb-2">
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          Free wifi
+                        </p>
+                        <p className="mb-0 text-[16px] font-[500] tracking-wider">
+                          {state.allReviews?.averageRatings[6]?.rating}
+                        </p>
+                      </div>
+                      <ProgressBar now={now} striped variant="danger" />
+                    </div>
+                  </div>
+                </div>
+                <div className="py-3">
+                  {state?.allReviews?.reviews &&
+                    state?.allReviews?.reviews?.map((review, index) => (
+                      <GuestReview   review ={review} key={review._id} />
+                    ))}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="text-center">No reviews yet</div>
+          )}
+        </>
+      )}
     </div>
   );
 }

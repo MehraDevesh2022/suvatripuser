@@ -12,7 +12,8 @@ const initialState = {
   profileData : {},
   roomDetails: {},
   allRooms: [],
-  allRewviews: [],
+  allReviews: [],
+
    
 };
 
@@ -31,6 +32,7 @@ const actionTypes = {
   SET_ROOM_DETAILS: "SET_ROOM_DETAILS",
   SET_ALL_ROOMS: "SET_ALL_ROOMS",
   SET_ALL_REVIEW: "SET_ALL_REVIEW",
+  
 };
 
 const appReducer = (state, action) => {
@@ -57,7 +59,7 @@ const appReducer = (state, action) => {
       return { ...state, roomDetails: action.payload };
       
       case actionTypes.SET_ALL_REVIEW:
-      return { ...state, allRewviews: action.payload };
+      return { ...state, allReviews: action.payload };
        case actionTypes.SET_ALL_ROOMS:
       return { ...state, allRooms: action.payload };  
 
@@ -94,7 +96,7 @@ const setProfileData = (profileData) =>
   const setHotelDetails = (hotelDetails) =>
     dispatch({ type: actionTypes.SET_HOTEL_DETAILS, payload: hotelDetails });
 
-    const setAllRewviews = (allRewviews) =>
+    const setAllReviews = (allRewviews) =>
     dispatch({ type: actionTypes.SET_ALL_REVIEW, payload: allRewviews });
 
   const contextValue = {
@@ -111,7 +113,7 @@ const setProfileData = (profileData) =>
       setAuthType,
       setRoomData,
       setRoomDetails,
-      setAllRewviews
+      setAllReviews
        
     },
   };

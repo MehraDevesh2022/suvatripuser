@@ -2,10 +2,10 @@ import React from 'react'
 import { FaAngleDoubleDown } from "react-icons/fa";
 import ReviewSection from './ReviewSection';
 
-function GuestReview() {
+function GuestReview({review}) {
     return (
         <div>
-            <div>
+            {/* <div>
                 <div class="row">
                     <div class="col">
                         <h3 className='text-[18px] md:text-[24px] font-[700] text-slate-700'>Guest reviews</h3>
@@ -19,9 +19,9 @@ function GuestReview() {
 
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div>
-                <ReviewSection />
+                <ReviewSection  country ={review?.hotel_id?.country}  propertyName ={review?.hotel_id?.propertyName}  username ={review?.user_id?.username} user_id ={review?.user_id?._id}   review ={review}   />
             </div>
         </div>
     )
