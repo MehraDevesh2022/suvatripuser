@@ -29,7 +29,7 @@ function Filter() {
             try {
               actions.isLoading(true);
         
-              const params = {
+              let params = {
                 location: encodeURIComponent(location),
                 checkIn: checkIn, // Convert start date to milliseconds
                 checkOut: checkOut, // Convert end date to milliseconds
@@ -48,13 +48,15 @@ function Filter() {
                   },
                 }
               );
+
+              console.log('doneeee');
         
               actions.setHotel(response.data.data);
               actions.isLoading(false);
-              actions.setHotel(response.data.data);
-              actions.isLoading(false);
             } catch (error) {
-              console.error("Error fetching hotels:", error);
+              if(error.response.status===404) {
+                actions.setHotel([]);
+              }
               // Handle error as needed
               console.error("Error fetching hotels:", error);
               // Handle error as needed
