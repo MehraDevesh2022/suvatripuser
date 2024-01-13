@@ -229,6 +229,13 @@ function HotelReviews() {
     }
   };
 
+  const butnStyle = {
+    padding: '10px 18px',
+    textAlign: 'center',
+    backgroundColor: '#e3292d',
+    border: 'none',
+    borderRadius: '40px',
+  }
   return (
     <>
       {loading ? (
@@ -251,7 +258,7 @@ function HotelReviews() {
                   <div>
                     <Row>
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our staff
                         </p>
                         <div className="input-group mb-0">
@@ -283,7 +290,7 @@ function HotelReviews() {
                         </div>
                       </Col>
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our facilities
                         </p>
                         <div className="input-group mb-0">
@@ -318,7 +325,7 @@ function HotelReviews() {
                     </Row>
                     <Row className="mt-3">
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our cleaniness
                         </p>
                         <div className="input-group mb-0">
@@ -351,7 +358,7 @@ function HotelReviews() {
                         </div>
                       </Col>
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our comfort
                         </p>
                         <div className="input-group mb-0">
@@ -387,7 +394,7 @@ function HotelReviews() {
                     </Row>
                     <Row className="mt-3">
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Value for money
                         </p>
                         <div className="input-group mb-0">
@@ -420,7 +427,7 @@ function HotelReviews() {
                         </div>
                       </Col>
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our Location
                         </p>
                         <div className="input-group mb-0">
@@ -456,7 +463,7 @@ function HotelReviews() {
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <p className="text-xl font-[600] tracking-wider">
+                      <p className="text-sm sm:text-xl font-[600] tracking-wider">
                         Rate our wifi
                       </p>
                       <div className="input-group mb-0">
@@ -491,7 +498,7 @@ function HotelReviews() {
                     <div className="w-full h-[200px] mb-2">
                       <label
                         htmlFor="highlight"
-                        className="text-2xl font-[600] mb-2"
+                        className="text-sm sm:text-xl md:text-2xl font-[600] mb-2"
                       >
                         Enter Your highlight
                       </label>
@@ -524,7 +531,7 @@ function HotelReviews() {
                     <div className="w-full h-[200px] mb-2">
                       <label
                         htmlFor="review"
-                        className="text-2xl font-[600] mb-2"
+                        className="text-sm sm:text-xl md:text-2xl font-[600] mb-2"
                       >
                         Enter Your Review
                       </label>
@@ -561,7 +568,8 @@ function HotelReviews() {
                 <Modal.Footer>
                   <Button
                     onClick={handleClose}
-                    className="text-[#fff] font-[700] text-xl tracking-wider"
+                    style={butnStyle}
+                    className="text-[#fff] font-[700] text-xl tracking-wider bg-[]"
                   >
                     Close
                   </Button>
@@ -569,7 +577,8 @@ function HotelReviews() {
                     onClick={
                       editReview ? handleEditSubmitReview : handleSubmitReview
                     }
-                    className="text-[#fff] font-[700] text-xl tracking-wider"
+                    style={butnStyle}
+                    className="text-[#fff] font-[700] text-xl tracking-wider hover:opacity-75 duration-150"
                   >
                     Submit Review
                   </Button>
