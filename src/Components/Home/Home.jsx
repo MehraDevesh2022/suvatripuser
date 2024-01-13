@@ -61,13 +61,7 @@ function Home() {
                 <PopularArea />
                 <Hotel />
                 <Newsletter />
-                <Footer />
-                {/* <Header />
-                <Section />
-                <PopularArea />
-                <Hotel />
-                <Newsletter />
-                <Footer />           */}
+                <Footer />               
         </div>
     )
 }

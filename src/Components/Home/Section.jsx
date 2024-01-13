@@ -20,7 +20,7 @@ function Section() {
 
   return (
     <div>
-      <div className="w-full lg:w-[1050px] bg-[#fff] shadow-md border-[1px] border-slate-100 mx-auto p-3 mt-5 rounded-md">
+      <div className="w-full xl:w-[1050px] bg-[#fff] shadow-md border-[1px] border-slate-100 mx-auto p-3 mt-5 rounded-md">
         <section className="flex flex-col md:flex-row  items-center p-2">
           <div className="w-full md:w-[300px] bg-[#fff]   p-3 rounded-md">
             <p className="leading-3 bg-slate-700 w-[120px] py-2 px-2 uppercase  rounded-md text-slate-200">

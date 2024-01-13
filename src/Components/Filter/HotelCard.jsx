@@ -36,7 +36,7 @@ console.log(hotel , "hotel");
       >
         <div
           key={hotel._id["$oid"]}
-          className="w-full lg:w-[800px] h-auto my-0 bg-[#fff] border-[1px] mt-0 mb-2 shadow-lg mx-auto flex flex-col md:flex-row justify-start p-2 rounded-lg"
+          className="w-full xl:w-[800px] h-auto my-0 bg-[#fff] border-[1px] mt-0 mb-2 shadow-lg mx-auto flex flex-col md:flex-row justify-start p-2 rounded-lg"
         >
           <div className="w-full md:w-[250px] h-[250px] rounded-lg">
             <img

@@ -50,12 +50,12 @@ function Hotel() {
 
   return (
     <div className="w-full">
-      <div className="my-3 bg-[#fff] w-full lg:w-[1050px] mx-auto  p-3  rounded-lg">
+      <div className="my-3 bg-[#fff] w-full xl:w-[1050px] mx-auto  p-3  rounded-lg">
         <div className="flex flex-row justify-between items-center">
           <div className="text-[55px] font-[900] tracking-wide leading-4">
             Hotel
           </div>
-          <div className="w-[700px] h-[2px] hidden lg:block bg-slate-950 my-auto"></div>
+          <div className="w-[700px] h-[2px] hidden xl:block bg-slate-950 my-auto"></div>
           <div>
             <Button
               style={{
