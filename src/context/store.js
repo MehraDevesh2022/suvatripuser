@@ -13,7 +13,7 @@ const initialState = {
   roomDetails: {},
   allRooms: [],
   allReviews: [],
-
+    location : ""
    
 };
 
@@ -32,7 +32,7 @@ const actionTypes = {
   SET_ROOM_DETAILS: "SET_ROOM_DETAILS",
   SET_ALL_ROOMS: "SET_ALL_ROOMS",
   SET_ALL_REVIEW: "SET_ALL_REVIEW",
-  
+  SET_LOCATION: "SET_LOCATION"
 };
 
 const appReducer = (state, action) => {
@@ -99,6 +99,9 @@ const setProfileData = (profileData) =>
     const setAllReviews = (allRewviews) =>
     dispatch({ type: actionTypes.SET_ALL_REVIEW, payload: allRewviews });
 
+    const setLocation = (location) =>
+    dispatch({ type: actionTypes.SET_LOCATION, payload: location });
+
   const contextValue = {
     state,
     actions: {
@@ -113,7 +116,8 @@ const setProfileData = (profileData) =>
       setAuthType,
       setRoomData,
       setRoomDetails,
-      setAllReviews
+      setAllReviews,
+      setLocation
        
     },
   };
