@@ -14,8 +14,6 @@ function Home() {
   
       const { actions} = useAppContext()
 
-
-
     useEffect(() => {
         const fetchSpecialData = async () => {
           try {
@@ -55,11 +53,6 @@ function Home() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
-
-
-
-
-
     return (
         <div className='min-w-full h-screen'>
                 <Navbar />
@@ -68,7 +61,7 @@ function Home() {
                 <PopularArea />
                 <Hotel />
                 <Newsletter />
-                <Footer />          
+                <Footer />               
         </div>
     )
 }

@@ -66,7 +66,6 @@ function HotelRooms() {
   const handleDateSelect = (ranges) => {
     setDate([ranges.selection]);
     console.log(date[0].startDate, "ranges");
-    hideCalender();
   };
 
   const calenderInput = {
@@ -249,7 +248,7 @@ function HotelRooms() {
     <div className="relative pt-3 pb-5 mb-4">
       <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Body>
-          <Container>
+       
             <Row onClick={hideCalender}>
               <div className="mb-3">
                 <h3 className="text-3xl font-[700] tracking-wider">
@@ -401,13 +400,16 @@ function HotelRooms() {
                 {showCalender ? (
                   <div className="absolute top-[400px] left-0 md:left-12 z-10">
                     <DateRangePicker
-                      editableDateInputs={true}
+                     editableDateInputs={true}
+                      showSelectionPreview={true}
+                      calendarFocus="forwards"
                       onChange={handleDateSelect}
                       moveRangeOnFirstSelection={false}
                       ranges={date}
+                      preventSnapRefocus={true}
                       months={2}
                         direction={
-                          window.innerWidth < 768 ? "vertical" : "horizontal"
+                          window.innerWidth < 1280 ? "vertical" : "horizontal"
                         }
                       rangeColors={["#f33e5b", "#3ecf8e", "#fed14c"]}
                     />
@@ -482,7 +484,7 @@ function HotelRooms() {
                 Complete Your Booking
               </button>
             </div>
-          </Container>
+         
         </Modal.Body>
       </Modal>
 
@@ -490,7 +492,7 @@ function HotelRooms() {
         <>
           {roomsDeatils?.map((room, index) => (
             <div
-              className="w-full bg-slate-50  mt-2 mb-3 grid grid-cols-2 md:grid-cols-4 gap-4 px-2 py-3 rounded-lg shadow-lg h-[250px] scroller-card cursor-pointer border-[1px] border-red-200"
+              className="w-full bg-slate-50  mt-2 mb-3 grid grid-cols-2 lg:grid-cols-4 gap-4 px-2 py-3 rounded-lg shadow-lg h-auto"
               key={room._id}
             >
               {/* Details from hotelData */}
@@ -533,7 +535,7 @@ function HotelRooms() {
                   </>
                 ))}
               </div>
-              <div className="border-r-[0px] md:border-r-[1px] px-4 border-slate-400">
+              <div className="border-r-[0px] xl:border-r-[1px] px-4 border-slate-400">
                 <h3 className="text-[20px] md:text-[25px] font-[600] mb-3 text-[#f86d71]">
                   Amenities
                 </h3>

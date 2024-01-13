@@ -130,9 +130,9 @@ function FilterSection() {
   return (
     <div>
       <FilterHeader />
-      <div className="w-full md:w-[1100px] mx-auto flex flex-row justify-between">
+      <div className="w-full xl:w-[1100px] mx-auto flex flex-row justify-between">
         {/* larger screen filter */}
-        <div className="hidden md:block">
+        <div className="hidden xl:block">
           <div>
             <FilterMap />
           </div>
@@ -842,7 +842,7 @@ function FilterSection() {
                         </div> */}
           </div>
         </div>
-        <div className="w-full md:w-[850px] px-2">
+        <div className="w-full xl:w-[850px] px-2">
           <FilterCard />
         </div>
       </div>

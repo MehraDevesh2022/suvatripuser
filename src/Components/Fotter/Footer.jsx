@@ -6,13 +6,11 @@ import { Link } from 'react-router-dom'
 
 
 
-
-
 function Footer() {
     return (
         <div className='bg-[#292929]'>
             <div className='w-full h-auto  p-5'>
-            <div className='border-b-[1px] pt-2 pb-0 w-full md:w-[900px] mx-auto leading-6'>
+            <div className='border-b-[1px] pt-2 pb-0 w-full lg:w-[900px] mx-auto leading-6'>
                 <div className='flex flex-row items-start justify-center'>
                     <p className='text-slate-300 text-[14px] md:text-[19px] font-[400]'>Follow us on</p>
                     <ul className='flex flex-row cursor-pointer'>

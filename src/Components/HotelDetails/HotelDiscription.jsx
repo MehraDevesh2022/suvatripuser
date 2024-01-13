@@ -66,7 +66,7 @@ import { FaLocationDot } from "react-icons/fa6";
   
           {/* Discription Icons */}
           <div className='px-4 pb-4'>
-            <div style={mobileAligment} className='grid grid-cols-2 md:grid-cols-5 gap-4'>
+            <div style={mobileAligment} className='grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-4'>
               <div className='flex flex-col md:flex-row items-center justify-center md:justify-start'>
                 <span>
                   <LuParkingCircle className='font-[800] text-xl text-[#129035]' />

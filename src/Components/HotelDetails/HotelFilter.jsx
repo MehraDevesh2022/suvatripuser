@@ -14,7 +14,7 @@ function HotelFilter() {
   
     const navItemStyle = {
       backgroundColor: '#edf2f7',
-      padding: '12px 30px',
+      padding: '12px 28px',
       borderRadius: '8px',
       fontSize: '15px',
       fontWeight: '600',

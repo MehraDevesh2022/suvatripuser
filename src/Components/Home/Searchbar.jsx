@@ -147,17 +147,17 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
   }, []);
 
   return (
-    <div  className="w-full md:w-[1100px] mx-auto bg-[#fff] py-2  px-2  rounded-[15px] border-l-2 border-r-2 border-b-[10px] border-[#129035] relative">
+    <div  className="w-full xl:w-[1100px] mx-auto bg-[#fff] py-3 lg:py-2  px-2  rounded-[15px] border-l-2 border-r-2 border-b-[10px] border-[#129035] relative">
       <>
         <div>
           <div style={isMobile ? mobileContainer : desktopContainer} id="searchbar">
-            <div className="flex flex-col md:flex-row  justify-center md:justify-start items-center">
+            <div className="flex flex-col lg:flex-row  justify-center md:justify-start items-center">
               <div
-                className="bg-[#fff] md:bg-[#f2f5f8] w-full md:w-[300px] p-3 cursor-pointer rounded-lg border-[1px] border-slate-300 md:border-none"
+                className="bg-[#fff] lg:bg-[#f2f5f8] w-full lg:w-[300px] p-3 cursor-pointer rounded-lg border-[1px] border-slate-300 lg:border-none"
                 onClick={completeOff}
               >
                 <Form>
-                  <p className="bg-[#fff]  text-[#f62c31] w-[150px] hidden md:block text-center py-[2px] rounded-lg">
+                  <p className="bg-[#fff]  text-[#f62c31] w-[150px] hidden lg:block text-center py-[2px] rounded-lg">
                     City, Area, Hotel
                   </p>
                   <input
@@ -171,11 +171,11 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                     onChange={(e) => setLocation(e.target.value)}
                   />
                 </Form>
-                <p className="mt-1 ml-[1px] text-slate-500 hidden md:block">{location}</p>
+                <p className="mt-1 ml-[1px] text-slate-500 hidden lg:block">{location}</p>
               </div>
-              <div className="relative w-full md:w-[360px] my-2 md:my-0 flex flex-row justify-between md:justify-start items-center border-[1px] border-slate-300 rounded-lg md:border-none">
-                <div className="bg-[#fff] md:bg-[#f2f5f8] w-[180px] p-3 ml-0 md:ml-6 rounded-lg">
-                  <p className="bg-[#f2f5f8] md:bg-[#fff] w-[100px] text-[#f62c31] text-center py-0 md:py-[2px] rounded-lg">
+              <div className="relative w-full lg:w-[360px] my-2 md:my-0 flex flex-row justify-between md:justify-start items-center border-[1px] border-slate-300 rounded-lg lg:border-none">
+                <div className="bg-[#fff] lg:bg-[#f2f5f8] w-[160px] md:w-[320px] lg:w-[180px] p-3 ml-0 md:ml-6 rounded-lg">
+                  <p className="bg-[#f2f5f8] lg:bg-[#fff] w-[100px] text-[#f62c31] text-center py-0 md:py-[2px] rounded-lg">
                     Check-In
                   </p>
                   <Form onClick={handleCalender}>
@@ -187,11 +187,11 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                       placeholder="check-In"
                       value={formatStartDate}
                     />
-                    <p className="mt-1 ml-[1px] text-slate-500 hidden md:block">{currentDay}</p>
+                    <p className="mt-1 ml-[1px] text-slate-500 hidden lg:block">{currentDay}</p>
                   </Form>
                 </div>
-                <div className="bg-[#fff] md:bg-[#f2f5f8] w-[180px] p-3 mx-1 rounded-lg">
-                  <p className="bg-[#f2f5f8] md:bg-[#fff] w-[100px] text-[#f62c31] text-center py-0 md:py-[2px] rounded-lg">
+                <div className="bg-[#fff] lg:bg-[#f2f5f8] w-[160px] md:w-[320px] lg:w-[180px] p-3 mx-1 rounded-lg">
+                  <p className="bg-[#f2f5f8] lg:bg-[#fff] w-[100px] text-[#f62c31] text-center py-0 md:py-[2px] rounded-lg">
                     Check-Out
                   </p>
                   <Form onClick={handleCalender}>
@@ -203,24 +203,28 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                       placeholder="check-out"
                       value={formatEndDate}
                     />
-                    <p className="mt-1 ml-[1px] text-slate-500 hidden md:block">{lastDay}</p>
+                    <p className="mt-1 ml-[1px] text-slate-500 hidden lg:block">{lastDay}</p>
                   </Form>
                 </div>
                 {showCalender ? (
                   <div className="absolute top-[150px] duration-150 left-[-20px] md:left-6 z-10">
                     <DateRangePicker
                       editableDateInputs={true}
+                      showSelectionPreview={true}
+                      calendarFocus="forwards"
                       onChange={(item) => {
                         console.log(new Date(item.selection.startDate));
                         setDate([item.selection]);
                       }}
                       moveRangeOnFirstSelection={false}
+                      preventSnapRefocus={true}
                       ranges={date}
                       months={2}
                       direction={
                         window.innerWidth < 768 ? "vertical" : "horizontal"
                       }
                       rangeColors={["#f33e5b", "#3ecf8e", "#fed14c"]}
+                      
                     />
                   </div>
                 ) : (
@@ -228,16 +232,16 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                 )}
               </div>
 
-              <div className="relative my-2 md:my-0 border-[1px] md:border-none rounded-lg border-slate-300">
+              <div className="relative my-2 lg:my-0 border-[1px] lg:border-none rounded-lg border-slate-300">
                 <div
-                  className="bg-[#fff] md:bg-[#f2f5f8] px-5 md:px-3 w-full md:w-[350px] h-[70px] md:h-[160px] py-3 ml-0 md:ml-6 cursor-pointer rounded-lg"
+                  className="bg-[#fff] lg:bg-[#f2f5f8] px-5 md:px-0  lg:px-3 w-full md:w-[400px] lg:w-[350px] h-[80px] lg:h-[160px] py-3 ml-0 md:ml-6 cursor-pointer rounded-lg"
                   onClick={hideCalender}
                 >
-                  <p className="bg-[#fff] text-[#f62c31] w-[130px] text-center py-[2px] rounded-lg text-sm hidden md:block">
+                  <p className="bg-[#fff] text-[#f62c31] w-[130px] text-center py-[2px] rounded-lg text-sm hidden lg:block">
                     Room and Guest
                   </p>
                   <div className="mt-1  text-center">
-                    <h3 className="leading-6 md:leading-10 text-sm md:text-[18px]">
+                    <h3 className="leading-6 md:leading-10 text-sm md:text-xl lg:text-[18px]">
                       <span className="text-[23px] md:text-[25px] font-[500]">
                         {options.room}
                       </span>{" "}
@@ -334,7 +338,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
           </div>
         </div>
       </>
-      <div className="w-[150px] absolute bottom-[-26px] left-[95px] md:left-[450px]">
+      <div className="w-[150px] absolute bottom-[-26px] left-[110px] md:left-[300px] lg:left-[450px]">
         <Link to={`/filter?location=${location}&checkIn=${date[0].startDate}&checkOut=${date[0].endDate}&children=${options.child}&room=${options.room}&adult=${options.adult}`}>
           <button
             className="bg-[#129035] w-full py-2 font-[600] uppercase text-[20px] text-slate-100 rounded-[20px] z-0"

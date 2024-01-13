@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { useAppContext } from '../../context/store';
 import { useNavigate } from 'react-router';
-import MapIcon from '../../Assets/img/Map.jpg'
+
 
 function FilterMap(props) {
     const [showMap, setShowMap] = useState(false);
@@ -50,15 +50,16 @@ function FilterMap(props) {
         clearTimeout(timeoutRef.current);
         setInfoWindowVisible(false);
     };
+    const mapLink = 'https://cdn6.agoda.net/images/MAPS-1213/default/bkg-map-entry.svg'
 
     return (
         <div>
-            <div style={{ backgroundImage: `url(${MapIcon})` }} className='w-[250px] h-[200px] bg-slate-600 rounded-lg shadow-md bg-cover'>
+            <div style={{ backgroundImage: `url(${mapLink})` }} className='w-[250px] h-[200px] bg-slate-600 rounded-lg shadow-md bg-cover'>
                 <div className='flex flex-col justify-center pt-14 items-center'>
-                    <FaMapMarkerAlt className='text-[40px] font-[700] text-red-600' />
+                    <FaMapMarkerAlt className='text-[40px] font-[700] text-blue-600' />
                     <button
                         onClick={handleShowMap}
-                        className='mt-2 bg-red-100 px-2 py-2 border-[1px] border-red-500 text-slate-900 rounded-md'
+                        className='mt-2 bg-blue-100 hover:bg-blue-700 hover:text-slate-100 duration-200 px-2 py-2 border-[1px] border-blue-300 text-slate-900 rounded-md'
                    >
                         Show on Map
                     </button>
