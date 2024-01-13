@@ -3,11 +3,14 @@ import { CiIndent } from "react-icons/ci";
 import { TfiSupport } from "react-icons/tfi";
 import { RiCoupon4Line } from "react-icons/ri";
 import { CiFaceSmile } from "react-icons/ci";
-import { MdEdit, MdDelete } from "react-icons/md"; // Import the edit and delete icons
+import { toast } from "react-toastify";
+import { MdEdit, MdDelete } from "react-icons/md";
 import Img from "../../Assets/img/Rectangle.png";
 import { useAppContext } from "../../context/store";
+import axios from "axios";
 
-function ReviewSection({ country, propertyName, username, user_id, review  , handleShow}) {
+
+function ReviewSection({ country, getReviews, username, user_id, review  , handleShow}) {
   console.log("review username", user_id);
 
   const { state } = useAppContext();
@@ -72,6 +75,32 @@ function ReviewSection({ country, propertyName, username, user_id, review  , han
   // Calculate the average rating
   const averageRating = calculateAverageRating();
 
+  const handleDelete = async () => {
+    
+    try {
+
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: token ? `Bearer ${token}` : undefined,
+      };
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/review/delete/${review._id}`,
+        {
+          headers,
+        }
+      );
+      if (response.data.status) {
+        toast.success("Review deleted successfully");
+        getReviews()
+      }
+
+      
+    } catch (error) {
+      console.error("Error deleting review:", error);
+      toast.error("Error deleting review");
+    }
+  }
+
   return (
     <div>
       {/* first review */}
@@ -133,14 +162,14 @@ function ReviewSection({ country, propertyName, username, user_id, review  , han
             </div>
             {/* Buttons below the average rating */}
            {loggedUser_id === user_id && <>
-            <div className="flex items-center mt-3" onClick={() => handleShow(review._id)}>
+            <div className="flex items-center mt-3" >
               {/* Edit Button */}
-              <button className="mx-2" >
+              <button className="mx-2"  onClick={() => handleShow(review._id , review)} >
                 <MdEdit size={20} color="#007BFF" />
               </button>
               {/* Delete Button */}
-              <button className="mx-2">
-                <MdDelete size={20} color="#FF0000" />
+              <button className="mx-2"  onClick={handleDelete}>
+                <MdDelete size={20} color="#FF0000"  />
               </button>
             </div>
            </>}
