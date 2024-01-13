@@ -20,6 +20,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
     child: typeof childD === 'number' ? childD : 0,
   });
   const [location, setLocation] = useState(locationD || "India");
+  
   const { state, actions } = useAppContext();
   const [showCalender, setShowCalender] = useState(false);
   const [date, setDate] = useState([
@@ -29,6 +30,8 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
       key: "selection",
     },
   ]);
+
+
 
   const { ref, autocompleteRef } = usePlacesWidget({
     apiKey: 'AIzaSyBi5Bq8YbATnUhPpwQdhtENLTQQROVV6N0',
@@ -116,6 +119,8 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
   // get all rooms
 
   useEffect(() => {
+    actions.setLocation(location);
+
     const fetchRooms = async () => {
       try {
         const response = await axios.get(
