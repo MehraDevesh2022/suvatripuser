@@ -7,17 +7,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useAppContext } from "../../context/store";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import Starrating from "./Starrating";
 function HotelReviews() {
-
-  const inputStyle = {
-    backgroundColor: "#f3f5f8",
-  };
-
   const [show, setShow] = useState(false);
-  const [review_id , setReview_id] = useState("")
+  const [review_id, setReview_id] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
@@ -36,7 +31,49 @@ function HotelReviews() {
   });
   const { state, actions } = useAppContext();
   const handleClose = () => setShow(false);
-  const handleShow = () => {
+
+
+
+
+
+
+
+
+
+
+  // getAll reviews
+
+  const getReviews = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://localhost:8000/review/${state?.hotelDetails?._id}`
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setReviews(data.data);
+
+        toast.success("Reviews fetched successfully");
+        setLoading(false);
+      } else {
+        toast.error("Failed to fetch reviews");
+        setReviews([]);
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.error("Error:", error);
+      setReviews([]);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+ getReviews();
+  }, []);
+
+
+const handleShow = () => {
     if (
       JSON.parse(localStorage.getItem("isLoggedIn")) &&
       localStorage.getItem("token") &&
@@ -47,9 +84,22 @@ function HotelReviews() {
       alert("Please login to write a review");
     }
   };
-  const handleEditShow = (idReview ) => {
+  const handleEditShow = (idReview, review) => {
     setEditReview(true);
-    setReview_id(idReview)
+    setReview_id(idReview);
+
+    setReviewData({
+      staff_rating: review?.staff_rating,
+      facilities_rating: review?.facilities_rating,
+      cleanliness_rating: review?.cleanliness_rating,
+      comfort_rating: review?.comfort_rating,
+      money_rating: review?.money_rating,
+      location_rating: review?.location_rating,
+      wifi_rating: review?.wifi_rating,
+      highlight: review?.highlight,
+      review: review?.review,
+      images: review?.images,
+    });
 
     if (
       JSON.parse(localStorage.getItem("isLoggedIn")) &&
@@ -98,8 +148,9 @@ function HotelReviews() {
         toast.error(data.message);
       }
 
-      if (response.ok) {
+      if (response.ok && data.success !== false) {
         toast.success("Review submitted updated");
+        getReviews()
         setReviewData({
           staff_rating: 0,
           facilities_rating: 0,
@@ -113,14 +164,14 @@ function HotelReviews() {
           images: [],
         });
         handleClose();
-        setEditReview(false)
+       
       } else {
         toast.error("Failed to update review");
-        setEditReview(false)
+     
       }
     } catch (error) {
       toast.error(error.message);
-      setEditReview(false)
+    
       console.error("Error:", error);
     }
   };
@@ -148,18 +199,25 @@ function HotelReviews() {
       formData.append("hotel_id", state?.hotelDetails?._id);
       formData.append("user_id", state.profileData?._id);
       formData.append("username", state.profileData?.username);
-      const response = await fetch(`http://localhost:8000/review/reviews/${review_id}`, {
-        method: "POST",
-        body: formData,
-      });
 
-      const data = await response.json();
-      if (data.success === false) {
+      const token = localStorage.getItem("token");
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/review/reviews/${review_id}`,
+        formData,
+        config
+      );
+
+      const data = await response.data;
+      if (data.status === false) {
         toast.error(data.message);
       }
 
-      if (response.ok) {
+      if (data.status === true) {
         toast.success("Review submitted successfully");
+       getReviews();
+        
         setReviewData({
           staff_rating: 0,
           facilities_rating: 0,
@@ -172,49 +230,20 @@ function HotelReviews() {
           highlight: "",
           images: [],
         });
-
+        setEditReview(false);
         handleClose();
       } else {
+        setEditReview(false);
         toast.error("Failed to submit review");
       }
     } catch (error) {
+      setEditReview(false);
       toast.error(error.message);
       console.error("Error:", error);
     }
   };
 
   const now = 89;
-
-  // getAll reviews
-
-  useEffect(() => {
-    const getReviews = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `http://localhost:8000/review/${state?.hotelDetails?._id}`
-        );
-        const data = await response.json();
-        if (response.ok) {
-          setReviews(data.data);
-
-          toast.success("Reviews fetched successfully");
-          setLoading(false);
-        } else {
-          toast.error("Failed to fetch reviews");
-          setReviews([]);
-          setLoading(false);
-        }
-      } catch (error) {
-        toast.error(error.message);
-        console.error("Error:", error);
-        setReviews([]);
-        setLoading(false);
-      }
-    };
-
-    getReviews();
-  }, []);
 
   const maxHighlightLength = 70;
 
@@ -229,6 +258,13 @@ function HotelReviews() {
     }
   };
 
+  const butnStyle = {
+    padding: '10px 18px',
+    textAlign: 'center',
+    backgroundColor: '#e3292d',
+    border: 'none',
+    borderRadius: '40px',
+  }
   return (
     <>
       {loading ? (
@@ -251,7 +287,7 @@ function HotelReviews() {
                   <div>
                     <Row>
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our staff
                         </p>
                         <div className="input-group mb-0">
@@ -283,7 +319,7 @@ function HotelReviews() {
                         </div>
                       </Col>
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our facilities
                         </p>
                         <div className="input-group mb-0">
@@ -318,7 +354,7 @@ function HotelReviews() {
                     </Row>
                     <Row className="mt-3">
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our cleaniness
                         </p>
                         <div className="input-group mb-0">
@@ -351,7 +387,7 @@ function HotelReviews() {
                         </div>
                       </Col>
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our comfort
                         </p>
                         <div className="input-group mb-0">
@@ -387,7 +423,7 @@ function HotelReviews() {
                     </Row>
                     <Row className="mt-3">
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Value for money
                         </p>
                         <div className="input-group mb-0">
@@ -420,7 +456,7 @@ function HotelReviews() {
                         </div>
                       </Col>
                       <Col>
-                        <p className="text-xl font-[600] tracking-wider">
+                        <p className="text-sm sm:text-xl font-[600] tracking-wider">
                           Rate our Location
                         </p>
                         <div className="input-group mb-0">
@@ -456,7 +492,7 @@ function HotelReviews() {
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <p className="text-xl font-[600] tracking-wider">
+                      <p className="text-sm sm:text-xl font-[600] tracking-wider">
                         Rate our wifi
                       </p>
                       <div className="input-group mb-0">
@@ -491,7 +527,7 @@ function HotelReviews() {
                     <div className="w-full h-[200px] mb-2">
                       <label
                         htmlFor="highlight"
-                        className="text-2xl font-[600] mb-2"
+                        className="text-sm sm:text-xl md:text-2xl font-[600] mb-2"
                       >
                         Enter Your highlight
                       </label>
@@ -524,7 +560,7 @@ function HotelReviews() {
                     <div className="w-full h-[200px] mb-2">
                       <label
                         htmlFor="review"
-                        className="text-2xl font-[600] mb-2"
+                        className="text-sm sm:text-xl md:text-2xl font-[600] mb-2"
                       >
                         Enter Your Review
                       </label>
@@ -561,7 +597,8 @@ function HotelReviews() {
                 <Modal.Footer>
                   <Button
                     onClick={handleClose}
-                    className="text-[#fff] font-[700] text-xl tracking-wider"
+                    style={butnStyle}
+                    className="text-[#fff] font-[700] text-xl tracking-wider bg-[]"
                   >
                     Close
                   </Button>
@@ -569,7 +606,8 @@ function HotelReviews() {
                     onClick={
                       editReview ? handleEditSubmitReview : handleSubmitReview
                     }
-                    className="text-[#fff] font-[700] text-xl tracking-wider"
+                    style={butnStyle}
+                    className="text-[#fff] font-[700] text-xl tracking-wider hover:opacity-75 duration-150"
                   >
                     Submit Review
                   </Button>
@@ -706,6 +744,7 @@ function HotelReviews() {
                         review={review}
                         key={review._id}
                         handleShow={handleEditShow}
+                        getReviews ={getReviews}
                       />
                     ))}
                 </div>

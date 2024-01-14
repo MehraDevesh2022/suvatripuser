@@ -130,71 +130,14 @@ function FilterSection() {
   return (
     <div>
       <FilterHeader />
-      <div className="w-full lg:w-[1100px] mx-auto flex flex-row justify-between">
+      <div className="w-full xl:w-[1100px] mx-auto flex flex-row justify-between">
         {/* larger screen filter */}
-        <div className="hidden lg:block">
+        <div className="hidden xl:block">
           <div>
             <FilterMap />
           </div>
           <div className="w-[250px] h-[900px] bg-[#fff] shadow-md py-2 rounded-lg mt-4 overflow-y-auto scrollbar-custom">
-            <div>
-              <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">
-                Select Filters
-              </h3>
-              <div className="px-3">
-                {/* <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="Last Minute Deal" id="flexCheckDefault" />
-            <label className="form-check-label" for="flexCheckDefault">
-              Last Minute Deal
-            </label>
-          </div> */}
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value="5 Star"
-                    id="flexCheckDefault"
-                    onChange={() => handleCheckboxChange("starRating", "5")}
-                  />
-                  <label className="form-check-label" for="flexCheckDefault">
-                    5 Star
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=" North Nepal"
-                    id="flexCheckDefault"
-                  />
-                  <label className="form-check-label" for="flexCheckDefault">
-                    North Nepal
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=" North Nepal"
-                    id="flexCheckDefault"
-                  />
-                  <label className="form-check-label" for="flexCheckDefault">
-                    South Nepal
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=" North Nepal"
-                    id="flexCheckDefault"
-                  />
-                  <label className="form-check-label" for="flexCheckDefault">
-                    Couple Friendly
-                  </label>
-                </div>
-              </div>
-            </div>
+          
             <div>
               <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">
                 Price Per Night
@@ -899,7 +842,7 @@ function FilterSection() {
                         </div> */}
           </div>
         </div>
-        <div className="w-full lg:w-[850px] px-2">
+        <div className="w-full xl:w-[850px] px-2">
           <FilterCard />
         </div>
       </div>

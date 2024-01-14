@@ -30,6 +30,8 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
     },
   ]);
 
+
+
   const { ref, autocompleteRef } = usePlacesWidget({
     apiKey: 'AIzaSyBi5Bq8YbATnUhPpwQdhtENLTQQROVV6N0',
     onPlaceSelected: (place) => {
@@ -116,6 +118,8 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
   // get all rooms
 
   useEffect(() => {
+    actions.setLocation(location);
+
     const fetchRooms = async () => {
       try {
         const response = await axios.get(

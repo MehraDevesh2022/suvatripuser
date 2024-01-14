@@ -43,7 +43,7 @@ function Booktrips() {
   }, [state.profileData?._id]);
 
   return (
-    <div className="min-w-fit max-w-[1000px] mx-auto">
+    <div className="w-full xl:w-[1000px] mx-auto p-2 xl:p-0">
       <h3
         className={`my-5 font-bold text-slate-700 text-[30px] md:text-[35px] ${
           window.innerWidth <= 768 ? "text-center" : "text-left"

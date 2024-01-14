@@ -1,39 +1,39 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAppContext } from "../../context/store";
+
 function HotelSupport() {
   const [supportText, setSupportText] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState('');
   const { state } = useAppContext();
+
   const handleSupportSubmit = async () => {
     try {
-        if (
-            JSON.parse(localStorage.getItem("isLoggedIn")) &&
-            localStorage.getItem("token") &&
-            state.isLoggedIn
-          ) {
-            
+      if (JSON.parse(localStorage.getItem("isLoggedIn")) && localStorage.getItem("token") && state.isLoggedIn) {
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/tickets/create`, {
+          user_id: state.profileData?._id, 
+          vendor_id: state?.hotelDetails?._id, 
+          messages: [supportText],
+        });
 
-            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/tickets/create`, {
-                user_id: state.profileData?._id, 
-                vendor_id: state?.hotelDetails?._id, 
-                messages: [supportText],
-              });
-
-              if(response.data){
-                setSupportText('');
-                console.log('Ticket created successfully:', response.data)
-              } 
-        
-              ;
-          } else {
-            alert("Please login to write a review");
-          }
-    
-      // Handle success, e.g., show a success message to the user
+        if (response.data) {
+          setSupportText('');
+          setModalContent('Ticket created successfully!');
+          setShowModal(true);
+        }
+      } else {
+        alert("Please login to write a review");
+      }
     } catch (error) {
       console.error('Error creating ticket:', error.response ? error.response.data.message : error.message);
-      // Handle error, e.g., show an error message to the user
+      setModalContent('Error creating ticket. Please try again.');
+      setShowModal(true);
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -61,6 +61,44 @@ function HotelSupport() {
           </div>
         </div>
       </div>
+
+      {/* Bootstrap Modal */}
+      <div
+        className={`modal fade ${showModal ? 'show' : ''}`}
+        style={{ display: showModal ? 'block' : 'none' }}
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalCenterTitle">
+                Modal Title
+              </h5>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                onClick={closeModal}
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <p>{modalContent}</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* End Bootstrap Modal */}
     </div>
   );
 }

@@ -51,7 +51,7 @@ function PopularArea() {
 
     return (
         <div>
-            <div className='w-full lg:w-[1050px] bg-[#fff] mx-auto my-3 shadow-md p-4 rounded-lg border-[1px] border-slate-100'>
+            <div className='w-full xl:w-[1050px] bg-[#fff] mx-auto my-3 shadow-md p-4 rounded-lg border-[1px] border-slate-100'>
                 <h3 className='text-xl md:text-[28px] lg:text-3xl font-[800] tracking-wider px-2 mb-3'>Popular area to stay in Nepal</h3>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-2 lg:flex flex-row justify-between items-center'>
                     {popularPlace.map((item, index) => (
