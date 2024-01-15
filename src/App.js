@@ -67,6 +67,7 @@ function App() {
   const personalProfile = async () => {
     try {
       const token = localStorage.getItem('token');
+    
       if (!token) {
         actions.login(false); 
         if(location.pathname === '/personaldetails' || location.pathname === '/booking' ) 
