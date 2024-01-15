@@ -1,41 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
-import Logo from '../../Assets/img/logo.png';
-import { Link } from 'react-router-dom';
-import { FaUser } from 'react-icons/fa6';
-
-import {  useNavigate} from 'react-router-dom';
-import SignUp from './SignUp/SignUp';
-import ProfileDropdown from './SignUp/ProfileDropdown';
-import { useAppContext } from '../../context/store';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
+import Logo from "../../Assets/img/logo.png";
+import { Link } from "react-router-dom";
+import { FaUser } from "react-icons/fa6";
+import India from "../../Assets/img/india.png";
+import AedImg from '../../Assets/img/united-arab-emirates.png'
+import Qatar from '../../Assets/img/qatar.png'
+import USA from '../../Assets/img/united-states.png'
+import AUD from '../../Assets/img/australia.png'
+import UK from '../../Assets/img/united-kingdom.png'
+import Euro from '../../Assets/img/european-union.png'
+import Nepal from '../../Assets/img/nepal.png'
+import { useNavigate } from "react-router-dom";
+import SignUp from "./SignUp/SignUp";
+import ProfileDropdown from "./SignUp/ProfileDropdown";
+import Dropdown from "react-bootstrap/Dropdown";
+import { useAppContext } from "../../context/store";
+import { useLocation } from "react-router-dom";
 function Navbar() {
   const [showSignup, setShowSignup] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const { state, actions } = useAppContext();
   const location = useLocation();
   const navigate = useNavigate();
- 
+
   const handleProfileClick = () => {
     setShowProfileDropdown(!showProfileDropdown);
   };
-  
 
   const handleLogout = () => {
     actions.login(false);
- 
-      localStorage.removeItem("isLoggedIn")
-      localStorage.removeItem("token")
+
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token");
     actions.setProfileData({});
-    localStorage.removeItem('authType');
-    if(location.pathname === '/personaldetails')
-    navigate('/'); 
+    localStorage.removeItem("authType");
+    if (location.pathname === "/personaldetails") navigate("/");
 
     // Additional cleanup if needed
   };
 
   const closeProfileDropdown = () => {
     setShowProfileDropdown(false);
+  };
+
+  const DropdownStyle = {
+    border: "none",
+    color: "#000",
   };
 
   return (
@@ -51,7 +62,99 @@ function Navbar() {
             <Link to="/about" className="no-underline text-[#000]">
               <li>About</li>
             </Link>
-            <li className="text-[#000]">Currency</li>
+            {/* Here is currencyocde */}
+            <Dropdown>
+              <Dropdown.Toggle style={DropdownStyle} className="bg-transparent">
+                Currency
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu style={{backgroundColor : "#FF9C99"}}>
+                <Dropdown.Item
+                  href="#/action-1">
+                  <div className="flex flex-row items-center justify-around">
+                    <img
+                      src={India}
+                      alt="india_currency"
+                      className="w-[20px] h-[20px]"
+                    />
+                    <span className="font-[600] ml-2 text-[18px]">INR</span>
+                  </div>
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-2">
+                <div className="flex flex-row items-center justify-around">
+                    <img
+                      src={Nepal}
+                      alt="india_currency"
+                      className="w-[20px] h-[20px]"
+                    />
+                    <span className="font-[600] ml-2 text-[18px]">NPR</span>
+                  </div>
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">
+                <div className="flex flex-row items-center justify-around">
+                    <img
+                      src={AedImg}
+                      alt="india_currency"
+                      className="w-[20px] h-[20px]"
+                    />
+                    <span className="font-[600] ml-2 text-[18px]">AED</span>
+                  </div>
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">
+                <div className="flex flex-row items-center justify-around">
+                    <img
+                      src={Qatar}
+                      alt="india_currency"
+                      className="w-[20px] h-[20px]"
+                    />
+                    <span className="font-[600] ml-2 text-[18px]">QAR</span>
+                  </div>
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">
+                <div className="flex flex-row items-center justify-around">
+                    <img
+                      src={AUD}
+                      alt="india_currency"
+                      className="w-[20px] h-[20px]"
+                    />
+                    <span className="font-[600] ml-2 text-[18px]">AUD</span>
+                  </div>
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">
+                <div className="flex flex-row items-center justify-around">
+                    <img
+                      src={USA}
+                      alt="india_currency"
+                      className="w-[20px] h-[20px]"
+                    />
+                    <span className="font-[600] ml-2 text-[18px]">US</span>
+                  </div>
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">
+                <div className="flex flex-row items-center justify-around">
+                    <img
+                      src={UK}
+                      alt="india_currency"
+                      className="w-[20px] h-[20px]"
+                    />
+                    <span className="font-[600] ml-2 text-[18px]">UK</span>
+                  </div>
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">
+                <div className="flex flex-row items-center justify-around">
+                    <img
+                      src={Euro}
+                      alt="india_currency"
+                      className="w-[20px] h-[20px]"
+                    />
+                    <span className="font-[600] ml-2 text-[18px]">EUR</span>
+                  </div>
+                </Dropdown.Item>
+                
+              </Dropdown.Menu>
+            </Dropdown>
+
+            {/* End of currenc code */}
             <Link to="/help" className="no-underline text-[#000]">
               <li>Help</li>
             </Link>
@@ -62,11 +165,11 @@ function Navbar() {
             <div>
               <Button
                 style={{
-                  padding: '10px 18px',
-                  textAlign: 'center',
-                  backgroundColor: '#e3292d',
-                  border: 'none',
-                  borderRadius: '40px',
+                  padding: "10px 18px",
+                  textAlign: "center",
+                  backgroundColor: "#e3292d",
+                  border: "none",
+                  borderRadius: "40px",
                 }}
                 onClick={handleProfileClick}
               >
@@ -85,11 +188,11 @@ function Navbar() {
           ) : (
             <Button
               style={{
-                padding: '10px 18px',
-                textAlign: 'center',
-                backgroundColor: '#e3292d',
-                border: 'none',
-                borderRadius: '40px',
+                padding: "10px 18px",
+                textAlign: "center",
+                backgroundColor: "#e3292d",
+                border: "none",
+                borderRadius: "40px",
               }}
               onClick={() => setShowSignup(true)}
             >
