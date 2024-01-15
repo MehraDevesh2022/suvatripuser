@@ -7,19 +7,15 @@ function VerfyPhoneOtp({ otpHandler  }) {
   const [otpError, setOtpError] = useState('');
 
   const handleVerifyOTP = () => {
-    // Validate OTP (for example, check if it is a 6-digit number)
+  
     const isValidOTP = /^\d{6}$/.test(otp);
 
     if (isValidOTP) {
-      // Reset previous OTP error
       setOtpError('');
-
-      // Call the OTP handler
       otpHandler(otp);
     } 
     
     else {
-      // Display an error if OTP is invalid
       setOtpError('Invalid OTP. Please enter a 6-digit number.');
     }
   };
