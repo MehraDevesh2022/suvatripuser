@@ -54,9 +54,7 @@ function Filter() {
               actions.setHotel(response.data.data);
               actions.isLoading(false);
             } catch (error) {
-              if(error.response.status===404) {
                 actions.setHotel([]);
-              }
               // Handle error as needed
               console.error("Error fetching hotels:", error);
               // Handle error as needed
