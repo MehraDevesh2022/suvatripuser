@@ -32,15 +32,6 @@ function HotelReviews() {
   const { state, actions } = useAppContext();
   const handleClose = () => setShow(false);
 
-
-
-
-
-
-
-
-
-
   // getAll reviews
 
   const getReviews = async () => {
@@ -69,11 +60,10 @@ function HotelReviews() {
   };
 
   useEffect(() => {
- getReviews();
+    getReviews();
   }, []);
 
-
-const handleShow = () => {
+  const handleShow = () => {
     if (
       JSON.parse(localStorage.getItem("isLoggedIn")) &&
       localStorage.getItem("token") &&
@@ -150,7 +140,7 @@ const handleShow = () => {
 
       if (response.ok && data.success !== false) {
         toast.success("Review submitted updated");
-        getReviews()
+        getReviews();
         setReviewData({
           staff_rating: 0,
           facilities_rating: 0,
@@ -164,14 +154,12 @@ const handleShow = () => {
           images: [],
         });
         handleClose();
-       
       } else {
         toast.error("Failed to update review");
-     
       }
     } catch (error) {
       toast.error(error.message);
-    
+
       console.error("Error:", error);
     }
   };
@@ -216,8 +204,8 @@ const handleShow = () => {
 
       if (data.status === true) {
         toast.success("Review submitted successfully");
-       getReviews();
-        
+        getReviews();
+
         setReviewData({
           staff_rating: 0,
           facilities_rating: 0,
@@ -259,12 +247,12 @@ const handleShow = () => {
   };
 
   const butnStyle = {
-    padding: '10px 18px',
-    textAlign: 'center',
-    backgroundColor: '#e3292d',
-    border: 'none',
-    borderRadius: '40px',
-  }
+    padding: "10px 18px",
+    textAlign: "center",
+    backgroundColor: "#e3292d",
+    border: "none",
+    borderRadius: "40px",
+  };
   return (
     <>
       {loading ? (
@@ -627,12 +615,12 @@ const handleShow = () => {
                         {reviews &&
                         reviews?.reviews &&
                         reviews?.reviews?.length > 0
-                          ? "Excelent"
+                          ? reviews && reviews?.totalAvgRatingDescription
                           : "No Review Yet"}
                       </h5>
                       <p className="mb-0 text-[12px] font-[400] leading-3">
-                        {reviews?.length > 0
-                          ? reviews?.reviews && reviews?.reviews?.length
+                        {reviews?.reviews && reviews?.reviews?.length > 0
+                          ? reviews?.reviews?.length
                           : "0"}{" "}
                         <span>review</span>
                       </p>
@@ -665,7 +653,12 @@ const handleShow = () => {
                               {reviews && reviews?.averageRatings[0]?.rating}
                             </p>
                           </div>
-                          <ProgressBar now={now} striped variant="danger" />
+                          <ProgressBar
+                            now={parseFloat(reviews && reviews?.averageRatings[0]?.rating) * 10} 
+                            striped
+                            variant="danger"
+                           
+                          />
                         </div>
                         <div className="w-auto md:w-[300px]">
                           <div className="flex flex-row justify-between mb-2">
@@ -676,7 +669,11 @@ const handleShow = () => {
                               {reviews && reviews?.averageRatings[1]?.rating}
                             </p>
                           </div>
-                          <ProgressBar now={now} striped variant="danger" />
+                          <ProgressBar
+                              now={parseFloat(reviews && reviews?.averageRatings[1]?.rating) * 10} 
+                            striped
+                            variant="danger"
+                          />
                         </div>
                         <div className="w-auto md:w-[300px]">
                           <div className="flex flex-row justify-between mb-2">
@@ -687,7 +684,11 @@ const handleShow = () => {
                               {reviews && reviews?.averageRatings[2]?.rating}
                             </p>
                           </div>
-                          <ProgressBar now={now} striped variant="danger" />
+                          <ProgressBar
+                            now={parseFloat(reviews && reviews?.averageRatings[2]?.rating) * 10}
+                            striped
+                            variant="danger"
+                          />
                         </div>
                         <div className="w-auto md:w-[300px]">
                           <div className="flex flex-row justify-between mb-2">
@@ -698,7 +699,11 @@ const handleShow = () => {
                               {reviews && reviews?.averageRatings[3]?.rating}
                             </p>
                           </div>
-                          <ProgressBar now={now} striped variant="danger" />
+                          <ProgressBar
+                            now={parseFloat(reviews && reviews?.averageRatings[3]?.rating) * 10}
+                            striped
+                            variant="danger"
+                          />
                         </div>
                         <div className="w-auto md:w-[300px]">
                           <div className="flex flex-row justify-between  mb-2">
@@ -709,7 +714,11 @@ const handleShow = () => {
                               {reviews && reviews?.averageRatings[4]?.rating}
                             </p>
                           </div>
-                          <ProgressBar now={now} striped variant="danger" />
+                          <ProgressBar
+                            now={parseFloat(reviews && reviews?.averageRatings[4]?.rating) * 10}
+                            striped
+                            variant="danger"
+                          />
                         </div>
                         <div className="w-auto md:w-[300px]">
                           <div className="flex flex-row justify-between mb-2">
@@ -720,7 +729,11 @@ const handleShow = () => {
                               {reviews && reviews?.averageRatings[5]?.rating}
                             </p>
                           </div>
-                          <ProgressBar now={now} striped variant="danger" />
+                          <ProgressBar
+                            now={reviews && reviews?.averageRatings[5]?.rating}
+                            striped
+                            variant="danger"
+                          />
                         </div>
                         <div className="w-auto md:w-[300px]">
                           <div className="flex flex-row justify-between mb-2">
@@ -731,7 +744,11 @@ const handleShow = () => {
                               {reviews && reviews?.averageRatings[6]?.rating}
                             </p>
                           </div>
-                          <ProgressBar now={now} striped variant="danger" />
+                          <ProgressBar
+                            now={parseFloat(reviews && reviews?.averageRatings[6]?.rating) * 10}
+                            striped
+                            variant="danger"
+                          />
                         </div>
                       </div>
                     </div>
@@ -744,7 +761,7 @@ const handleShow = () => {
                         review={review}
                         key={review._id}
                         handleShow={handleEditShow}
-                        getReviews ={getReviews}
+                        getReviews={getReviews}
                       />
                     ))}
                 </div>
