@@ -19,7 +19,7 @@ import HotelReviews from './Components/HotelDetails/HotelReviews';
 import HotelSupport from './Components/HotelDetails/HotelSupport';
 import HotelPhotos from './Components/HotelDetails/HotelPhotos';
 import { useAppContext } from './context/store';
-import { useLocation  , useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -37,6 +37,33 @@ function App() {
   };
 
 
+  useEffect(() => {
+    const getCountry = async () => {
+      try {
+        const apiKey = 'AIzaSyBi5Bq8YbATnUhPpwQdhtENLTQQROVV6N0';
+        const response = await axios.post(
+          `https://www.googleapis.com/geolocation/v1/geolocate?key=${apiKey}`
+        );
+  
+        const { lat, lng } = response.data.location;
+  
+        const reverseGeocodeResponse = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`
+        );
+  
+        const country = reverseGeocodeResponse.data.results[0]?.address_components.find(
+          (component) => component.types.includes('country')
+        )?.long_name;
+  
+        localStorage.setItem('userCountry', country);
+      } catch (error) {
+        console.error('Error fetching user location:', error);
+      }
+    }
+
+    getCountry();
+  }, [])
+
   const personalProfile = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -46,24 +73,24 @@ function App() {
         navigate('/'); 
         return;
       }
-  
+
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-  
+
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/profile`, config);
-  
+
       if (response.data.success && response.data.success === true) {
         actions.setProfileData(response.data.user);
         actions.setAuthType(response.data.authType);
-         setIsLoggedIn(true);
+        setIsLoggedIn(true);
         actions.login(true);
         localStorage.setItem("isLoggedIn", true)
-         
+
       }
     } catch (error) {
       actions.setProfileData({});
-     
+
       actions.setAuthType('');
       actions.login(false);
       localStorage.removeItem("isLoggedIn")
@@ -72,12 +99,12 @@ function App() {
       console.error('Error fetching profile:', error);
     }
   };
-  
- 
-  
+
+
+
   useEffect(() => {
     const fetchData = async () => {
-      
+
       try {
         await personalProfile();
       } catch (error) {
@@ -85,11 +112,11 @@ function App() {
       }
 
       if (isLoggedIn) {
-         actions.login(false);
+        actions.login(false);
         if (location.pathname === '/personaldetails') {
           navigate('/');
         }
-        return;  
+        return;
       }
 
     };
@@ -98,40 +125,39 @@ function App() {
     const storedIsLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
 
     actions.login(storedIsLoggedIn || false);
-    if(JSON.parse(localStorage.getItem('isLoggedIn'))  && state.isLoggedIn === false)
-    {
+    if (JSON.parse(localStorage.getItem('isLoggedIn')) && state.isLoggedIn === false) {
       personalProfile();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
+
 
 
 
   return (
     <div style={styleText} className='overflow-x-hidden'>
       <GoogleOAuthProvider clientId={clientId}>
-      
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/privacypolicy' element={<Privacy />} />
-            <Route path='/condition' element={<Condition />} />
-            <Route path='/filter' element={<Filter />} />
-            <Route path='/booking' element={<Booking />} />
-            <Route path='/personaldetails' element={<PersonalDetails />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/help' element={<Clienthelp />} />
-            <Route path='/hoteldetails/:id/*' element={<HotelDetail />}>
+
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/privacypolicy' element={<Privacy />} />
+          <Route path='/condition' element={<Condition />} />
+          <Route path='/filter' element={<Filter />} />
+          <Route path='/booking' element={<Booking />} />
+          <Route path='/personaldetails' element={<PersonalDetails />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/help' element={<Clienthelp />} />
+          <Route path='/hoteldetails/:id/*' element={<HotelDetail />}>
             <Route path='rooms' element={<HotelRooms />} />
-              <Route path='amenities' element={<HotelAmenities />} />
-              <Route path='description' element={<HotelDescription />} />
-              <Route path='review' element={<HotelReviews />} />
-              <Route path='support' element={<HotelSupport />} />
-              <Route path='photos/*' element={<HotelPhotos />} />
-            </Route>
-          </Routes>
-      
+            <Route path='amenities' element={<HotelAmenities />} />
+            <Route path='description' element={<HotelDescription />} />
+            <Route path='review' element={<HotelReviews />} />
+            <Route path='support' element={<HotelSupport />} />
+            <Route path='photos/*' element={<HotelPhotos />} />
+          </Route>
+        </Routes>
+
       </GoogleOAuthProvider>
     </div>
   );
