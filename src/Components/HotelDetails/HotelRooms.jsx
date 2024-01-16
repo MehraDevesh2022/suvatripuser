@@ -151,7 +151,7 @@ function HotelRooms() {
 
   const renderAmenities = (amenities) => {
     return amenities.map((amenity, index) => (
-      <p key={index} className="mb-1 text-[11px] md:text-[17px]">
+      <p key={index} className="mb-1 text-[11px] md:text-[19px] xl:text-[17px]">
         <span>{amenity.icon}</span> {amenity.label}
       </p>
     ));
@@ -503,27 +503,27 @@ function HotelRooms() {
                 <div>
                   {/* Render icons based on data */}
                   {Array.from({ length: room?.guests }).map((_, index) => (
-                    <FaUser key={index} className="inline mx-2" />
+                    <FaUser key={index} className="inline mx-1 text-sm sm:text-[20px]" />
                   ))}
                 </div>
-                <p className="mb-1 mt-2 text-[12px] md:text-[17px]">
-                  <span className="text-[12px] md:text-[16px]">-</span> Room
+                <p className="mb-1 mt-2 text-[12px] md:text-[20px] xl:text-[17px]">
+                  <span className="text-[12px] md:text-[20px] xl:text-[17px]">-</span> Room
                   Type : {room?.roomType}
                 </p>
-                <p className="mb-1  text-[12px] md:text-[17px]">
-                  <span className="text-[12px] md:text-[16px]">-</span>{" "}
+                <p className="mb-1  text-[12px] md:text-[20px] xl:text-[17px]">
+                  <span className="text-[12px] md:text-[20px] xl:text-[17px]">-</span>{" "}
                   {hotelData?.paymentPolicy[0]?.cancleOption === "Yes"
                     ? "Free Cancellation"
                     : "Non Refundable"}
                 </p>
-                <p className="mb-1  text-[12px] md:text-[17px]">
-                  <span className="text-[12px] md:text-[16px]">-</span>{" "}
+                <p className="mb-1  text-[12px] md:text-[20px] xl:text-[17px]">
+                  <span className="text-[12px] md:text-[20px] xl:text-[17px]">-</span>{" "}
                   {hotelData?.hotelRules?.allowChildren === "no"
                     ? "Not Child Friendly"
                     : "Child Friendly"}
                 </p>
-                <p className="mb-1  text-[12px] md:text-[17px]">
-                  <span className="text-[12px] md:text-[16px]">-</span>{" "}
+                <p className="mb-1  text-[12px] md:text-[20px] xl:text-[17px]">
+                  <span className="text-[12px] md:text-[20px] xl-[17px] ">-</span>{" "}
                   Breakfast Included
                 </p>
                 {hotelData?.facilities?.recreation?.map((item, idx) => (
@@ -535,7 +535,7 @@ function HotelRooms() {
                   </>
                 ))}
               </div>
-              <div className="border-r-[0px] xl:border-r-[1px] px-4 border-slate-400">
+              <div className="border-r-[0px] lg:border-r-[1px] px-4 border-slate-400">
                 <h3 className="text-[20px] md:text-[25px] font-[600] mb-3 text-[#f86d71]">
                   Amenities
                 </h3>
@@ -568,16 +568,16 @@ function HotelRooms() {
                 <h3 className="text-[25px] font-[600] mb-2 text-[#f86d71]">
                   Price
                 </h3>
-                <p className="mb-2 text-[20px] font-[300]">
+                <p className="mb-2 text-[20px] font-[400]">
                   {" "} {formatPriceNumber(isWeekend ? room?.weekendPrice : room?.weekdayPrice , hotelData?.currency)}
                 </p>
-                <p className="mb-2 text-slate-500">
+                <p className="mb-2 text-slate-500 text-[16px] sm:text-[18px] md:text-[20px] xl:text-[17px]">
                    Non Refundable Price : {formatPriceNumber(room?.nonRefundPrice , hotelData?.currency)}
                 </p>
-                <p className="mb-2 text-slate-500">
-                  +{hotelData.taxes || 750 } Taxes & Fees
+                <p className="mb-2 text-slate-500 text-[15px] sm:text-[20px] md:text-[22px] xl:text-[17px]">
+                  +{hotelData.taxes || 750 }  Taxes & Fees
                 </p>
-                <p className="mb-2 text-slate-500">Per Night</p>
+                <p className="mb-2 text-slate-500 text-[15px] sm:text-[20px] md:text-[22px xl:text-[17px]">Per Night</p>
               </div>
               <div className="px-3">
                 <h3 className="text-[20px] md:text-[25px] font-[600] text-[#f86d71]">
@@ -603,7 +603,7 @@ function HotelRooms() {
                     {selectedRooms[room._id] ? "selected" : "Select"}
                   </span>
                 </div>
-                <p className="text-[21px] font-[700] mb-1">
+                <p className="text-[18px] sm:text-[21px] font-[700] mb-1">
                  {formatPriceNumber(isWeekend ? room?.weekendPrice : room?.weekdayPrice , hotelData.currency)}
                 </p>
                 <p className="text-[21px]">Total</p>

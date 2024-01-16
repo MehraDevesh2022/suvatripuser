@@ -329,14 +329,14 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
     <div>
       {forGot && !clickSignUp ? (
         <div className="flex flex-row items-start">
-          <div className="w-[350px] h-[430px] hidden md:block rounded-lg">
+          <div className="w-[400px] h-[430px] hidden lg:block rounded-lg">
             <img
               src={LoginImg}
               alt="login_img"
               className="w-full h-full rounded-lg"
             />
           </div>
-          <div className="w-[350px] px-4 py-3">
+          <div className="w-full md:w-[400px]  px-4 py-3">
             <div className="mb-2">
               <input
                 type="text"

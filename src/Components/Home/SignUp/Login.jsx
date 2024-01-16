@@ -289,14 +289,14 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
     <div>
       {showForgotPass && !clickSignUp ? (
         <div className="flex flex-row items-start justify-center">
-          <div className="w-[400px] h-[430px] hidden md:block rounded-lg">
+          <div className="w-[400px] h-[430px] hidden lg:block rounded-lg">
             <img
               src={LoginImg}
               alt="login_img"
               className="w-full h-full rounded-lg"
             />
           </div>
-          <div className="w-[400px] mx-auto px-4 py-3">
+          <div className="w-full lg:w-[400px] mx-auto px-4 py-3">
             <div className="mb-3">
               <p className="leading-6 text-slate-6000 font-[600] mb-0">Email</p>
               <input

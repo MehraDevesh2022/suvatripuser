@@ -64,7 +64,7 @@ function PopularArea() {
                                 <img
                                     src={item.img}
                                     alt='picture_Img'
-                                    className={`w-full h-full rounded-lg ${hoveredItem === index ? 'opacity-70' : ''}`}
+                                    className={`w-full h-full rounded-lg ${hoveredItem === index ? 'opacity-40' : ''}`}
                                 />
                             </div>
                             {hoveredItem === index && (
@@ -73,8 +73,8 @@ function PopularArea() {
                                     onMouseEnter={handleContentMouseEnter}
                                     onMouseLeave={handleContentMouseLeave}
                                 >
-                                    <h4 className='font-[600] text-slate-800 tracking-wide'>{item.Title}</h4>
-                                    <p className='text-[14px] font-[500] text-slate-900'>{item.discript}</p>
+                                    <h4 className='font-[600] text-[#000] tracking-wide'>{item.Title}</h4>
+                                    <p className='text-[14px] font-[500] text-[#000]'>{item.discript}</p>
                                     <button className='bg-[blue] w-[150px] py-2 text-slate-50 rounded-xl hover:opacity-75'>
                                         More Options <span><FaArrowRight className='inline' /></span>
                                     </button>
