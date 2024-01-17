@@ -106,33 +106,33 @@ function ReviewSection({ country, getReviews, username, user_id, review  , handl
       {/* first review */}
       <div className="py-3 border-b-[1px] border-slate-400">
         <div className="flex flex-col md:flex-row justify-start items-start">
-          <div className="w-[350px]">
+          <div className="w-[350px] hidden lg:block">
             <div className="flex flex-row justify-start items-center">
-              <div className="w-[45px] h-[45px] rounded-full bg-red-500 px-3 py-2 text-[18px] md:text-[23px] text-slate-100">
+              <div className="w-[45px] h-[45px] rounded-full bg-red-500 px-3 py-2 text-[18px] text-slate-100">
                 {username?.charAt(0).toUpperCase()}
               </div>
-              <div className="mx-0 md:mx-1">
-                <p className="mb-0 leading-3 text-[16px] md:text-[20px] font-bold">
+              <div className="mx-1 mt-1">
+                <p className="mb-0 leading-3 text-[18px] font-bold">
                   {username}
                 </p>
                 <p className="mb-0">
                   <span>
                     <CiIndent className="inline font-[500]" />
                   </span>{" "}
-                  <span className="mx-0 md:mx-1 text-sm font-[500]">
+                  <span className="mx-0 md:mx-1 text-sm font-[400]">
                     {country}
                   </span>
                 </p>
               </div>
             </div>
             <div className="ml-0 md:ml-10 py-2">
-              <p className="mb-3">
+              <p className="mb-1 text-sm">
                 <span>
                   <TfiSupport className="inline" />
                 </span>{" "}
                 &nbsp;{review?.booking_id?.room_id?.roomType}
               </p>
-              <p className="mb-4">
+              <p className="mb-1 text-sm">
                 <span>
                   <RiCoupon4Line className="inline" />
                 </span>{" "}
@@ -147,13 +147,13 @@ function ReviewSection({ country, getReviews, username, user_id, review  , handl
               Reviewed: {created}
             </p>
             <div className="w-full flex flex-row justify-between mb-0">
-              <h3 className="mb-0">  {review?.highlight}</h3>
-              <p className="w-[35px] h-[35px] bg-[#169239] px-2 py-2 rounded-lg text-slate-50">
+              <h3 className="mb-0 text-[18px] lg:text-[20px]">  {review?.highlight}</h3>
+              <p className="w-[45px] h-[40px] bg-[#169239] text-sm text-center  pt-2 rounded-lg text-slate-50">
                 {averageRating.toFixed(2)}
               </p>
             </div>
             <div className="my-1">
-              <p className="mb-0">
+              <p className="mb-0 text-sm">
                 <span>
                   <CiFaceSmile className="inline font-[800] mx-1" />
                 </span>

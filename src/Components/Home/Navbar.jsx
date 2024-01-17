@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import Logo from "../../Assets/img/logo.png";
+import Logo from "../../Assets/img/red.png";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa6";
 import India from "../../Assets/img/india.png";
@@ -58,17 +58,16 @@ function Navbar() {
     color: "#000",
     fontWeight: '500',
     fontSize : '20px',
-    
-    
+     
   }
 
   
 
   return (
-    <div className="min-w-fit max-w-[1200px] mx-auto">
+    <div className="min-w-fit max-w-[1200px] mx-auto  bg-[#FF9D99]">
       <div className="flex flex-row justify-between items-center px-2 md:px-5 py-3">
         <Link to="/">
-          <div className="w-[150px] md:w-[200px]">
+          <div className="w-[200px]">
             <img src={Logo} alt="img" className="w-full h-full" />
           </div>
         </Link>
@@ -173,7 +172,7 @@ function Navbar() {
             </Link>
           </ul>
         </div>
-        <div className="hidden xl:block">
+        <div className="hidden lg:block">
           {state.isLoggedIn ? (
             <div>
               <Button
@@ -226,9 +225,13 @@ function Navbar() {
           }       
         </div>
         {/* Mobile Navbar */}
-        <div className={`fixed bg-[#FF9D99] z-10 top-16 duration-300 w-[50%] ${mobileNavbar ? 'left-0' :"left-[-100%]"}`}>
+        <div className={`fixed bg-[#fff] z-10 h-screen top-0 duration-300 w-[50%]  rounded-br-xl shadow-sm ${mobileNavbar ? 'left-0' :"left-[-100%]"}`}>
           {/* Sign-up button */}
-        <div className="mt-2 ml-4">
+       <div className="w-full sm:w-[50%] mx-auto">
+       <div className="w-[150px] md:w-[200px]">
+            <img src={Logo} alt="img" className="w-full h-full" />
+          </div>
+       <div className="mt-2 ml-8">
           {state.isLoggedIn ? (
             <div>
               <Button
@@ -271,9 +274,9 @@ function Navbar() {
             </Button>
           )}
         </div>
-          <ul className="flex flex-col justify-between px-4 py-1 z-30">
+          <ul className="flex flex-col justify-between  py-1 z-30">
             <Link to="/about" className="no-underline text-[#000]">
-              <li className="font-[500] text-[20px] m-3">About</li>
+              <li className="font-[500] text-[20px] sm:text-[25px] m-3">About</li>
             </Link>
             {/* Here is currencyocde */}
             <Dropdown>
@@ -367,10 +370,11 @@ function Navbar() {
 
             {/* End of currenc code */}
             <Link to="/help" className="no-underline text-[#000]">
-              <li className="font-[500] text-[20px] m-3">Help</li>
+              <li className="font-[500] text-[20px] m-3 sm:text-[25px]">Help</li>
             </Link>
           </ul>
         </div>
+       </div>
       </div>
       {showSignup && <SignUp show={showSignup} setShow={setShowSignup} />}
     </div>
