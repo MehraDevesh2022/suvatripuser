@@ -18,7 +18,7 @@ function Home() {
         const fetchSpecialData = async () => {
           try {
             const token = localStorage.getItem("token");
-            console.log(token , "token inside home");
+         
     
             const headers = {
               Authorization: token ? `Bearer ${token}` : undefined,

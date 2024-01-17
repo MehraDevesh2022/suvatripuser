@@ -2,7 +2,7 @@ import React from 'react'
 import { FaAngleDoubleDown } from "react-icons/fa";
 import ReviewSection from './ReviewSection';
 
-function GuestReview({review , handleShow , getReviews}) {
+function GuestReview({review , handleShow , getReviews ,totalAvgRatingDescription }) {
     return (
         <div>
             {/* <div>
@@ -21,7 +21,7 @@ function GuestReview({review , handleShow , getReviews}) {
                 </div>
             </div> */}
             <div>
-                <ReviewSection  country ={review?.hotel_id?.country}  getReviews ={getReviews}  username ={review?.username} user_id ={review?.user_id}   review ={review}  handleShow  ={handleShow} />
+                <ReviewSection  country ={review?.hotel_id?.country}  getReviews ={getReviews}  username ={review?.username} user_id ={review?.user_id}   review ={review}  handleShow  ={handleShow} totalAvgRatingDescription ={totalAvgRatingDescription} />
             </div>
         </div>
     )

@@ -36,16 +36,13 @@ function SignUp({ show, setShow }) {
         show={show}
         onHide={handleClose}
         onClick={handleBackdropClick}
-        size="md"
+        size="lg"
         centered
         ref={modalRef}
       >
         <Modal.Body
           onClick={handleModalClick}
-          style={{
-            ...modalStyle,
-            ...(window.innerWidth <= 800 && mobileModalStyle),
-          }}
+        
         >
           {handleLoginShow ? (
             <Login

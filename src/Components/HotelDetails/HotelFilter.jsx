@@ -10,7 +10,7 @@ function HotelFilter() {
     const isActive = (path) => location.pathname.includes(path);
 
     // mobile device
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = window.innerWidth <= 800;
   
     const navItemStyle = {
       backgroundColor: '#edf2f7',
@@ -26,7 +26,7 @@ function HotelFilter() {
     const mobileStyle = {
       padding: '10px',
       borderRadius: '8px',
-      fontSize: '12px',
+      fontSize: '14px',
       fontWeight: '600',
       marginBottom: '10px',
       marginLeft:'10px',
@@ -36,7 +36,7 @@ function HotelFilter() {
   
     const hotelPages = [
       { path: `/hoteldetails/${hotelId}`, label: 'Room' },
-      { path: `/hoteldetails/${hotelId}/amenities`, label: 'Ameninites' },
+      { path: `/hoteldetails/${hotelId}/amenities`, label: 'Amenities' },
       { path: `/hoteldetails/${hotelId}/description`, label: 'Description' },
       { path: `/hoteldetails/${hotelId}/review`, label: 'Review' },
       { path: `/hoteldetails/${hotelId}/support`, label: 'Support' },
@@ -44,7 +44,7 @@ function HotelFilter() {
     ];
   
     return (
-      <div className='w-[350px] mx-auto md:w-full flex flex-row justify-between items-center scroller'>
+      <div className='w-[350px] mx-auto md:w-full flex flex-row justify-between items-center scroller mt-3 px-2 lg:p-1 xl:p-0'>
         {hotelPages.map((page) => (
           <Link
             key={page.path}

@@ -37,8 +37,6 @@ function App() {
   };
 
 
-  console.log(process.env.REACT_APP_BASE_URL, 'process.env.REACT_APP_BASE_URL');
-
   useEffect(() => {
     const getCountry = async () => {
       try {
@@ -69,11 +67,11 @@ function App() {
   const personalProfile = async () => {
     try {
       const token = localStorage.getItem('token');
+    
       if (!token) {
-        console.error('Token is missing');
-        actions.login(false);
-        if (location.pathname === '/personaldetails' || location.pathname === '/booking')
-          navigate('/');
+        actions.login(false); 
+        if(location.pathname === '/personaldetails' || location.pathname === '/booking' ) 
+        navigate('/'); 
         return;
       }
 
@@ -84,7 +82,6 @@ function App() {
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/profile`, config);
 
       if (response.data.success && response.data.success === true) {
-        console.log(response.data.user, 'response.data.user');
         actions.setProfileData(response.data.user);
         actions.setAuthType(response.data.authType);
         setIsLoggedIn(true);

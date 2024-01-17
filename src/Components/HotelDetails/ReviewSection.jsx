@@ -10,7 +10,7 @@ import { useAppContext } from "../../context/store";
 import axios from "axios";
 
 
-function ReviewSection({ country, getReviews, username, user_id, review  , handleShow}) {
+function ReviewSection({ country, getReviews, username, user_id, review  , handleShow , totalAvgRatingDescription}) {
   console.log("review username", user_id);
 
   const { state } = useAppContext();

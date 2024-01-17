@@ -1,6 +1,26 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+
 
 function ProfileDropdown({ handleLogout, closeDropdown }) {
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleBodyClick = (event) => {
+      // Check if the clicked element is outside the dropdown
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.body.addEventListener("click", handleBodyClick);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.body.removeEventListener("click", handleBodyClick);
+    };
+  }, [closeDropdown]);
   const handleItemClick = (action) => {
     // Handle the selected action (e.g., "My Booking", "My Profile")
 
