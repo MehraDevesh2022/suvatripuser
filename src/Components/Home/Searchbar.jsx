@@ -10,8 +10,12 @@ import axios from "axios";
 import config from "../../config";
 import { useAppContext } from "../../context/store";
 import { usePlacesWidget } from "react-google-autocomplete";
+import { FaAngleDown } from "react-icons/fa";
+
 
 function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
+  const [emptyArray, setEmptyArray] = useState([]);
+  let index = 0;
   const [openOptions, setOpenOptions] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767); 
   const [options, setOptions] = useState({
@@ -99,8 +103,21 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
       ...prev,
       [name]: operation === "i" ? prev[name] + 1 : Math.max(0, prev[name] - 1),
     }));
+
+    if (name === "child") {
+      if (operation === "i") {
+        index++;
+        setEmptyArray((prevArray) => [...prevArray, index]);
+      } else if (operation === "d" && emptyArray.length > 0) {
+        index--;
+        setEmptyArray((prevArray) => prevArray.slice(0, -1));
+      }
+    }
+
+    console.log(name,operation)
   };
 
+  
   const completeOff = () => {
     setShowCalender(false);
     setOpenOptions(false);
@@ -257,8 +274,8 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                   </div>
                 </div>
                 {openOptions ? (
-                  <div className="absolute bg-[#fff] left-1 md:left-11 rounded-lg z-10">
-                    <div className="border-[2px] flex flex-row justify-between items-center p-1 rounded-tl-lg rounded-tr-lg">
+                  <div className="absolute bg-[#fff] p-1 left-1 md:left-11  z-10 border-r-[1px] border-l-[1px] border-b-[1px] border-blue-700 rounded-bl-md rounded-br-md">
+                    <div className="flex flex-row justify-between items-center">
                       <div className="w-[150px] text-[20px]">Room</div>
                       <div
                         className="border-1 border-slate-400 text-[25px] font-[600] p-1 cursor-pointer rounded-full"
@@ -278,7 +295,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                         <TiPlus />
                       </div>
                     </div>
-                    <div className="border-[2px] flex flex-row justify-between items-center p-1">
+                    <div className="flex flex-row justify-between items-center p-1">
                       <div className="w-[150px] text-[20px]">
                         Adult{" "}
                         <span className="text-slate-400 text-sm font-bold">
@@ -303,7 +320,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                         <TiPlus />
                       </div>
                     </div>
-                    <div className="border-[2px] flex flex-row justify-between items-center p-1 rounded-bl-lg rounded-br-lg">
+                    <div className="flex flex-row justify-between items-center p-1 rounded-bl-lg rounded-br-lg">
                       <div className="w-[150px] text-[20px]">
                         Child{" "}
                         <span className="text-slate-400 text-sm font-bold">
@@ -325,9 +342,22 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                           handleOption("child", "i");
                         }}
                       >
-                        <TiPlus />
+                        <TiPlus />                      
                       </div>
                     </div>
+                    {/* Age of Child */}
+                   {
+                    emptyArray.map((data,val) => {
+                      return (
+                        <div key={val} className="px-3 py-1 flex flex-row justify-between items-center">
+                        <span className="text-[18px] font-[300]">Age of Child</span>
+                       <div>
+                       <input type="number" placeholder="0" className="w-[50px] outline-none  px-1 border-[1px] border-blue-500" />                      
+                       </div>
+                   </div>
+                      )
+                    })
+                   }
                   </div>
                 ) : (
                   ""

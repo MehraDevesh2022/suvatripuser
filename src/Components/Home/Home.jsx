@@ -1,5 +1,4 @@
 import React , {useEffect}from 'react'
-import Navbar from './Navbar'
 import Header from './Header'
 import Section from './Section'
 import Footer from '../Fotter/Footer'
@@ -9,6 +8,7 @@ import PopularArea from './PopularArea'
 import {MY_SECRET} from "../../config";
 import axios from "axios";
 import { useAppContext } from '../../context/store'
+import Navbar from './Navbar'
 
 function Home() {
   

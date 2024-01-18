@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import Logo from "../../Assets/img/logo.png";
+import Logo from "../../Assets/img/red.png";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa6";
 import India from "../../Assets/img/india.png";
-import AedImg from '../../Assets/img/united-arab-emirates.png'
-import Qatar from '../../Assets/img/qatar.png'
-import USA from '../../Assets/img/united-states.png'
-import AUD from '../../Assets/img/australia.png'
-import UK from '../../Assets/img/united-kingdom.png'
-import Euro from '../../Assets/img/european-union.png'
-import Nepal from '../../Assets/img/nepal.png'
+import AedImg from "../../Assets/img/united-arab-emirates.png";
+import Qatar from "../../Assets/img/qatar.png";
+import USA from "../../Assets/img/united-states.png";
+import AUD from "../../Assets/img/australia.png";
+import UK from "../../Assets/img/united-kingdom.png";
+import Euro from "../../Assets/img/european-union.png";
+import Nepal from "../../Assets/img/nepal.png";
 import { useNavigate } from "react-router-dom";
 import SignUp from "./SignUp/SignUp";
 import ProfileDropdown from "./SignUp/ProfileDropdown";
@@ -19,18 +19,23 @@ import { useAppContext } from "../../context/store";
 import { useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GiTireIronCross } from "react-icons/gi";
-
+import { FaChevronDown } from "react-icons/fa";
 
 function Navbar() {
   const [showSignup, setShowSignup] = useState(false);
-  const [mobileNavbar, setMobileNabar] = useState(false)
+  const [mobileNavbar, setMobileNabar] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [isCurrencyListVisible, setCurrencyListVisibility] = useState(false);
   const { state, actions } = useAppContext();
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
     setShowProfileDropdown(!showProfileDropdown);
+  };
+
+  const toggleCurrencyList = () => {
+    setCurrencyListVisibility(!isCurrencyListVisible);
   };
 
   const handleLogout = () => {
@@ -56,19 +61,15 @@ function Navbar() {
   const mobileDrown = {
     border: "none",
     color: "#000",
-    fontWeight: '500',
-    fontSize : '20px',
-    
-    
-  }
-
-  
+    fontWeight: "500",
+    fontSize: "20px",
+  };
 
   return (
-    <div className="min-w-fit max-w-[1200px] mx-auto">
+    <div className="min-w-fit max-w-[1200px] mx-auto  bg-[#FF9D99]">
       <div className="flex flex-row justify-between items-center px-2 md:px-5 py-3">
         <Link to="/">
-          <div className="w-[150px] md:w-[200px]">
+          <div className="w-[200px]">
             <img src={Logo} alt="img" className="w-full h-full" />
           </div>
         </Link>
@@ -173,7 +174,7 @@ function Navbar() {
             </Link>
           </ul>
         </div>
-        <div className="hidden xl:block">
+        <div className="hidden lg:block">
           {state.isLoggedIn ? (
             <div>
               <Button
@@ -217,159 +218,180 @@ function Navbar() {
           )}
         </div>
         <div className="block lg:hidden">
-          {
-            mobileNavbar ?  <GiTireIronCross className="text-[35px] font-[700] text-[#000] cursor-pointer" onClick={() =>{
-              setMobileNabar(!mobileNavbar)
-            }}/> :  <GiHamburgerMenu className="text-[35px] font-[700] text-[#000] cursor-pointer" onClick={() => {
-              setMobileNabar(!mobileNavbar)
-            }}/>
-          }       
-        </div>
-        {/* Mobile Navbar */}
-        <div className={`fixed bg-[#FF9D99] z-10 top-16 duration-300 w-[50%] ${mobileNavbar ? 'left-0' :"left-[-100%]"}`}>
-          {/* Sign-up button */}
-        <div className="mt-2 ml-4">
-          {state.isLoggedIn ? (
-            <div>
-              <Button
-                style={{
-                  padding: "10px 18px",
-                  textAlign: "center",
-                  backgroundColor: "#e3292d",
-                  border: "none",
-                  borderRadius: "40px",
-                }}
-                onClick={handleProfileClick}
-              >
-                <span>
-                  <FaUser className="inline mx-2 items-center" />
-                </span>
-                Profile
-              </Button>
-              {showProfileDropdown && (
-                <ProfileDropdown
-                  handleLogout={handleLogout}
-                  closeDropdown={closeProfileDropdown}
-                />
-              )}
-            </div>
-          ) : (
-            <Button
-              style={{
-                padding: "10px",
-                textAlign: "center",
-                backgroundColor: "#e3292d",
-                border: "none",
-                borderRadius: "40px",
+          {mobileNavbar ? (
+            <GiTireIronCross
+              className="text-[35px] font-[700] text-[#000] cursor-pointer"
+              onClick={() => {
+                setMobileNabar(!mobileNavbar);
               }}
-              onClick={() => setShowSignup(true)}
-            >
-              <span>
-                <FaUser className="inline mx-2 items-center" />
-              </span>
-              Signup
-            </Button>
+            />
+          ) : (
+            <GiHamburgerMenu
+              className="text-[30px] font-[700] text-[#000] cursor-pointer"
+              onClick={() => {
+                setMobileNabar(!mobileNavbar);
+              }}
+            />
           )}
         </div>
-          <ul className="flex flex-col justify-between px-4 py-1 z-30">
-            <Link to="/about" className="no-underline text-[#000]">
-              <li className="font-[500] text-[20px] m-3">About</li>
-            </Link>
-            {/* Here is currencyocde */}
-            <Dropdown>
-              <Dropdown.Toggle style={mobileDrown} className="bg-transparent">
-                Currency
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu style={{ backgroundColor: "#FF9C99" }}>
-                <Dropdown.Item href="#/action-1">
-                  <div className="flex flex-row items-center justify-around">
+        {/* Mobile Navbar */}
+        <div
+          className={`fixed bg-[#fff] z-10 h-screen top-0 duration-300 w-[50%]  rounded-br-xl shadow-sm ${
+            mobileNavbar ? "left-0" : "left-[-100%]"
+          }`}
+        >
+          {/* Sign-up button */}
+          <div className="w-full sm:w-[55%] mx-auto">
+            <div className="w-[150px] sm:w-[250px] mx-auto my-4">
+              <img src={Logo} alt="img" className="w-full h-full" />
+            </div>
+            <div className="mt-2 ml-8">
+              {state.isLoggedIn ? (
+                <div>
+                  <Button
+                    style={{
+                      padding: "10px 18px",
+                      textAlign: "center",
+                      backgroundColor: "#e3292d",
+                      border: "none",
+                      borderRadius: "20px",
+                      margin: "auto",
+                    }}
+                    className="mx-auto"
+                    onClick={handleProfileClick}
+                  >
+                    <span>
+                      <FaUser className="inline mx-2 items-center" />
+                    </span>
+                    Profile
+                  </Button>
+                  {showProfileDropdown && (
+                    <ProfileDropdown
+                      handleLogout={handleLogout}
+                      closeDropdown={closeProfileDropdown}
+                    />
+                  )}
+                </div>
+              ) : (
+                <Button
+                  style={{
+                    padding: "10px 18px",
+                    textAlign: "center",
+                    backgroundColor: "#e3292d",
+                    border: "none",
+                    borderRadius: "20px",
+                  }}
+                  onClick={() => setShowSignup(true)}
+                >
+                  <span>
+                    <FaUser className="inline mx-2 items-center" />
+                  </span>
+                  Signup
+                </Button>
+              )}
+            </div>
+            <ul className="flex flex-col justify-between  py-1 z-30">
+              <Link to="/about" className="no-underline text-[#000]">
+                <li className="font-[500] text-[20px] sm:text-[30px] md:text-[35px] m-3">
+                  About
+                </li>
+              </Link>
+              {/* Here is currencyocde */}
+              <div className={`mb-3 md:mb-5 ${isCurrencyListVisible ? "h-auto rounded-lg shadow-md duration-300" : "h-[60px]"}`}>
+                <div
+                  className="flex flex-row items-center"
+                  onClick={toggleCurrencyList}
+                >
+                  <li className="font-[500] text-[20px] my-3 ml-3 mr-1 sm:text-[30px]  md:text-[35px] ">
+                    Currency
+                  </li>
+                  <li>
+                    <FaChevronDown />
+                  </li>
+                </div>
+                <div className={`bg-opacity-80  ${isCurrencyListVisible ? "block duration-300" : "hidden"}`}>
+                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:opacity-70 duration-300">
                     <img
                       src={India}
                       alt="india_currency"
-                      className="w-[20px] h-[20px]"
+                      className="w-[25px] h-[25px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">INR</span>
+                    <span className="font-[600] ml-2 text-[20px]">INR</span>
                   </div>
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-2">
-                  <div className="flex flex-row items-center justify-around">
+
+                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:opacity-70 duration-300">
                     <img
                       src={Nepal}
                       alt="india_currency"
-                      className="w-[20px] h-[20px]"
+                      className="w-[25px] h-[25px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">NPR</span>
+                    <span className="font-[600] ml-2 text-[20px]">NPR</span>
                   </div>
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+
+                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:opacity-70 duration-300">
                     <img
                       src={AedImg}
                       alt="india_currency"
-                      className="w-[20px] h-[20px]"
+                      className="w-[25px] h-[25px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">AED</span>
+                    <span className="font-[600] ml-2 text-[20px]">AED</span>
                   </div>
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+
+                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:opacity-70 duration-300">
                     <img
                       src={Qatar}
                       alt="india_currency"
-                      className="w-[20px] h-[20px]"
+                      className="w-[25px] h-[25px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">QAR</span>
+                    <span className="font-[600] ml-2 text-[20px]">QAR</span>
                   </div>
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+
+                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:opacity-70 duration-300">
                     <img
                       src={AUD}
                       alt="india_currency"
-                      className="w-[20px] h-[20px]"
+                      className="w-[25px] h-[25px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">AUD</span>
+                    <span className="font-[600] ml-2 text-[20px]">AUD</span>
                   </div>
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+
+                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:opacity-70 duration-300">
                     <img
                       src={USA}
                       alt="india_currency"
-                      className="w-[20px] h-[20px]"
+                      className="w-[25px] h-[25px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">US</span>
+                    <span className="font-[600] ml-2 text-[20px]">US</span>
                   </div>
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+
+                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:opacity-70 duration-300">
                     <img
                       src={UK}
                       alt="india_currency"
-                      className="w-[20px] h-[20px]"
+                      className="w-[25x] h-[25px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">UK</span>
+                    <span className="font-[600] ml-2 text-[20px]">UK</span>
                   </div>
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+
+                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:opacity-70 duration-300">
                     <img
                       src={Euro}
                       alt="india_currency"
-                      className="w-[20px] h-[20px]"
+                      className="w-[25px] h-[25px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">EUR</span>
+                    <span className="font-[600] ml-2 text-[20px]">EUR</span>
                   </div>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+                </div>
+              </div>
 
-            {/* End of currenc code */}
-            <Link to="/help" className="no-underline text-[#000]">
-              <li className="font-[500] text-[20px] m-3">Help</li>
-            </Link>
-          </ul>
+              {/* End of currenc code */}
+              <Link to="/help" className="no-underline text-[#000]">
+                <li className="font-[500] text-[20px] my-3 mx-3 sm:text-[30px] md:text-[35px]">
+                  Help
+                </li>
+              </Link>
+            </ul>
+          </div>
         </div>
       </div>
       {showSignup && <SignUp show={showSignup} setShow={setShowSignup} />}
