@@ -5,13 +5,14 @@ import Picture from "../../Assets/img/Rectangle.png";
 import axios from "axios";
 import config from "../../config";
 import { useAppContext } from "../../context/store";
+import { useNavigate } from "react-router-dom";
 // Import the following library to sanitize HTML
 // import DOMPurify from "dompurify";
 
 function Hotel() {
   const { actions, state } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
-
+const navigate = useNavigate();
   useEffect(() => {
     const fetchHotels = async () => {
       try {
@@ -29,7 +30,7 @@ function Hotel() {
           }
         );
 
-        console.log(response.data.data);
+
 
         if (response.data.isHotelAccess) {
           // while the user is not logged in
@@ -47,6 +48,51 @@ function Hotel() {
     fetchHotels();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function removeHtmlTags(htmlString) {
+    // Create a temporary element (a div) to parse the HTML
+    var doc = new DOMParser().parseFromString(htmlString, 'text/html');
+    return doc.body.textContent || "NA";
+}
+
+
+function constructHotelFilterURL() {
+  const defaultLocation = 'All';
+  const today = new Date();
+  const defaultCheckIn = formatDate(today); 
+  const defaultCheckOut = formatDate(addDays(today, 7)); 
+  const defaultChildren = 0;
+  const defaultRoom = 1;
+  const defaultAdult = 1;
+
+  const filterLocation =  defaultLocation;
+  const filterCheckIn =  defaultCheckIn;
+  const filterCheckOut =  defaultCheckOut;
+  const filterChildren =  defaultChildren;
+  const filterRoom =  defaultRoom;
+  const filterAdult =  defaultAdult;
+
+  const url = `/filter?location=${filterLocation}&checkIn=${filterCheckIn}&checkOut=${filterCheckOut}&children=${filterChildren}&room=${filterRoom}&adult=${filterAdult}`;
+
+  return url;
+}
+
+
+function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+
 
   return (
     <div className="w-full">
@@ -66,7 +112,12 @@ function Hotel() {
                 borderRadius: "40px",
                 fontWeight: "400",
               }}
+              onClick={() => {
+                const url = constructHotelFilterURL();
+                navigate(url);
+              }}
             >
+            
               View All{" "}
               <span>
                 <MdOutlineArrowRightAlt className="inline text-[35px] font-[300]" />
@@ -93,7 +144,7 @@ function Hotel() {
                       {data.propertyName || "Hotel Name"}
                     </h3>
                     <p className="w-full line-clamp-5">
-                      {data.description || "Hotel Description"}
+                      {data?.description && removeHtmlTags(data.description)}
                     </p>
                     <div className="text-right">
                       <Button
@@ -103,8 +154,10 @@ function Hotel() {
                           backgroundColor: "#e3292d",
                           border: "none",
                           borderRadius: "40px",
+
                         }}
                         className="hover:opacity-70 duration-200 ease-in-out"
+                        onClick={() => navigate(`/hoteldetails/${data._id}`)}
                       >
                         Book Now
                       </Button>

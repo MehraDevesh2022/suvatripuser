@@ -11,10 +11,9 @@ import Forget from "./Forget";
 import { useAppContext } from "../../../context/store";
 import SignReset from "./SignReset";
 import VerfyPhoneOtp from "./VerfyPhoneOtp";
-
-// import {LoginSocialFacebook} from 'reactjs-social-login';
-// import { LoginButton } from "react-facebook";
+import { MdOutlineAlternateEmail } from "react-icons/md";
 import { useGoogleLogin } from "@react-oauth/google";
+import PhoneInput, { getCountries } from "react-phone-number-input/input";
 // import {FACEBOOK_APP_ID} from '../../../config';
 function Login({ handleBackdropClick, setHandleLoginShow }) {
   const [showForgotPass, setShowForgotPass] = useState(true);
@@ -31,15 +30,20 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
   });
   const [isGoogle, setIsGoogle] = useState(false);
   const [isFacebook, setIsFacebook] = useState(false);
-
+  const [loginWithPhone, setLoginWithPhone] = useState(false);
   const [phoneOtp, setPhoneOtp] = useState("");
   const [token, setToken] = useState();
+  const [phoneInput, setPhoneInput] = useState("");
 
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
     role: "user",
   });
+
+  const handlePhoneInputChange = (value) => {
+    setPhoneInput(value);
+  };
 
   const hadleFacebookLogin = async (data) => {
     try {
@@ -123,6 +127,7 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
   const [fieldWarnings, setFieldWarnings] = useState({
     email: false,
     password: false,
+    phoneNo: false,
   });
 
   const { actions } = useAppContext();
@@ -131,36 +136,73 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
 
   const handleLogin = async () => {
     // Validate fields before attempting login
-    if (!loginData.email.trim() || !loginData.password.trim()) {
-      // Show warnings for empty fields
-      setFieldWarnings({
-        email: !loginData.email.trim(),
-        password: !loginData.password.trim(),
-      });
-      return;
-    }
-
     try {
-      // Make a POST request to the backend API
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/auth/login`,
-        loginData
-      );
+      if (loginWithPhone) {
+        if (!phoneInput.trim() || !loginData.password.trim()) {
+          // Show warnings for empty fields
+          setFieldWarnings({
+            phoneNo: phoneInput.trim() === "",
+            password: !loginData.password.trim(),
+          });
+          return;
+        }
 
-      console.log(response.data, "response.data");
+        if (phoneInput.length < 10) {
+          toast.warning("Phone number must be 10 digits");
+          return;
+        }
 
-      if (response.data.token) {
-        actions.setProfileData(response.data.user);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("isLoggedIn", JSON.stringify(true));
-        actions.login(true);
-        handleBackdropClick();
+        // Login with phone number
+        const response = await axios.post(
+          `${process.env.REACT_APP_BASE_URL}/auth/login`,
+          {
+            phoneNumber: phoneInput,
+            password: loginData.password,
+            role: "user",
+          }
+        );
+
+        if (response.data.token) {
+          actions.setProfileData(response.data.user);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("isLoggedIn", JSON.stringify(true));
+          actions.login(true);
+          handleBackdropClick();
+        }
+      } else {
+        const emailRegex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+        if (!emailRegex.test(loginData.email)) {
+          toast.warning("Invalid email format");
+          return;
+        }
+        if (!loginData.email.trim() || !loginData.password.trim()) {
+          // Show warnings for empty fields
+          setFieldWarnings({
+            email: !loginData.email.trim(),
+            password: !loginData.password.trim(),
+          });
+          return;
+        }
+
+        const response = await axios.post(
+          `${process.env.REACT_APP_BASE_URL}/auth/login`,
+          loginData
+        );
+
+        if (response.data.token) {
+          actions.setProfileData(response.data.user);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("isLoggedIn", JSON.stringify(true));
+          actions.login(true);
+          handleBackdropClick();
+        }
       }
     } catch (error) {
+      toast.error(error.response.data.message || "Login Failed");
       actions.login(false);
       localStorage.removeItem("token");
       localStorage.removeItem("isLoggedIn");
-      console.error("Error during login:", error);
+      console.error("Error during login:", error && error.response.data);
     }
   };
 
@@ -225,22 +267,7 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
         toast.success("Login Successfully");
       }
     } catch (error) {
-      // if (response.data.success) {
-
-      //   // actions.setProfileData(response.data.user);
-      //   // actions.login(true);
-      //   // localStorage.setItem("isLoggedIn", JSON.stringify(true));
-      //   // localStorage.setItem("token", response.data.token);
-      //   // handleBackdropClick();
-
-      //   setGoogleUser({
-      //     ...googleUser,
-      //     username: response.data.data.username,
-      //     email: response.data.data.email,
-      //   });
-      //   setIsGoogle(true);
-      //   setClickSignup(true);
-      // }
+      actions.login(false);
       toast.error("Login Failed");
       console.error("Error during Google login:", error);
     }
@@ -289,32 +316,60 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
     <div>
       {showForgotPass && !clickSignUp ? (
         <div className="flex flex-row items-start justify-center">
-          <div className="w-[400px] h-[430px] hidden lg:block rounded-lg">
+          <div className="w-[400px] h-[430px] hidden md:block rounded-lg">
             <img
               src={LoginImg}
               alt="login_img"
               className="w-full h-full rounded-lg"
             />
           </div>
-          <div className="w-full lg:w-[400px] mx-auto px-4 py-3">
-            <div className="mb-3">
-              <p className="leading-6 text-slate-6000 font-[600] mb-0">Email</p>
-              <input
-                type="text"
-                name="email"
-                placeholder="Enter the Email"
-                className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
-                  fieldWarnings.email ? "border-red-500" : ""
-                }`}
-                value={loginData.email}
-                onChange={handleInputChange}
-              />
-              {fieldWarnings.email && (
-                <div className="text-red-500 text-sm mt-1">
-                  Email is required
+          <div className="w-[400px] mx-auto px-4 py-3">
+            {!loginWithPhone ? (
+              <>
+                <div className="mb-3">
+                  <p className="leading-6 text-slate-6000 font-[600] mb-0">
+                    Email
+                  </p>
+                  <input
+                    type="text"
+                    name="email"
+                    placeholder="Enter the Email"
+                    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                      fieldWarnings.email ? "border-red-500" : ""
+                    }`}
+                    value={loginData.email}
+                    onChange={handleInputChange}
+                  />
+                  {fieldWarnings.email && (
+                    <div className="text-red-500 text-sm mt-1">
+                      Email is required
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              </>
+            ) : (
+              <>
+                <div className="mb-2">
+                  <p className="leading-6 text-slate-6000 font-[600] mb-0">
+                    Phone Number
+                  </p>
+                  <PhoneInput
+                    placeholder="Enter the phone"
+                    international
+                    countryCallingCodeEditable={false}
+                    className={`w-full outline-none border-[1px] border-slate-500 px-1 py-2 rounded-lg ${
+                      fieldWarnings.phoneNumber && phoneInput.trim() === ""
+                        ? "border-red-500"
+                        : ""
+                    }`}
+                    value={phoneInput}
+                    onChange={handlePhoneInputChange}
+                    countries={getCountries()}
+                    flags
+                  />
+                </div>
+              </>
+            )}
             <div className="mb-3">
               <p className="leading-6 text-slate-6000 font-[600] mb-0">
                 Password
@@ -397,15 +452,22 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
                   </LoginSocialFacebook>
                 </span>
 
-                {/* <LoginButton
-                  scope="email"
-                  onError={handleError}
-                  onSuccess={handleSuccess}
-                >
-                  <FaSquareFacebook className="inline mx-3 text-[30px] text-[blue] cursor-pointer hover:opacity-70" />
-                </LoginButton> */}
-
-                <FaPhone className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70" />
+                {loginWithPhone ? (
+                  <>
+                    {" "}
+                    <FaPhone
+                      className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70"
+                      onClick={() => setLoginWithPhone((prv) => !prv)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <MdOutlineAlternateEmail
+                      className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70"
+                      onClick={() => setLoginWithPhone((prv) => !prv)}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>

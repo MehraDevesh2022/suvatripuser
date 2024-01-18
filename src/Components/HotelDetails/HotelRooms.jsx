@@ -9,13 +9,15 @@ import { GrFormPrevious } from "react-icons/gr";
 import { format, isWeekend } from "date-fns";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import Modal from "react-bootstrap/Modal";
-import Container from "react-bootstrap/Container";
+
+import { toast } from "react-toastify";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { DateRangePicker } from "react-date-range";
 import { useAppContext } from "../../context/store";
 import axios from "axios";
+
 function HotelRooms() {
   const [selectedRooms, setSelectedRooms] = useState({});
   const [show, setShow] = useState(false);
@@ -113,7 +115,7 @@ function HotelRooms() {
       setPhoneNumber(state?.profileData?.phoneNumber);
       setShow(true);
     } else {
-      alert("Please Login First for Booking");
+     toast.warning("Please Login First");
     }
   };
   const inlineStyle = {
@@ -163,7 +165,7 @@ function HotelRooms() {
       .map(([roomId, count]) => ({ roomId, count }));
   
     if (selectedRoomsArray.length === 0) {
-      alert("Please select at least one room.");
+      toast.warning("Please Select Room");  
       return;
     }
   
@@ -202,7 +204,7 @@ function HotelRooms() {
       );
   
       if (response.data.status) {
-        alert("Your Booking is Done");
+       toast.success("Reservation Successfull");
   
         // Reset the component's state to initial values or empty values
         setFirstName("");
@@ -224,12 +226,13 @@ function HotelRooms() {
         setIsWeekend(false);
         setSelectedRooms({});
       } else {
-        alert("Something went wrong");
+      toast.error("Reservation Failed");
       }
   
       handleClose();
     } catch (error) {
       console.log(error, "error");
+      toast.error("Reservation Failed Please Try Again");
       handleClose();
     }
   };

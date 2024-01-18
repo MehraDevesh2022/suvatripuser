@@ -45,8 +45,7 @@ function SignReset({
 
   const handleVerifyOTP = () => {
     const isValidOTP = /^\d{6}$/.test(otp);
-
-    if (isValidOTP) {
+     if (isValidOTP) {
       setOtpError("");
       otpHandler(otp);
     } else {
@@ -79,7 +78,7 @@ function SignReset({
         setToken(response.data.token);
         setIsPhoneOtp(true);
         setPhoneNo(formDataFb.phoneNumber);
-        toast.success("Signup Successfull");
+      
       
       }
     } catch (error) {
@@ -115,7 +114,7 @@ function SignReset({
         setToken(response.data.token);
         setIsPhoneOtp(true);
         setPhoneNo(formDataGoogle.phoneNumber);
-        toast.success("Signup Successfull");
+       
 
       }else if(response.data.isLogged ===true){
         setClickSignup(true);
