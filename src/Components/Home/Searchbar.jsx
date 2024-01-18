@@ -173,8 +173,8 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
                 onClick={completeOff}
               >
                 <Form>
-                  <p className="bg-[#fff]  text-[#f62c31] w-[150px] hidden lg:block text-center py-[2px] rounded-lg">
-                    City, Area, Hotel
+                  <p className="bg-[#fff]  text-[#f62c31] w-[50px]  hidden lg:block text-center py-[2px] px-1 rounded-lg">
+                    City
                   </p>
                   <input
                     type="email"

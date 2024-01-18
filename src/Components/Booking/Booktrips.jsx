@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAppContext } from "../../context/store";
+import ClipLoader from 'react-spinners/ClipLoader'
+
 
 function Booktrips() {
   const [bookings, setBookings] = useState([]);
@@ -43,7 +45,7 @@ function Booktrips() {
   }, [state.profileData?._id]);
 
   return (
-    <div className="w-full xl:w-[1000px] mx-auto p-2 xl:p-0">
+    <div className="w-full xl:w-[1000px] h-auto mx-auto p-2 xl:p-0 mt-0 mb-5">
       <h3
         className={`my-5 font-bold text-slate-700 text-[30px] md:text-[35px] ${
           window.innerWidth <= 768 ? "text-center" : "text-left"
@@ -52,7 +54,9 @@ function Booktrips() {
         Booking & Trips
       </h3>
       {loading ? (
-        <p>Loading...</p>
+        <div className="w-full text-center p-10">
+          <ClipLoader color="#FF0000" size={60} />
+        </div>
       ) : (
         bookings.map((booking, index) => (
           <div

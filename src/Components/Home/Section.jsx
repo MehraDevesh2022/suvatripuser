@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { useAppContext } from "../../context/store";
 import ViewImg from "../../Assets/img/simple.png";
 import { useNavigate } from "react-router-dom";
+import BeatLoader from 'react-spinners/BeatLoader'
 function Section() {
   const { state } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
@@ -40,7 +41,9 @@ function Section() {
           </div>
           <div className="grid grid-cols-2 lg:flex flex-row items-center md:items-start w-full md:w-[650px]  mx-auto  p-0">
             {isLoading ? (
-              <div>Loading...</div>
+              <div className="w-full text-center">
+                <BeatLoader color="#FF0000" size={20} />
+                </div>
             ) : (
               state.hotel.slice(0, 3).map((data, index) => {
                 return (

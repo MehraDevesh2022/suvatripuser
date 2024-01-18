@@ -489,7 +489,7 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
                       console.log(err);
                     }}
                   >
-                    <FaSquareFacebook className="inline mx-3 text-[30px] cursor-pointer hover:opacity-70" />
+                    <FaSquareFacebook className="inline mx-3 text-[30px] text-blue-800 cursor-pointer hover:opacity-70" />
                   </LoginSocialFacebook>
                 </span>
 

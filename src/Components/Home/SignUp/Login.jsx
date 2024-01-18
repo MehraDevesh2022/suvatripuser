@@ -448,21 +448,21 @@ function Login({ handleBackdropClick, setHandleLoginShow }) {
                       console.log(err);
                     }}
                   >
-                    <FaSquareFacebook className="inline mx-3 text-[30px] cursor-pointer hover:opacity-70" />
+                    <FaSquareFacebook className="inline mx-3 text-[30px] cursor-pointer text-blue-900 hover:opacity-70" />
                   </LoginSocialFacebook>
                 </span>
 
                 {loginWithPhone ? (
                   <>
                     {" "}
-                    <FaPhone
+                    <MdOutlineAlternateEmail
                       className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70"
                       onClick={() => setLoginWithPhone((prv) => !prv)}
                     />
                   </>
                 ) : (
                   <>
-                    <MdOutlineAlternateEmail
+                    <FaPhone
                       className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70"
                       onClick={() => setLoginWithPhone((prv) => !prv)}
                     />

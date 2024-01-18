@@ -105,7 +105,7 @@ function Filter() {
             </button>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full mb-4">
           <FilterSection />
         </div>
         <div>

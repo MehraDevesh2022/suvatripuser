@@ -29,7 +29,7 @@ function PhotoRouting() {
 
         <Link
             to={`/hoteldetails/${hotelId}/photos/property`}
-            className={`no-underline ${isActive(`/hoteldetails/${hotelId}/photos/roompic/property`) ? 'border-b-2 border-red-500' : ''}`}
+            className={`no-underline ${isActive(`/hoteldetails/${hotelId}/photos/property`) ? 'border-b-2 border-red-500' : ''}`}
         >
             <div className='mx-1 font-500 text-slate-500 tracking-wider px-2 py-2 my-2 cursor-pointer  text-[12px] md:text-[18px]'>
                 Property
@@ -38,7 +38,7 @@ function PhotoRouting() {
 
         <Link
             to={`/hoteldetails/${hotelId}/photos/nearbypic`}
-            className={`no-underline ${isActive(`/hoteldetails/${hotelId}/photos/roompic/property/nearbypic`) ? 'border-b-2 border-red-500' : ''}`}
+            className={`no-underline ${isActive(`/hoteldetails/${hotelId}/photos/nearbypic`) ? 'border-b-2 border-red-500' : ''}`}
         >
             <div className='mx-1 font-500 text-slate-500 tracking-wider px-2 py-2 my-2 cursor-pointer text-center whitespace-nowrap  text-[12px] md:text-[18px]'>
                 Nearby Attraction

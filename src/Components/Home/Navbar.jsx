@@ -18,7 +18,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { useAppContext } from "../../context/store";
 import { useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { GiTireIronCross } from "react-icons/gi";
+import { RxCross1 } from "react-icons/rx";
 import { FaChevronDown } from "react-icons/fa";
 
 function Navbar() {
@@ -66,7 +66,7 @@ function Navbar() {
   };
 
   return (
-    <div className="min-w-fit max-w-[1200px] mx-auto  bg-[#FF9D99]">
+    <div className="min-w-fit max-w-[1200px] mx-auto">
       <div className="flex flex-row justify-between items-center px-2 md:px-5 py-3">
         <Link to="/">
           <div className="w-[200px]">
@@ -84,9 +84,9 @@ function Navbar() {
                 Currency
               </Dropdown.Toggle>
 
-              <Dropdown.Menu style={{ backgroundColor: "#FF9C99" }}>
+              <Dropdown.Menu style={{ backgroundColor: "#fff" }}>
                 <Dropdown.Item href="#/action-1">
-                  <div className="flex flex-row items-center justify-around">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
                     <img
                       src={India}
                       alt="india_currency"
@@ -96,7 +96,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-2">
-                  <div className="flex flex-row items-center justify-around">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
                     <img
                       src={Nepal}
                       alt="india_currency"
@@ -106,7 +106,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
                     <img
                       src={AedImg}
                       alt="india_currency"
@@ -116,7 +116,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
                     <img
                       src={Qatar}
                       alt="india_currency"
@@ -126,7 +126,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
                     <img
                       src={AUD}
                       alt="india_currency"
@@ -136,7 +136,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
                     <img
                       src={USA}
                       alt="india_currency"
@@ -146,7 +146,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
                     <img
                       src={UK}
                       alt="india_currency"
@@ -156,7 +156,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
                     <img
                       src={Euro}
                       alt="india_currency"
@@ -219,7 +219,7 @@ function Navbar() {
         </div>
         <div className="block lg:hidden">
           {mobileNavbar ? (
-            <GiTireIronCross
+            <RxCross1 
               className="text-[35px] font-[700] text-[#000] cursor-pointer"
               onClick={() => {
                 setMobileNabar(!mobileNavbar);
@@ -245,9 +245,9 @@ function Navbar() {
             <div className="w-[150px] sm:w-[250px] mx-auto my-4">
               <img src={Logo} alt="img" className="w-full h-full" />
             </div>
-            <div className="mt-2 ml-8">
+            <div className="mt-2">
               {state.isLoggedIn ? (
-                <div>
+                <div className={`mx-auto w-[140px] text-left rounded-md`}>
                   <Button
                     style={{
                       padding: "10px 18px",
@@ -255,9 +255,8 @@ function Navbar() {
                       backgroundColor: "#e3292d",
                       border: "none",
                       borderRadius: "20px",
-                      margin: "auto",
+                     
                     }}
-                    className="mx-auto"
                     onClick={handleProfileClick}
                   >
                     <span>
@@ -266,10 +265,27 @@ function Navbar() {
                     Profile
                   </Button>
                   {showProfileDropdown && (
-                    <ProfileDropdown
-                      handleLogout={handleLogout}
-                      closeDropdown={closeProfileDropdown}
-                    />
+                    <div className={`bg-opacity-70 shadow-md text-left ${showProfileDropdown ? 'block duration-500' : 'hidden'}`}>
+                      <ul className="text-left p-1">
+                       <Link 
+                        to="/booking"
+                        className="no-underline text-[#000]"
+                       >
+                          <li className="text-[16px] py-2">- My Booking</li>
+                       </Link>
+                      <Link
+                       to="/personaldetails"
+                       className="no-underline text-[#000]"
+                      >
+                          <li  className="text-[16px] py-2">- My Profile</li>
+                      </Link>
+                        <li  className="text-[16px] py-2">- Logout</li>
+                      </ul>
+                    </div>
+                    // <ProfileDropdown
+                    //   handleLogout={handleLogout}
+                    //   closeDropdown={closeProfileDropdown}
+                    // />
                   )}
                 </div>
               ) : (

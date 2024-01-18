@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import Starrating from "./Starrating";
+import ClipLoader from 'react-spinners/ClipLoader'
+
 function HotelReviews() {
   const [show, setShow] = useState(false);
   const [review_id, setReview_id] = useState("");
@@ -256,7 +258,11 @@ function HotelReviews() {
   return (
     <>
       {loading ? (
-        <>Loading...</>
+        <>
+          <div className="w-full text-center p-4">
+            <ClipLoader color="#FF0000" size={60} />
+          </div>
+        </>
       ) : (
         <>
           <div className="w-full  bg-[#fff] my-3 px-4">

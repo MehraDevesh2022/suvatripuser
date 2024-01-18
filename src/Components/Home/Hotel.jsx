@@ -6,13 +6,14 @@ import axios from "axios";
 import config from "../../config";
 import { useAppContext } from "../../context/store";
 import { useNavigate } from "react-router-dom";
+import ClipLoader from 'react-spinners/ClipLoader'
 // Import the following library to sanitize HTML
 // import DOMPurify from "dompurify";
 
 function Hotel() {
   const { actions, state } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchHotels = async () => {
       try {
@@ -29,8 +30,6 @@ const navigate = useNavigate();
             headers,
           }
         );
-
-
 
         if (response.data.isHotelAccess) {
           // while the user is not logged in
@@ -51,57 +50,52 @@ const navigate = useNavigate();
 
   function removeHtmlTags(htmlString) {
     // Create a temporary element (a div) to parse the HTML
-    var doc = new DOMParser().parseFromString(htmlString, 'text/html');
+    var doc = new DOMParser().parseFromString(htmlString, "text/html");
     return doc.body.textContent || "NA";
-}
+  }
 
+  function constructHotelFilterURL() {
+    const defaultLocation = "All";
+    const today = new Date();
+    const defaultCheckIn = formatDate(today);
+    const defaultCheckOut = formatDate(addDays(today, 7));
+    const defaultChildren = 0;
+    const defaultRoom = 1;
+    const defaultAdult = 1;
 
-function constructHotelFilterURL() {
-  const defaultLocation = 'All';
-  const today = new Date();
-  const defaultCheckIn = formatDate(today); 
-  const defaultCheckOut = formatDate(addDays(today, 7)); 
-  const defaultChildren = 0;
-  const defaultRoom = 1;
-  const defaultAdult = 1;
+    const filterLocation = defaultLocation;
+    const filterCheckIn = defaultCheckIn;
+    const filterCheckOut = defaultCheckOut;
+    const filterChildren = defaultChildren;
+    const filterRoom = defaultRoom;
+    const filterAdult = defaultAdult;
 
-  const filterLocation =  defaultLocation;
-  const filterCheckIn =  defaultCheckIn;
-  const filterCheckOut =  defaultCheckOut;
-  const filterChildren =  defaultChildren;
-  const filterRoom =  defaultRoom;
-  const filterAdult =  defaultAdult;
+    const url = `/filter?location=${filterLocation}&checkIn=${filterCheckIn}&checkOut=${filterCheckOut}&children=${filterChildren}&room=${filterRoom}&adult=${filterAdult}`;
 
-  const url = `/filter?location=${filterLocation}&checkIn=${filterCheckIn}&checkOut=${filterCheckOut}&children=${filterChildren}&room=${filterRoom}&adult=${filterAdult}`;
+    return url;
+  }
 
-  return url;
-}
+  function addDays(date, days) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
 
-
-function addDays(date, days) {
-  const result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-}
-
-
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 
   return (
     <div className="w-full">
       <div className="my-3 bg-[#fff] w-full xl:w-[1050px] mx-auto  p-3  rounded-lg">
         <div className="flex flex-row justify-between items-center">
           <div className="text-[55px] font-[900] tracking-wide leading-4">
-            Hotel
+            Hotels
           </div>
-          <div className="w-[700px] h-[2px] hidden xl:block bg-slate-950 my-auto"></div>
+          <div className="w-[650px] h-[2px] hidden xl:block bg-slate-950 my-auto"></div>
           <div>
             <Button
               style={{
@@ -117,7 +111,6 @@ function formatDate(date) {
                 navigate(url);
               }}
             >
-            
               View All{" "}
               <span>
                 <MdOutlineArrowRightAlt className="inline text-[35px] font-[300]" />
@@ -126,7 +119,9 @@ function formatDate(date) {
           </div>
         </div>
         {isLoading ? (
-          <div>Loading...</div>
+          <div className="w-full text-center p-4">
+            <ClipLoader color="#FF0000" size={60} />
+          </div>
         ) : (
           <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center">
             {state.hotel.map((data, index) => {
@@ -154,7 +149,6 @@ function formatDate(date) {
                           backgroundColor: "#e3292d",
                           border: "none",
                           borderRadius: "40px",
-
                         }}
                         className="hover:opacity-70 duration-200 ease-in-out"
                         onClick={() => navigate(`/hoteldetails/${data._id}`)}

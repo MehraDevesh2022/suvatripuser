@@ -4,10 +4,11 @@ import Searchbar from "../Home/Searchbar";
 import Footer from "../Fotter/Footer";
 import HotelHaeding from "./HotelHaeding";
 import HotelFilter from "./HotelFilter";
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate } from "react-router-dom";
 import NestedRouting from "./NestedRouting";
 import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/store";
+import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
 
 function HotelDetail() {
@@ -40,11 +41,15 @@ function HotelDetail() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>; // You can replace this with a loading spinner or another loading indicator
+    return (
+      <div className="w-full h-screen text-center p-4">
+        <ClipLoader color="#FF0000" size={60} />
+      </div>
+    ); // You can replace this with a loading spinner or another loading indicator
   }
 
   if (error) {
-    return <div>{error}</div>; // Render an error message
+    return <div className="w-full h-screen text-center p-5 text-[30px] text-[#FF0000]">{error}</div>; // Render an error message
   }
 
   // If param.id is not available or invalid, navigate to a default page or handle it as per your requirement
@@ -53,14 +58,14 @@ function HotelDetail() {
   }
 
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <div>
         <Navbar />
       </div>
-      <div className='py-5 px-4 md:px-0'>
+      <div className="py-5 px-4 md:px-0">
         <Searchbar />
       </div>
-      <div className='w-full xl:w-[1100px]  mx-auto'>
+      <div className="w-full xl:w-[1100px]  mx-auto">
         <HotelHaeding />
         <HotelFilter />
         <div>

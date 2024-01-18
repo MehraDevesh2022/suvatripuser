@@ -616,7 +616,9 @@ function HotelRooms() {
         </>
       ) : (
         <>
-          <div>no room founds</div>
+          <div className="w-full text-center">
+            <p className="text-center">no room founds</p>
+          </div>
         </>
       )}
         <div className="absolute right-1 bottom-0 py-0">
