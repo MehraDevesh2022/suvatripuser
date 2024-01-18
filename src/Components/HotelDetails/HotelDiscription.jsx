@@ -43,6 +43,14 @@ import { FaLocationDot } from "react-icons/fa6";
       description: hotelDetial?.description || 'Description not available Description not available Description not available Description not available Description not availableDescription not availableDescription not availableDescription not availableDescription not availableDescription not availableDescription not availableDescription not availableDescription not availableDescription not availablevDescription not available', // Default description if not available
     };
   
+
+    function removeHtmlTags(htmlString) {
+      // Create a temporary element (a div) to parse the HTML
+      var doc = new DOMParser().parseFromString(htmlString, 'text/html');
+      
+      
+      return doc.body.textContent || "";
+  }
     return (
       <div>
         <div className='w-full h-auto bg-white my-3 rounded-lg'>
@@ -60,7 +68,7 @@ import { FaLocationDot } from "react-icons/fa6";
             </div>
   
             <div className='py-2'>
-            <p>{hotelData.description}</p>
+            <p>{removeHtmlTags(hotelData?.description)}</p>
           </div>
           </div>
   

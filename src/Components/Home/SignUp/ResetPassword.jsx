@@ -3,6 +3,7 @@ import LoginImg from "../../../Assets/img/Rectangle.png";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import Login from "./Login";
+import { toast } from "react-toastify";
 function ResetPassword({ email, handleBackdropClick, otp , setHandleLoginShow }) {
   const [success, setSuccess] = useState(false); // [1]
   const [password, setPassword] = useState("");
@@ -31,12 +32,16 @@ function ResetPassword({ email, handleBackdropClick, otp , setHandleLoginShow })
         },
         config
       );
+     
       if (response.data.success && response.data.success === true) {
+        toast.success(response?.data?.message || "Password reset successfully");
         setSuccess(true);
+      
         }
     } catch (error) {
        setSuccess(false);
       console.log(error, "error");
+      toast.error(error?.response?.data?.message || "Something went wrong");
     }
   };
 

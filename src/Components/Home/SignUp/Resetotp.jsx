@@ -3,7 +3,7 @@ import LoginImg from "../../../Assets/img/Rectangle.png";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import ResetPassword from "./ResetPassword";
-
+import { toast } from "react-toastify";
 function Resendotp({ email, handleBackdropClick , setHandleLoginShow }) {
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
@@ -33,11 +33,12 @@ function Resendotp({ email, handleBackdropClick , setHandleLoginShow }) {
 
       if (response.data.success && response.data.success === true) {
         setIsOtpSent(true);
-         
+          toast.success(response?.data?.message || "OTP verified successfully");
       }
     } catch (error) {
       console.error("Error during OTP verification:", error);
       setOtpError("Invalid OTP. Please try again.");
+
     }
   };
 

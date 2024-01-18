@@ -27,6 +27,14 @@ console.log(hotel , "hotel");
       setLowestWeekdayPrice(minPrice);
     }
   }, [allRooms, hotel._id]);
+
+  function removeHtmlTags(htmlString) {
+    // Create a temporary element (a div) to parse the HTML
+    var doc = new DOMParser().parseFromString(htmlString, 'text/html');
+    return doc.body.textContent || "NA";
+}
+
+
   return (
     <>
       <Link
@@ -69,7 +77,7 @@ console.log(hotel , "hotel");
 
            
             <p className="px-2 leading-5 text-slate-600 text-sm">
-                {hotel?.description}
+                {removeHtmlTags(hotel?.description)}
             </p>
             <div className="ml-0 text-left">
               <ul className="flex flex-row justify-start items-center">
