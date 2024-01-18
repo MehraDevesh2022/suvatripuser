@@ -44,10 +44,10 @@ function HotelReviews() {
       if (response.ok) {
         setReviews(data.data);
 
-        toast.success("Reviews fetched successfully");
+
         setLoading(false);
       } else {
-        toast.error("Failed to fetch reviews");
+     
         setReviews([]);
         setLoading(false);
       }
@@ -71,7 +71,7 @@ function HotelReviews() {
     ) {
       setShow(true);
     } else {
-      alert("Please login to write a review");
+    toast.warning("Please login to write a review");
     }
   };
   const handleEditShow = (idReview, review) => {
@@ -98,7 +98,7 @@ function HotelReviews() {
     ) {
       setShow(true);
     } else {
-      alert("Please login to write a review");
+     toast.warning("Please login to edit a review");  
     }
   };
 

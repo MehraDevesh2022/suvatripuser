@@ -4,11 +4,11 @@ import { FaArrowRight } from 'react-icons/fa';
 import Kathmandu from '../../Assets/img/kathmandu.jpg'
 import Pokahara from '../../Assets/img/pokahara.jpg'
 import Dharan from '../../Assets/img/Dharan.jpg'
-
+import { useNavigate } from 'react-router-dom';
 function PopularArea() {
     const [hoveredItem, setHoveredItem] = useState(null);
     let timeoutId;
-
+    const navigate = useNavigate();
     const handleMouseEnter = (index) => {
         setHoveredItem(index);
     };
@@ -49,6 +49,43 @@ function PopularArea() {
         },
     ];
 
+    function constructHotelFilterURL(location) {
+        const defaultLocation = 'All';
+        const today = new Date();
+        const defaultCheckIn = formatDate(today); 
+        const defaultCheckOut = formatDate(addDays(today, 7)); 
+        const defaultChildren = 0;
+        const defaultRoom = 1;
+        const defaultAdult = 1;
+      
+        const filterLocation = location || defaultLocation;
+        const filterCheckIn =  defaultCheckIn;
+        const filterCheckOut =  defaultCheckOut;
+        const filterChildren =  defaultChildren;
+        const filterRoom =  defaultRoom;
+        const filterAdult =  defaultAdult;
+      
+        const url = `/filter?location=${filterLocation}&checkIn=${filterCheckIn}&checkOut=${filterCheckOut}&children=${filterChildren}&room=${filterRoom}&adult=${filterAdult}`;
+      
+        return url;
+      }
+      
+      
+      function addDays(date, days) {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+      }
+      
+      
+      function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+      
+
     return (
         <div>
             <div className='w-full xl:w-[1050px] bg-[#fff] mx-auto my-3 shadow-md p-4 rounded-lg border-[1px] border-slate-100'>
@@ -75,7 +112,14 @@ function PopularArea() {
                                 >
                                     <h4 className='font-[600] text-[#000] tracking-wide'>{item.Title}</h4>
                                     <p className='text-[14px] font-[500] text-[#000]'>{item.discript}</p>
-                                    <button className='bg-[blue] w-[150px] py-2 text-slate-50 rounded-xl hover:opacity-75'>
+                                    <button className='bg-[blue] w-[150px] py-2 text-slate-50 rounded-xl hover:opacity-75'
+                                     onClick={() => {
+                                        const url = constructHotelFilterURL(item.Title);
+                                        navigate(url);
+                                      }}
+                                    >
+                                    
+                                        
                                         More Options <span><FaArrowRight className='inline' /></span>
                                     </button>
                                 </div>

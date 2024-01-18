@@ -143,7 +143,6 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
 
   const handleOtp = (otp) => {
     setOTP(otp);
-    alert(otp);
     handleVerify();
   };
 
@@ -502,7 +501,10 @@ function Sign({ handleBackdropClick, setHandleLoginShow }) {
                   <FaSquareFacebook className="inline mx-3 text-[30px] text-[blue] cursor-pointer hover:opacity-70" />
                 </LoginButton> */}
 
-                <FaPhone className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70" />
+                <FaPhone
+                  className="inline mx-3 text-[28px] cursor-pointer hover:opacity-70"
+                  onClick={handleSignUp}
+                />
               </div>
             </div>
           </div>

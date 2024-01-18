@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useAppContext } from "../../context/store";
 import ViewImg from "../../Assets/img/simple.png";
-
+import { useNavigate } from "react-router-dom";
 function Section() {
   const { state } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
@@ -13,6 +13,7 @@ function Section() {
     border: 'none',
     borderRadius: '40px',
   }
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(!state.hotel.length); // Set loading to true if hotel data is not available
@@ -33,7 +34,9 @@ function Section() {
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur
               consectetur mollitia{" "}
             </p>
-            <Button style={buttoStyle}>Know more</Button>
+            <Button style={buttoStyle}
+             onClick={() => { navigate("/about")}}
+            >Know more</Button>
           </div>
           <div className="grid grid-cols-2 lg:flex flex-row items-center md:items-start w-full md:w-[650px]  mx-auto  p-0">
             {isLoading ? (

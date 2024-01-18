@@ -19,7 +19,7 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
     room: typeof roomD === 'number' ? roomD : 1,
     child: typeof childD === 'number' ? childD : 0,
   });
-  const [location, setLocation] = useState(locationD || "All");
+  const [location, setLocation] = useState(locationD || "Delhi");
   const { state, actions } = useAppContext();
   const [showCalender, setShowCalender] = useState(false);
   const [date, setDate] = useState([

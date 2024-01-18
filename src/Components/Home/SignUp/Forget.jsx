@@ -3,7 +3,7 @@ import LoginImg from '../../../Assets/img/Rectangle.png';
 import Button from 'react-bootstrap/Button';
 import Resendotp from './Resetotp';
 import axios from 'axios';
-
+import { toast } from "react-toastify";
 function Forget({ handleBackdropClick , setHandleLoginShow }) {
     const [email, setEmail] = useState("");
     const [resetPassword, setResetPassword] = useState(true);
@@ -21,10 +21,11 @@ function Forget({ handleBackdropClick , setHandleLoginShow }) {
             const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/forgot-password`, {
                 email: email
             });
-            console.log(response.data, "response.data");
+            toast.success(response?.data?.message || "OTP sent successfully to your email");
             setResetPassword(false);
         } catch (error) {
             console.log(error, "error");
+            toast.error(error?.response?.data?.message || "Something went wrong");
         }
     };
 

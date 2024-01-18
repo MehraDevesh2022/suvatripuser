@@ -2,7 +2,7 @@ import React from "react";
 import HotelCard from "./HotelCard";
 import { useAppContext } from "../../context/store";
 
-function FilterCard() {
+function FilterCard({filteredHotels}) {
   const { state } = useAppContext();
   const hotelData = state.hotel;
 
@@ -14,9 +14,9 @@ function FilterCard() {
   return (
 
     <div>
-      {hotelData && hotelData.length > 0 ? (
+      {filteredHotels && filteredHotels.length > 0 ? (
 
-        hotelData.map((hotel) => (
+filteredHotels.map((hotel) => (
           <HotelCard hotel={hotel} key={hotel._id} />
         ))
       ) : (
