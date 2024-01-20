@@ -9,7 +9,6 @@ import { LuParkingCircle } from "react-icons/lu";
 import { Link } from "react-router-dom";
 function HotelCard({ hotel }) {
   const { state } = useAppContext();
-console.log(hotel , "hotel");
   const allRooms = state.allRooms
   const isMobile = window.innerWidth > 768;
   const containerStyle = {
@@ -123,7 +122,7 @@ console.log(hotel , "hotel");
             </div>
             <div style={containerStyle}>
               <h3 className="text-[20px] md:text-[24px] text-slate-600  font-[900] text-right">
-                {hotel.currency} {lowestWeekdayPrice}
+                {state.currency} {Math.trunc(lowestWeekdayPrice * state.rate)}
               </h3>
               <div style={containerStyle}>
                 <p className="mb-0 text-[16px] md:text-[20px] text-right">

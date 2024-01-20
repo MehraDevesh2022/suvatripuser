@@ -1,4 +1,4 @@
-  import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import FilterHeader from "./FilterHeader";
 import FilterCard from "./FilterCard";
 import FilterMap from "./FilterMap";
@@ -35,21 +35,23 @@ function FilterSection() {
   });
 
   const applyFilters = () => {
-    let updatedHotels = [...allHotels];
-  
-    if (filters.starRating.length > 0) {
+    let updatedHotels = [...state.hotel];
+
+    if (filters.starRating !== '' && filters.starRating.length > 0) {
       updatedHotels = updatedHotels.filter((hotel) =>
         filters.starRating.includes(hotel.rating.toString())
       );
     }
-  
-    if (filters.propertyType.length > 0) {
+
+    if (filters.propertyType !== '' && filters.propertyType.length > 0) {
+      console.log('bbbbbbb');
       updatedHotels = updatedHotels.filter((hotel) =>
         filters.propertyType.includes(hotel.propertyType)
       );
     }
-  
-    if (filters.facilities.length > 0) {
+
+    if (filters.facilities !== '' && filters.facilities.length > 0) {
+      console.log('cccccccc');
       updatedHotels = updatedHotels.filter((hotel) =>
         hotel.facilities &&
         filters.facilities.every((facility) =>
@@ -60,8 +62,9 @@ function FilterSection() {
         )
       );
     }
-  
-    if (minBudget !== "" && maxBudget !== "") {
+
+    if (minBudget !== '' && maxBudget !== '' && minBudget !== "" && maxBudget !== "") {
+      console.log('dddddddddddd');
       updatedHotels = updatedHotels.filter((hotel) =>
         hotel.rooms &&
         hotel.rooms[0] &&
@@ -69,7 +72,8 @@ function FilterSection() {
         parseInt(hotel.rooms[0].weekdayPrice) >= parseInt(minBudget) &&
         parseInt(hotel.rooms[0].weekdayPrice) <= parseInt(maxBudget)
       );
-    } else if (minBudget !== "") {
+    } else if (minBudget !== '' && minBudget !== "") {
+      console.log('eeeeeeeee');
       updatedHotels = updatedHotels.filter((hotel) =>
         hotel.rooms &&
         hotel.rooms[0] &&
@@ -77,48 +81,60 @@ function FilterSection() {
         parseInt(hotel.rooms[0].weekdayPrice) >= parseInt(minBudget)
       );
     }
-  
+
+    console.log(updatedHotels, 'hhhhhhh');
+
     setFilteredHotels(updatedHotels);
   };
-  
-  
 
-  const handleCheckboxChange = (filterType, value) => {
-    setFilters((prevFilters) => {
-      const currentFilterType = prevFilters[filterType] || [];
 
-      setMinBudget("");
-      setMaxBudget("");
 
-      if (value === "NPR 0 - 1500") {
-        setMaxBudget("1500");
-      } else if (value === "NPR 1500 - 2500") {
-        setMinBudget("1500");
-        setMaxBudget("2500");
-      } else if (value === "NPR 2500 - 3500") {
-        setMinBudget("2500");
-        setMaxBudget("3500");
-      } else if (value === "NPR 3500 - 4500") {
-        setMinBudget("3500");
-        setMaxBudget("4500");
-      } else if (value === "NPR 4500+") {
-        setMinBudget("4500");
+  const handleCheckboxChange = (e, filterType, value) => {
+    if (e.target.checked) {
+      setFilters((prevFilters) => {
+        const currentFilterType = prevFilters[filterType] || [];
+
+        setMinBudget("");
         setMaxBudget("");
-      }
 
-      return {
-        ...prevFilters,
-        [filterType]: currentFilterType.includes(value)
-          ? currentFilterType.filter((v) => v !== value)
-          : [...currentFilterType, value],
-      };
-    });
+        if (value === "NPR 0 - 1500") {
+          setMaxBudget("1500");
+        } else if (value === "NPR 1500 - 2500") {
+          setMinBudget("1500");
+          setMaxBudget("2500");
+        } else if (value === "NPR 2500 - 3500") {
+          setMinBudget("2500");
+          setMaxBudget("3500");
+        } else if (value === "NPR 3500 - 4500") {
+          setMinBudget("3500");
+          setMaxBudget("4500");
+        } else if (value === "NPR 4500+") {
+          setMinBudget("4500");
+          setMaxBudget("");
+        }
+
+        return {
+          ...prevFilters,
+          [filterType]: currentFilterType.includes(value)
+            ? currentFilterType.filter((v) => v !== value)
+            : [...currentFilterType, value],
+        };
+      });
+    } else {
+      setFilters((prevFilters) => {
+        setMinBudget('');
+        setMaxBudget('');
+        return {
+          ...prevFilters,
+          [filterType]: ''
+        };
+      });
+    }
   };
 
   useEffect(() => {
     applyFilters();
-    console.log("filters", filteredHotels);
-  }, [filters, minBudget, maxBudget]);
+  }, [filters, minBudget, maxBudget, state.hotel]);
 
   const handleMinBudgetChange = (e) => {
     setMinBudget(e.target.value);
@@ -152,8 +168,8 @@ function FilterSection() {
                     type="checkbox"
                     value="Last Minute Deal"
                     id="flexCheckDefault"
-                    onChange={() =>
-                      handleCheckboxChange("priceRange", "NPR 0 - 1500")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "priceRange", "NPR 0 - 1500")
                     }
                   />
                   <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -166,8 +182,8 @@ function FilterSection() {
                     type="checkbox"
                     value="5 Star"
                     id="flexCheckDefault"
-                    onChange={() =>
-                      handleCheckboxChange("priceRange", "NPR 1500 - 2500")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "priceRange", "NPR 1500 - 2500")
                     }
                   />
                   <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -180,8 +196,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefault"
-                    onChange={() =>
-                      handleCheckboxChange("priceRange", "NPR 2500 - 3500")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "priceRange", "NPR 2500 - 3500")
                     }
                   />
                   <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -194,8 +210,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefault"
-                    onChange={() =>
-                      handleCheckboxChange("priceRange", "NPR 3500 - 4500")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "priceRange", "NPR 3500 - 4500")
                     }
                   />
                   <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -208,8 +224,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefault"
-                    onChange={() =>
-                      handleCheckboxChange("priceRange", "NPR 4500+")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "priceRange", "NPR 4500+")
                     }
                   />
                   <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -231,8 +247,8 @@ function FilterSection() {
                       type="checkbox"
                       value={`${rating} Star`}
                       id={`flexCheckDefault${rating}`}
-                      onChange={() =>
-                        handleCheckboxChange("starRating", `${rating}`)
+                      onChange={(e) =>
+                        handleCheckboxChange(e, "starRating", `${rating}`)
                       }
                     />
                     <label
@@ -241,11 +257,10 @@ function FilterSection() {
                     >
                       <span>
                         <FaStar
-                          className={`${
-                            starColors[rating]
-                              ? "text-[#FDCC0D]"
-                              : "text-[#ccc]"
-                          } font-[700]`}
+                          className={`${starColors[rating]
+                            ? "text-[#FDCC0D]"
+                            : "text-[#ccc]"
+                            } font-[700]`}
                         />
                       </span>
                       <span className="ml-2 font-[400] text-slate-800">
@@ -256,7 +271,7 @@ function FilterSection() {
                 ))}
               </div>
 
-              
+
             </div>
             <div>
               <h3 className="text-[20px] text-slate-700 font-[700] px-3 py-2 mb-1">
@@ -307,8 +322,8 @@ function FilterSection() {
                     type="checkbox"
                     value="Hotel"
                     id="flexCheckDefaultHotel"
-                    onChange={() =>
-                      handleCheckboxChange("propertyType", "Hotel")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "propertyType", "Hotel")
                     }
                   />
                   <label
@@ -325,8 +340,8 @@ function FilterSection() {
                     type="checkbox"
                     value="5 Star"
                     id="flexCheckDefaulxt"
-                    onChange={() =>
-                      handleCheckboxChange("propertyType", "Apartment")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "propertyType", "Apartment")
                     }
                   />
                   <label
@@ -342,8 +357,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefaultz"
-                    onChange={() =>
-                      handleCheckboxChange("propertyType", "Villa")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "propertyType", "Villa")
                     }
                   />
                   <label className="form-check-label" for="flexCheckDefaultz">
@@ -356,8 +371,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefaultzz"
-                    onChange={() =>
-                      handleCheckboxChange("propertyType", "Homestay")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "propertyType", "Homestay")
                     }
                   />
                   <label
@@ -373,8 +388,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefaultzzq"
-                    onChange={() =>
-                      handleCheckboxChange("propertyType", "Resort")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "propertyType", "Resort")
                     }
                   />
                   <label
@@ -390,8 +405,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefaultzza"
-                    onChange={() =>
-                      handleCheckboxChange("propertyType", "Guest house")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "propertyType", "Guest house")
                     }
                   />
                   <label
@@ -407,8 +422,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefaultxxx"
-                    onChange={() =>
-                      handleCheckboxChange("propertyType", "Hostel")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "propertyType", "Hostel")
                     }
                   />
                   <label
@@ -424,8 +439,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefaultqq"
-                    onChange={() =>
-                      handleCheckboxChange("propertyType", "Camp")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "propertyType", "Camp")
                     }
                   />
                   <label
@@ -441,8 +456,8 @@ function FilterSection() {
                     type="checkbox"
                     value=" North Nepal"
                     id="flexCheckDefaultww"
-                    onChange={() =>
-                      handleCheckboxChange("propertyType", "Tree house")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "propertyType", "Tree house")
                     }
                   />
                   <label
@@ -507,8 +522,8 @@ function FilterSection() {
                     type="checkbox"
                     value="Free Wifi"
                     id="flexCheckDefaultee"
-                    onChange={() =>
-                      handleCheckboxChange("facilities", "Free Wifi")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "facilities", "Free Wifi")
                     }
                   />
                   <label
@@ -525,8 +540,8 @@ function FilterSection() {
                     type="checkbox"
                     value="No Smoking Room"
                     id="flexCheckDefaulttt"
-                    onChange={() =>
-                      handleCheckboxChange("facilities", "No smoking rooms")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "facilities", "No smoking rooms")
                     }
                   />
                   <label
@@ -542,8 +557,8 @@ function FilterSection() {
                     type="checkbox"
                     value="Free parking"
                     id="  Free-parking"
-                    onChange={() =>
-                      handleCheckboxChange("facilities", "Free parking")
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "facilities", "Free parking")
                     }
                   />
                   <label className="form-check-label" htmlFor="  Free-parking">
@@ -554,11 +569,11 @@ function FilterSection() {
             </div>
             {/* Facilities-2 */}
 
-           
+
           </div>
         </div>
         <div className="w-full xl:w-[850px] px-2">
-          <FilterCard  filteredHotels ={filteredHotels} />
+          <FilterCard filteredHotels={filteredHotels} />
         </div>
       </div>
     </div>

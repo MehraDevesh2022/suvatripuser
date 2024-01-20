@@ -4,17 +4,18 @@ import { useReducer, useContext, createContext } from "react";
 const initialState = {
   isLoggedIn: false,
   hotel: [],
-  roomData : [],
+  roomData: [],
   userData: null,
   isLoading: false,
   hotelDetails: {},
-  authType : "local",
-  profileData : {},
+  authType: "local",
+  profileData: {},
   roomDetails: {},
   allRooms: [],
   allReviews: [],
-    location : ""
-   
+  location: "",
+  rate: 1,
+  currency: 'USD'
 };
 
 // action types
@@ -32,7 +33,9 @@ const actionTypes = {
   SET_ROOM_DETAILS: "SET_ROOM_DETAILS",
   SET_ALL_ROOMS: "SET_ALL_ROOMS",
   SET_ALL_REVIEW: "SET_ALL_REVIEW",
-  SET_LOCATION: "SET_LOCATION"
+  SET_LOCATION: "SET_LOCATION",
+  SET_RATE: "SET_RATE",
+  SET_CURRENCY: "SET_CURRENCY"
 };
 
 const appReducer = (state, action) => {
@@ -53,15 +56,21 @@ const appReducer = (state, action) => {
       return { ...state, profileData: action.payload };
     case actionTypes.SET_AUTH_TYPE:
       return { ...state, authType: action.payload };
-     case actionTypes.SET_ROOM_DATA:
+    case actionTypes.SET_ROOM_DATA:
       return { ...state, roomData: action.payload };
     case actionTypes.SET_ROOM_DETAILS:
       return { ...state, roomDetails: action.payload };
-      
-      case actionTypes.SET_ALL_REVIEW:
+
+    case actionTypes.SET_ALL_REVIEW:
       return { ...state, allReviews: action.payload };
-       case actionTypes.SET_ALL_ROOMS:
-      return { ...state, allRooms: action.payload };  
+    case actionTypes.SET_ALL_ROOMS:
+      return { ...state, allRooms: action.payload };
+
+    case actionTypes.SET_RATE:
+      return { ...state, rate: action.payload };
+
+    case actionTypes.SET_CURRENCY:
+      return { ...state, currency: action.payload };
 
     default:
       return state;
@@ -77,7 +86,7 @@ const AppProvider = ({ children }) => {
   const login = (isLoggedIn) => dispatch({ type: actionTypes.LOGIN, payload: isLoggedIn });
   const logout = () => dispatch({ type: actionTypes.LOGOUT });
   const isLoading = () => dispatch({ type: actionTypes.IS_LOADING });
-  
+
   const setAuthType = (authType) =>
     dispatch({ type: actionTypes.SET_AUTH_TYPE, payload: authType });
 
@@ -85,21 +94,27 @@ const AppProvider = ({ children }) => {
     dispatch({ type: actionTypes.SET_HOTEL, payload: hotel });
   const setUserData = (userData) =>
     dispatch({ type: actionTypes.SET_USER_DATA, payload: userData });
-const setProfileData = (profileData) =>
+  const setProfileData = (profileData) =>
     dispatch({ type: actionTypes.SET_PROFILE_DATA, payload: profileData });
-    
-    const setRoomData = (roomData) => dispatch({ type: actionTypes.SET_ROOM_DATA, payload: roomData });
+
+  const setRoomData = (roomData) => dispatch({ type: actionTypes.SET_ROOM_DATA, payload: roomData });
   const setRoomDetails = (roomDetails) => dispatch({ type: actionTypes.SET_ROOM_DETAILS, payload: roomDetails });
-   
+
   const setAllRooms = (allRooms) => dispatch({ type: actionTypes.SET_ALL_ROOMS, payload: allRooms });
+
+  const setRate = (rate) => {
+    console.log(rate, 'rrrr');
+    dispatch({ type: actionTypes.SET_RATE, payload: rate });}
+
+  const setCurrency = (currency) => dispatch({ type: actionTypes.SET_CURRENCY, payload: currency });
 
   const setHotelDetails = (hotelDetails) =>
     dispatch({ type: actionTypes.SET_HOTEL_DETAILS, payload: hotelDetails });
 
-    const setAllReviews = (allRewviews) =>
+  const setAllReviews = (allRewviews) =>
     dispatch({ type: actionTypes.SET_ALL_REVIEW, payload: allRewviews });
 
-    const setLocation = (location) =>
+  const setLocation = (location) =>
     dispatch({ type: actionTypes.SET_LOCATION, payload: location });
 
   const contextValue = {
@@ -117,8 +132,9 @@ const setProfileData = (profileData) =>
       setRoomData,
       setRoomDetails,
       setAllReviews,
-      setLocation
-       
+      setLocation,
+      setRate,
+      setCurrency
     },
   };
 

@@ -113,8 +113,6 @@ function Searchbar({ checkInD, checkOutD, roomD, adultD, childD, locationD }) {
         setEmptyArray((prevArray) => prevArray.slice(0, -1));
       }
     }
-
-    console.log(name,operation)
   };
 
   

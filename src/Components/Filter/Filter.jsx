@@ -22,7 +22,6 @@ function Filter() {
   const { state, actions } = useAppContext();
 
   useEffect(() => {
-    console.log(location, "lllllll");
     const getData = async () => {
       lbDate.init();
 
@@ -31,8 +30,8 @@ function Filter() {
 
         let params = {
           location: encodeURIComponent(location),
-          checkIn: checkIn, // Convert start date to milliseconds
-          checkOut: checkOut, // Convert end date to milliseconds
+          checkIn: checkIn,
+          checkOut: checkOut,
           children: children,
           room: room,
           adult: adult,
@@ -56,9 +55,7 @@ function Filter() {
         console.log(error, "errrr");
 
         actions.setHotel([]);
-        // Handle error as needed
         console.error("Error fetching hotels:", error);
-        // Handle error as needed
       }
     };
 

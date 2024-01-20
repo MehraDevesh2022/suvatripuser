@@ -20,6 +20,7 @@ import { useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import { FaChevronDown } from "react-icons/fa";
+import axios from "axios";
 
 function Navbar() {
   const [showSignup, setShowSignup] = useState(false);
@@ -49,6 +50,13 @@ function Navbar() {
 
     // Additional cleanup if needed
   };
+
+  const exchangeRate = (e, value) => {
+    axios.get(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usd/${value.toLowerCase()}.json`).then((response) => {
+      actions.setRate(response.data[value.toLowerCase()]);
+      actions.setCurrency(value.toUpperCase());
+    })
+  }
 
   const closeProfileDropdown = () => {
     setShowProfileDropdown(false);
@@ -86,7 +94,7 @@ function Navbar() {
 
               <Dropdown.Menu style={{ backgroundColor: "#fff" }}>
                 <Dropdown.Item href="#/action-1">
-                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300" onClick={(e) => exchangeRate(e, 'inr')}>
                     <img
                       src={India}
                       alt="india_currency"
@@ -96,7 +104,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-2">
-                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300" onClick={(e) => exchangeRate(e, 'npr')}>
                     <img
                       src={Nepal}
                       alt="india_currency"
@@ -106,7 +114,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300" onClick={(e) => exchangeRate(e, 'aed')}>
                     <img
                       src={AedImg}
                       alt="india_currency"
@@ -116,7 +124,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300" onClick={(e) => exchangeRate(e, 'qar')}>
                     <img
                       src={Qatar}
                       alt="india_currency"
@@ -126,7 +134,7 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300" onClick={(e) => exchangeRate(e, 'aud')}>
                     <img
                       src={AUD}
                       alt="india_currency"
@@ -136,27 +144,27 @@ function Navbar() {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300" onClick={(e) => exchangeRate(e, 'usd')}>
                     <img
                       src={USA}
                       alt="india_currency"
                       className="w-[20px] h-[20px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">US</span>
+                    <span className="font-[600] ml-2 text-[18px]">USD</span>
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300" onClick={(e) => exchangeRate(e, 'gbp')}>
                     <img
                       src={UK}
                       alt="india_currency"
                       className="w-[20px] h-[20px]"
                     />
-                    <span className="font-[600] ml-2 text-[18px]">UK</span>
+                    <span className="font-[600] ml-2 text-[18px]">GBP</span>
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item href="#/action-3">
-                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300">
+                  <div className="flex flex-row items-center justify-around hover:bg-slate-400 duration-300" onClick={(e) => exchangeRate(e, 'eur')}>
                     <img
                       src={Euro}
                       alt="india_currency"

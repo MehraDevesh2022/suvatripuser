@@ -572,13 +572,13 @@ function HotelRooms() {
                   Price
                 </h3>
                 <p className="mb-2 text-[20px] font-[400]">
-                  {" "} {formatPriceNumber(isWeekend ? room?.weekendPrice : room?.weekdayPrice , hotelData?.currency)}
+                  {" "} {formatPriceNumber(isWeekend ? room?.weekendPrice : Math.trunc(room?.weekdayPrice * state.rate) , state.currency)}
                 </p>
                 <p className="mb-2 text-slate-500 text-[16px] sm:text-[18px] md:text-[20px] xl:text-[17px]">
-                   Non Refundable Price : {formatPriceNumber(room?.nonRefundPrice , hotelData?.currency)}
+                   Non Refundable Price : {formatPriceNumber(Math.trunc(room?.nonRefundPrice * state.rate), state.currency)}
                 </p>
                 <p className="mb-2 text-slate-500 text-[15px] sm:text-[20px] md:text-[22px] xl:text-[17px]">
-                  +{hotelData.taxes || 750 }  Taxes & Fees
+                  +{Math.trunc(hotelData.taxes * state.rate) || Math.trunc(750 * state.rate) }  Taxes & Fees
                 </p>
                 <p className="mb-2 text-slate-500 text-[15px] sm:text-[20px] md:text-[22px xl:text-[17px]">Per Night</p>
               </div>
@@ -607,7 +607,7 @@ function HotelRooms() {
                   </span>
                 </div>
                 <p className="text-[18px] sm:text-[21px] font-[700] mb-1">
-                 {formatPriceNumber(isWeekend ? room?.weekendPrice : room?.weekdayPrice , hotelData.currency)}
+                 {formatPriceNumber(isWeekend ? room?.weekendPrice : Math.trunc(room?.weekdayPrice * state.rate), state.currency)}
                 </p>
                 <p className="text-[21px]">Total</p>
               </div>

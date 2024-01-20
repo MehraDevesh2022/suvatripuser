@@ -91,10 +91,10 @@ function Booktrips() {
             </div>
             <div className="w-full md:w-[250px] h-auto md:h-[200px] mx-auto">
               <h3 className="text-[20px] md:text-[30px] font-[700] leading-6 tracking-wider mt-3 text-left md:text-right">
-                {booking.hotel_id?.currency}
+                {state.currency}
               </h3>
               <h3 className="text-[20px] md:text-[30px] font-[700] leading-6 tracking-wider mt-3 text-left md:text-right">
-                {booking.room_id?.weekdayPrice}
+                {Math.trunc(booking.room_id?.weekdayPrice * state.rate)}
               </h3>
             </div>
           </div>
