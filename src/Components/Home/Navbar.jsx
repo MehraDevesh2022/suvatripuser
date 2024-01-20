@@ -236,7 +236,7 @@ function Navbar() {
         </div>
         {/* Mobile Navbar */}
         <div
-          className={`fixed bg-[#fff] z-10 h-screen top-0 duration-300 w-[50%]  rounded-br-xl shadow-sm ${
+          className={`fixed bg-[#fff] z-10 h-screen top-0 duration-300 w-[50%]   ${
             mobileNavbar ? "left-0" : "left-[-100%]"
           }`}
         >
@@ -245,9 +245,9 @@ function Navbar() {
             <div className="w-[150px] sm:w-[250px] mx-auto my-4">
               <img src={Logo} alt="img" className="w-full h-full" />
             </div>
-            <div className="mt-2">
+            <div className="mt-2 ml-6">
               {state.isLoggedIn ? (
-                <div className={`mx-auto w-[140px] text-left rounded-md`}>
+                <div className={`mx-auto w-[120px] text-left`}>
                   <Button
                     style={{
                       padding: "10px 18px",
@@ -265,7 +265,7 @@ function Navbar() {
                     Profile
                   </Button>
                   {showProfileDropdown && (
-                    <div className={`bg-opacity-70 shadow-md text-left ${showProfileDropdown ? 'block duration-500' : 'hidden'}`}>
+                    <div className={`text-left ${showProfileDropdown ? 'block duration-500' : 'hidden'}`}>
                       <ul className="text-left p-1">
                        <Link 
                         to="/booking"
@@ -306,27 +306,27 @@ function Navbar() {
                 </Button>
               )}
             </div>
-            <ul className="flex flex-col justify-between  py-1 z-30">
+            <ul className="flex flex-col justify-between items-center  py-1 z-30">
               <Link to="/about" className="no-underline text-[#000]">
-                <li className="font-[500] text-[20px] sm:text-[30px] md:text-[35px] m-3">
+                <li className="font-[500] text-left w-[120px] text-[18px] sm:text-[30px] md:text-[35px] m-3">
                   About
                 </li>
               </Link>
               {/* Here is currencyocde */}
-              <div className={`mb-3 md:mb-5 ${isCurrencyListVisible ? "h-auto rounded-lg shadow-md duration-300" : "h-[60px]"}`}>
+              <div className={`mb-3   ${isCurrencyListVisible ? "h-auto rounded-lg  duration-300" : "h-[50px]"}`}>
                 <div
-                  className="flex flex-row items-center"
+                  className="flex flex-row items-center justify-start w-[120px]"
                   onClick={toggleCurrencyList}
                 >
-                  <li className="font-[500] text-[20px] my-3 ml-3 mr-1 sm:text-[30px]  md:text-[35px] ">
+                  <li className="font-[500] text-[18px]  px-1 py-2 sm:text-[30px]  md:text-[35px] ">
                     Currency
                   </li>
                   <li>
-                    <FaChevronDown />
+                    <FaChevronDown  className={`${isCurrencyListVisible ? 'block' : 'hidden'}`}/>
                   </li>
                 </div>
-                <div className={`bg-opacity-80  ${isCurrencyListVisible ? "block duration-300" : "hidden"}`}>
-                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:opacity-70 duration-300">
+                <div className={`${isCurrencyListVisible ? "block duration-300" : "hidden"}`}>
+                  <div className="flex flex-row items-center justify-around mb-2 p-[1px] hover:bg-slate-200 duration-300">
                     <img
                       src={India}
                       alt="india_currency"
@@ -402,7 +402,7 @@ function Navbar() {
 
               {/* End of currenc code */}
               <Link to="/help" className="no-underline text-[#000]">
-                <li className="font-[500] text-[20px] my-3 mx-3 sm:text-[30px] md:text-[35px]">
+                <li className="font-[500] text-[18px] my-1 w-[120px] p-2   sm:text-[30px] md:text-[35px]">
                   Help
                 </li>
               </Link>
